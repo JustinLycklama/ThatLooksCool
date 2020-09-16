@@ -1,0 +1,67 @@
+PODS:
+  - Alamofire (5.2.2)
+  - ClassicClient (0.1.0):
+    - Moya (~> 14.0)
+    - Moya-ObjectMapper (~> 2.9)
+    - Result (~> 5.0)
+  - GoogleMaps (3.10.0):
+    - GoogleMaps/Maps (= 3.10.0)
+  - GoogleMaps/Base (3.10.0)
+  - GoogleMaps/Maps (3.10.0):
+    - GoogleMaps/Base
+  - GooglePlaces (3.10.0):
+    - GoogleMaps/Base (= 3.10.0)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya-ObjectMapper (2.9):
+    - Moya-ObjectMapper/Core (= 2.9)
+  - Moya-ObjectMapper/Core (2.9):
+    - Moya (~> 14.0.0-beta.6)
+    - ObjectMapper
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - ObjectMapper (4.2.0)
+  - Realm (5.4.0):
+    - Realm/Headers (= 5.4.0)
+  - Realm/Headers (5.4.0)
+  - RealmSwift (5.4.0):
+    - Realm (= 5.4.0)
+  - Result (5.0.0)
+
+DEPENDENCIES:
+  - ClassicClient (from `../ClassicClientiOS/`)
+  - GoogleMaps (= 3.10.0)
+  - GooglePlaces (= 3.10.0)
+  - RealmSwift (~> 5.3)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - GoogleMaps
+    - GooglePlaces
+    - Moya
+    - Moya-ObjectMapper
+    - ObjectMapper
+    - Realm
+    - RealmSwift
+    - Result
+
+EXTERNAL SOURCES:
+  ClassicClient:
+    :path: "../ClassicClientiOS/"
+
+SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  ClassicClient: 53d0becafa90f12b3d85fb2427f5502329bf8dd9
+  GoogleMaps: 8c080862ff2748ece9929471b30feb56a6c5079d
+  GooglePlaces: 9a6f5f3a0c88da2aa1bf7426a65d3e004f5e69a1
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  Moya-ObjectMapper: 967a99d9ea3aa9c93ddbe112aeca3667f53bfe93
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  Realm: 8949757d76e2451a53d727954c607e49c2542b77
+  RealmSwift: 0b7d7121e842724188123c6086831ae6d2952050
+  Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
+
+PODFILE CHECKSUM: 5a23e6f9aba8d4563c4abbef4f366fd7abc1c2a1
+
+COCOAPODS: 1.9.3
