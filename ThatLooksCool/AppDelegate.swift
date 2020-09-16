@@ -10,12 +10,30 @@ import UIKit
 import MapKit
 import CoreLocation
 
+import TLCModel
+
+import Realm
+import RealmSwift
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+//        let directoryUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: TLC_Constants.AppGroupId)!
+//        let realmPath = directoryUrl.path.appending("db.realm")
+//
+  
+        
+        // TOOD: Doesn't set default correctly?
+//        if let realmPath = TLC_Constants.realmPath {
+//            let config = RLMRealmConfiguration.default()
+//            config.pathOnDisk = realmPath.path
+//
+//            RLMRealmConfiguration.setDefault(config)
+//        }
         
         
 //        // Ask for Authorisation from the User.

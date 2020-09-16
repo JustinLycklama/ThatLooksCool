@@ -613,7 +613,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = TLCIntents/TLCIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
 				INFOPLIST_FILE = TLCIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
@@ -624,6 +624,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinlycklama.ThatLooksCool.TLCIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ThatLooksCool Intents";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -637,7 +638,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				CODE_SIGN_ENTITLEMENTS = TLCIntents/TLCIntents.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
 				INFOPLIST_FILE = TLCIntents/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
@@ -648,6 +649,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.justinlycklama.ThatLooksCool.TLCIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ThatLooksCool Intents";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

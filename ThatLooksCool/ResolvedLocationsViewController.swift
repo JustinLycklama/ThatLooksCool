@@ -11,6 +11,9 @@ import ClassicClient
 import IntentsUI
 
 import TLCIntents
+import TLCModel
+
+import RealmSwift
 
 class ResolvedLocationsViewController: UIViewController {
 
@@ -22,6 +25,12 @@ class ResolvedLocationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             
+        
+        let realm = try! Realm(configuration: TLC_Constants.realmConfig)
+
+        let locations = realm.objects(UnResolvedLocation.self)
+        print(locations.count)
+        
 
         self.view.backgroundColor = .gray
 

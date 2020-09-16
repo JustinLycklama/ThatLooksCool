@@ -7,8 +7,11 @@
 //
 
 import Intents
-import RealmSwift
+
 import TLCModel
+
+import Realm
+import RealmSwift
 
 // As an example, this class is set up to handle Message intents.
 // You will want to replace this or add other intents as appropriate.
@@ -190,8 +193,39 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         
         print("location: \(coordinate.latitude), \(coordinate.longitude)")
 
-        let realm = try! Realm()
+//        guard let realmPath = TLC_Constants.realmPath else {
+//
+//            let response = NewItemIntentResponse.init(code: .failure, userActivity: nil)
+//            onDidSaveCoordinate?(response)
+//
+//            locationManager = nil
+//            onDidSaveCoordinate = nil
+//
+//            return
+//        }
 
+//        let config = RLMRealmConfiguration.default()
+//            config.pathOnDisk = realmPath
+//
+//            RLMRealmConfiguration.setDefault(config)
+        
+        
+        let realm: Realm!
+        
+        do {
+            realm = try Realm(configuration: TLC_Constants.realmConfig)
+        }
+        catch {
+            
+            let response = NewItemIntentResponse.init(code: .failure, userActivity: nil)
+            onDidSaveCoordinate?(response)
+            
+            locationManager = nil
+            onDidSaveCoordinate = nil
+            
+            return
+        }
+        
 //        // Query Realm for all dogs less than 2 years old
 //        let puppies = realm.objects(Dog.self).filter("age < 2")
 //        puppies.count // => 0 because no dogs have been added to the Realm yet
@@ -200,13 +234,34 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         
         
         // Persist your data easily
-        try! realm.write {
-            realm.add(unresolvedLocation)
+        do {
+            try realm.write {
+                realm.add(unresolvedLocation)
+            }
+            
+            print("Success Writing Location")
+        } catch {
+
+            let response = NewItemIntentResponse.init(code: .failure, userActivity: nil)
+            onDidSaveCoordinate?(response)
+
+            locationManager = nil
+            onDidSaveCoordinate = nil
+
+            print("Fail Writing Location")
         }
+
+        
+        let locations = realm.objects(UnResolvedLocation.self)
+        print(locations.count)
         
         
+        
+        
+        let response = NewItemIntentResponse.init(code: .success, userActivity: nil)
+        onDidSaveCoordinate?(response)
+        
+        locationManager = nil
+        onDidSaveCoordinate = nil
     }
-    
-    
-    
 }
