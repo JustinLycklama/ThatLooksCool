@@ -6,12 +6,15 @@
 //  Copyright © 2020 Justin Lycklama. All rights reserved.
 //
 
+import UIKit
 import Intents
 
 import TLCModel
 
 import Realm
 import RealmSwift
+
+import UserNotifications
 
 // As an example, this class is set up to handle Message intents.
 // You will want to replace this or add other intents as appropriate.
@@ -255,7 +258,19 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         let locations = realm.objects(UnResolvedLocation.self)
         print(locations.count)
         
+
+        let content = UNMutableNotificationContent()
+        content.sound = .none
+        content.badge = NSNumber(value: locations.count)
         
+        // show this notification five seconds from now
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+        // choose a random identifier
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        // add our notification request
+        UNUserNotificationCenter.current().add(request)
         
         
         let response = NewItemIntentResponse.init(code: .success, userActivity: nil)

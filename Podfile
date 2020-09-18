@@ -6,15 +6,20 @@ def required_pods
   use_frameworks!
   inhibit_all_warnings!
 
-  pod 'RealmSwift',     '~> 5.3'
+  pod 'RealmSwift',     '5.4.2'
+  pod 'RxRealm',        '5.4.2'
 end
 
 def app_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'EasyNotificationBadge'
+  
   pod 'GoogleMaps',     '3.10.0'
   pod 'GooglePlaces',   '3.10.0'
+  
+  pod 'Google-Mobile-Ads-SDK', '~> 7.65'
   
   pod 'ClassicClient',    :path => '../ClassicClientiOS/'
 

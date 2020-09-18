@@ -15,8 +15,16 @@ import TLCModel
 
 import RealmSwift
 
+import GoogleMobileAds
+
+import EasyNotificationBadge
+
+// AppId: ca-app-pub-9795717139224841~5361159859
+
 class ResolvedLocationsViewController: UIViewController {
 
+    public static let Tast_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
+    
     let margin: CGFloat = 32
     let padding: CGFloat = 16
     
@@ -25,6 +33,8 @@ class ResolvedLocationsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             
+        edgesForExtendedLayout = []
+
         
         let realm = try! Realm(configuration: TLC_Constants.realmConfig)
 
@@ -36,10 +46,39 @@ class ResolvedLocationsViewController: UIViewController {
 
                 
         let contentView = UIView()
+        let bannerView = UIView()
         
+        let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
+
+        
+        adBanner.adUnitID = ResolvedLocationsViewController.Tast_Ad_Unit_Id
+        adBanner.rootViewController = self
+        adBanner.load(GADRequest())
+        
+        bannerView.backgroundColor = .white
+        bannerView.layer.cornerRadius = 10
+        
+        bannerView.addSubview(adBanner)
+
+        bannerView.addConstraint(NSLayoutConstraint.init(item: adBanner, attribute: .centerX, relatedBy: .equal, toItem: bannerView, attribute: .centerX, multiplier: 1, constant: 0))
+        bannerView.constrainSubviewToBounds(adBanner, onEdges: [.top, .bottom], withInset: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
+        
+//        addBannerViewToView(adBannerView)
+        
+        UIApplication.shared
         
         self.view.addSubview(contentView)
-        self.view.constrainSubviewToBounds(contentView, withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
+        self.view.addSubview(bannerView)
+
+        contentView.backgroundColor = .blue
+        
+        self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right], withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
+        self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
+
+        self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -margin))
+        
+        
+//        self.view.constrainSubviewToBounds(contentView, withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
         
         // Actions
         let horStackView = UIStackView()
@@ -56,10 +95,16 @@ class ResolvedLocationsViewController: UIViewController {
         let mapImage = UIImageView()
         mapView.contentView.addSubview(mapImage)
         mapView.contentView.constrainSubviewToBounds(mapImage)
+
+        mapView.badge(text: "1")
+        
+//        let badgeView = BadgeHub(view: mapView)
+//        badgeView.increment()
         
         // Unresolved Action
         let unresolvedView = TitleContentView()
         unresolvedView.titleLabel.text = "UnResolved"
+
         
         let button = INUIAddVoiceShortcutButton(style: .blackOutline)
         button.translatesAutoresizingMaskIntoConstraints = false

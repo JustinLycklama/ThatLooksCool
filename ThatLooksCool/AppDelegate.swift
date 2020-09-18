@@ -15,12 +15,25 @@ import TLCModel
 import Realm
 import RealmSwift
 
+import GoogleMobileAds
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in
+            if success {
+                print("All set!")
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
         
 //        let directoryUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: TLC_Constants.AppGroupId)!
 //        let realmPath = directoryUrl.path.appending("db.realm")
