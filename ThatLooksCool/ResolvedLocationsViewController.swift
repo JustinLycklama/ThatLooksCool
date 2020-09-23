@@ -17,11 +17,13 @@ import RealmSwift
 
 import GoogleMobileAds
 
+import  RxSwift
+
 import EasyNotificationBadge
 
 // AppId: ca-app-pub-9795717139224841~5361159859
 
-class ResolvedLocationsViewController: UIViewController {
+class ResolvedLocationsViewController: AdViewController {
 
     public static let Tast_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
     
@@ -30,52 +32,34 @@ class ResolvedLocationsViewController: UIViewController {
     
     let actionHeight: CGFloat = 175
     
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
             
         edgesForExtendedLayout = []
+        self.navigationController?.navigationBar.isHidden = true
 
-        
-        let realm = try! Realm(configuration: TLC_Constants.realmConfig)
-
-        let locations = realm.objects(UnResolvedLocation.self)
-        print(locations.count)
-        
-
-        self.view.backgroundColor = .gray
-
+        UnresolvedItemModel.sharedInstance.unresolvedItemCountSubject
+            .subscribe(onNext: { (count: Int) in
+                print(count)
+            }, onError: { (err: Error) in
                 
-        let contentView = UIView()
-        let bannerView = UIView()
+            }, onCompleted: {
+                
+            }) {
+                
+        }.disposed(by: disposeBag)
         
-        let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
+//        let realm = try! Realm(configuration: TLC_Constants.realmConfig)
+//
+//        let locations = realm.objects(UnResolvedLocation.self)
+//        print(locations.count)
 
-        
-        adBanner.adUnitID = ResolvedLocationsViewController.Tast_Ad_Unit_Id
-        adBanner.rootViewController = self
-        adBanner.load(GADRequest())
-        
-        bannerView.backgroundColor = .white
-        bannerView.layer.cornerRadius = 10
-        
-        bannerView.addSubview(adBanner)
 
-        bannerView.addConstraint(NSLayoutConstraint.init(item: adBanner, attribute: .centerX, relatedBy: .equal, toItem: bannerView, attribute: .centerX, multiplier: 1, constant: 0))
-        bannerView.constrainSubviewToBounds(adBanner, onEdges: [.top, .bottom], withInset: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
         
 //        addBannerViewToView(adBannerView)
-        
-        UIApplication.shared
-        
-        self.view.addSubview(contentView)
-        self.view.addSubview(bannerView)
-
-        contentView.backgroundColor = .blue
-        
-        self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right], withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
-        self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
-
-        self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -margin))
+       
         
         
 //        self.view.constrainSubviewToBounds(contentView, withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
@@ -97,6 +81,10 @@ class ResolvedLocationsViewController: UIViewController {
         mapView.contentView.constrainSubviewToBounds(mapImage)
 
         mapView.badge(text: "1")
+        
+        let tapG = UITapGestureRecognizer.init(target: self, action: #selector(presentUnresolvedItems))
+        mapView.addGestureRecognizer(tapG)
+        mapView.isUserInteractionEnabled = true
         
 //        let badgeView = BadgeHub(view: mapView)
 //        badgeView.increment()
@@ -147,7 +135,7 @@ class ResolvedLocationsViewController: UIViewController {
         let views = ["actions" : horStackView, "locations" : resolvedLocationsView]
         let metrics = ["margin" : margin, "padding" : padding, "actionHeight" : actionHeight]
         
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(0)-[actions(actionHeight)]-(padding)-[locations]-(0)-|", options: .alignAllCenterX, metrics: metrics, views: views)
+        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(margin)-[actions(actionHeight)]-(padding)-[locations]-(0)-|", options: .alignAllCenterX, metrics: metrics, views: views)
         
         
         let horActions = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[actions]-(0)-|", options: .alignAllCenterY, metrics: metrics, views: views)
@@ -168,6 +156,23 @@ class ResolvedLocationsViewController: UIViewController {
             viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
             present(viewController, animated: true, completion: nil)
         }
+    }
+    
+    @objc
+    func presentUnresolvedItems() {
+        let unresolvedItems = CategorizeUnresolvedViewController()
+        let navc = UINavigationController(rootViewController: unresolvedItems)
+        
+        navc.modalPresentationStyle = .fullScreen
+        
+        self.navigationController?.present(navc, animated: true, completion: {
+            navc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(self.close))
+        })
+    }
+    
+    @objc
+    func close() {
+        self.navigationController?.dismiss(animated: true, completion: nil)
     }
 
 }

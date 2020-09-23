@@ -15,15 +15,20 @@ import TLCModel
 import Realm
 import RealmSwift
 
+import GoogleMaps
+import GooglePlaces
 import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let locationManager = CLLocationManager()
-
+    let GOOGLE_API = "AIzaSyDpgypd8RVgbUFwHqgp80mNzhjGu8Pr2j8"
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        GMSServices.provideAPIKey(GOOGLE_API)
+        GMSPlacesClient.provideAPIKey(GOOGLE_API)
         
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         

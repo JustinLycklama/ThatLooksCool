@@ -233,7 +233,7 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
 //        let puppies = realm.objects(Dog.self).filter("age < 2")
 //        puppies.count // => 0 because no dogs have been added to the Realm yet
 
-        let unresolvedLocation = UnResolvedLocation()
+        let unresolvedLocation = UnresolvedLocation(coordinate: coordinate)
         
         
         // Persist your data easily
@@ -255,7 +255,7 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         }
 
         
-        let locations = realm.objects(UnResolvedLocation.self)
+        let locations = realm.objects(UnresolvedLocation.self)
         print(locations.count)
         
 
@@ -264,7 +264,7 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         content.badge = NSNumber(value: locations.count)
         
         // show this notification five seconds from now
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
 
         // choose a random identifier
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
