@@ -77,6 +77,6 @@ class UnresolvedItemPreviewView: UIView {
     // TODO: Any unresolved Item
     public func setItem(item: UnresolvedLocation?) {
         title.text = String(item?.timestamp?.timeIntervalSinceNow ?? 0.0)
-        currentCoordinate = item?.coordinates?.coreLocationCoordinate
+        currentCoordinate = item?.coordinate?.coreLocationCoordinate
     }
 }

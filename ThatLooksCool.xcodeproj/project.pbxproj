@@ -19,7 +19,6 @@
 		7D170D11251265F5007F151F /* TLCModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D170D0325126598007F151F /* TLCModel.framework */; };
 		7D98BBCB25008F8700F0ADC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */; };
 		7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBCC25008F8700F0ADC0 /* SceneDelegate.swift */; };
-		7D98BBCF25008F8700F0ADC0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBCE25008F8700F0ADC0 /* ViewController.swift */; };
 		7D98BBD225008F8700F0ADC0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D98BBD025008F8700F0ADC0 /* Main.storyboard */; };
 		7D98BBD425008F8900F0ADC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D98BBD325008F8900F0ADC0 /* Assets.xcassets */; };
 		7D98BBD725008F8900F0ADC0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D98BBD525008F8900F0ADC0 /* LaunchScreen.storyboard */; };
@@ -32,6 +31,8 @@
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
 		7DEDAF56251A819A00D15306 /* TLCStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF55251A819A00D15306 /* TLCStyle.swift */; };
 		7DEDAF58251A84CF00D15306 /* UnresolvedItemPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF57251A84CF00D15306 /* UnresolvedItemPreviewView.swift */; };
+		7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */; };
+		7DEDAF65251BB22700D15306 /* FourSquareModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF64251BB22700D15306 /* FourSquareModel.swift */; };
 		E39D3C6021DD63A23A4D7E58 /* Pods_TLCIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F53CC24DCE951550C59D6C91 /* Pods_TLCIntents.framework */; };
 		F3A67862E6EB8168750C3821 /* Pods_ThatLooksCool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */; };
 /* End PBXBuildFile section */
@@ -102,7 +103,6 @@
 		7D98BBC725008F8700F0ADC0 /* ThatLooksCool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatLooksCool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D98BBCC25008F8700F0ADC0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7D98BBCE25008F8700F0ADC0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7D98BBD125008F8700F0ADC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7D98BBD325008F8900F0ADC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D98BBD625008F8900F0ADC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -119,6 +119,8 @@
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7DEDAF55251A819A00D15306 /* TLCStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLCStyle.swift; sourceTree = "<group>"; };
 		7DEDAF57251A84CF00D15306 /* UnresolvedItemPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnresolvedItemPreviewView.swift; sourceTree = "<group>"; };
+		7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesModel.swift; sourceTree = "<group>"; };
+		7DEDAF64251BB22700D15306 /* FourSquareModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourSquareModel.swift; sourceTree = "<group>"; };
 		B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThatLooksCool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39DF70E8E1F6A2FBF731CA /* Pods-ThatLooksCool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThatLooksCool.release.xcconfig"; path = "Target Support Files/Pods-ThatLooksCool/Pods-ThatLooksCool.release.xcconfig"; sourceTree = "<group>"; };
 		BF4B409C3CD0D1B93E436B74 /* Pods-TLCModel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLCModel.release.xcconfig"; path = "Target Support Files/Pods-TLCModel/Pods-TLCModel.release.xcconfig"; sourceTree = "<group>"; };
@@ -228,19 +230,17 @@
 				7D0314022509B45800F9CCBD /* ThatLooksCool.entitlements */,
 				7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */,
 				7D98BBCC25008F8700F0ADC0 /* SceneDelegate.swift */,
-				7D98BBCE25008F8700F0ADC0 /* ViewController.swift */,
+				7DEDAF55251A819A00D15306 /* TLCStyle.swift */,
+				7DEDAF63251BB21000D15306 /* Foursquare Model */,
+				7DEDAF5A251AEC5000D15306 /* Google Model */,
+				7DEDAF5D251AEC9300D15306 /* TLC Model */,
+				7DEDAF5B251AEC5E00D15306 /* Controllers */,
+				7DEDAF5C251AEC6600D15306 /* Views */,
 				7D98BBD025008F8700F0ADC0 /* Main.storyboard */,
 				7D98BBD325008F8900F0ADC0 /* Assets.xcassets */,
 				7D98BBD525008F8900F0ADC0 /* LaunchScreen.storyboard */,
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
 				7D98BBE22500912B00F0ADC0 /* Podfile */,
-				7DEDAF53251A809200D15306 /* AdViewController.swift */,
-				7D98BBE4250136DA00F0ADC0 /* ResolvedLocationsViewController.swift */,
-				7D98BBEA2501A04200F0ADC0 /* TitleContentView.swift */,
-				7DEDAF4F2515568300D15306 /* UnresolvedItemModel.swift */,
-				7DEDAF51251A806800D15306 /* CategorizeUnresolvedViewController.swift */,
-				7DEDAF55251A819A00D15306 /* TLCStyle.swift */,
-				7DEDAF57251A84CF00D15306 /* UnresolvedItemPreviewView.swift */,
 			);
 			path = ThatLooksCool;
 			sourceTree = "<group>";
@@ -252,6 +252,49 @@
 				7DA16E2F250941DB00536F58 /* Info.plist */,
 			);
 			path = TLCTests;
+			sourceTree = "<group>";
+		};
+		7DEDAF5A251AEC5000D15306 /* Google Model */ = {
+			isa = PBXGroup;
+			children = (
+				7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */,
+			);
+			path = "Google Model";
+			sourceTree = "<group>";
+		};
+		7DEDAF5B251AEC5E00D15306 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7DEDAF53251A809200D15306 /* AdViewController.swift */,
+				7D98BBE4250136DA00F0ADC0 /* ResolvedLocationsViewController.swift */,
+				7DEDAF51251A806800D15306 /* CategorizeUnresolvedViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7DEDAF5C251AEC6600D15306 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7D98BBEA2501A04200F0ADC0 /* TitleContentView.swift */,
+				7DEDAF57251A84CF00D15306 /* UnresolvedItemPreviewView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7DEDAF5D251AEC9300D15306 /* TLC Model */ = {
+			isa = PBXGroup;
+			children = (
+				7DEDAF4F2515568300D15306 /* UnresolvedItemModel.swift */,
+			);
+			path = "TLC Model";
+			sourceTree = "<group>";
+		};
+		7DEDAF63251BB21000D15306 /* Foursquare Model */ = {
+			isa = PBXGroup;
+			children = (
+				7DEDAF64251BB22700D15306 /* FourSquareModel.swift */,
+			);
+			path = "Foursquare Model";
 			sourceTree = "<group>";
 		};
 		D58EC3E77564E91A0AEE2B1E /* Frameworks */ = {
@@ -565,9 +608,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D03141A2511B19100F9CCBD /* Intents.intentdefinition in Sources */,
-				7D98BBCF25008F8700F0ADC0 /* ViewController.swift in Sources */,
 				7D98BBCB25008F8700F0ADC0 /* AppDelegate.swift in Sources */,
+				7DEDAF65251BB22700D15306 /* FourSquareModel.swift in Sources */,
 				7DEDAF502515568300D15306 /* UnresolvedItemModel.swift in Sources */,
+				7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */,
 				7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */,
 				7D98BBE6250136DA00F0ADC0 /* ResolvedLocationsViewController.swift in Sources */,
 				7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */,

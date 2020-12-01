@@ -10,7 +10,7 @@ import Foundation
 
 import TLCModel
 import RealmSwift
-import RxRealm
+//import RxRealm
 import RxSwift
 
 class UnresolvedItemModel {
@@ -26,31 +26,31 @@ class UnresolvedItemModel {
     
     init() {
         let realm: Realm!
-            
+
         do {
             realm = try! Realm(configuration: TLC_Constants.realmConfig)
         }
-        
-        disposeBag = DisposeBag()
-        
-        
-        let unresolvedLocations = realm.objects(UnresolvedLocation.self)
-        
-        Observable.collection(from: unresolvedLocations)
-            .subscribe(onNext: { [weak self] (results: Results<UnresolvedLocation>) in
-                
-                self?.unresolvedItemCountSubject.onNext(results.count)
-                UIApplication.shared.applicationIconBadgeNumber = results.count
 
-                self?.unresolvedItemsSubject.onNext(results.toArray())
-                                            
-            }, onError: { (err: Error) in
-                
-            }, onCompleted: {
-                
-            }) {
-        }.disposed(by: disposeBag)
-                
+        disposeBag = DisposeBag()
+//
+//
+//        let unresolvedLocations = realm.objects(UnresolvedLocation.self)
+//
+//        Observable.collection(from: unresolvedLocations)
+//            .subscribe(onNext: { [weak self] (results: Results<UnresolvedLocation>) in
+//
+//                self?.unresolvedItemCountSubject.onNext(results.count)
+//                UIApplication.shared.applicationIconBadgeNumber = results.count
+//
+//                self?.unresolvedItemsSubject.onNext(results.toArray())
+//
+//            }, onError: { (err: Error) in
+//
+//            }, onCompleted: {
+//
+//            }) {
+//        }.disposed(by: disposeBag)
+//
 
     }
     

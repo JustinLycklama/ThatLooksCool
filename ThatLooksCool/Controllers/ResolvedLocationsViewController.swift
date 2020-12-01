@@ -17,7 +17,7 @@ import RealmSwift
 
 import GoogleMobileAds
 
-import  RxSwift
+import RxSwift
 
 import EasyNotificationBadge
 

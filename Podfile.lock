@@ -1,19 +1,19 @@
 PODS:
-  - Alamofire (5.2.2)
+  - Alamofire (5.4.0)
   - ClassicClient (0.1.0):
     - Moya (~> 14.0)
     - Moya-ObjectMapper (~> 2.9)
     - Result (~> 5.0)
-  - EasyNotificationBadge (1.2.0)
-  - Google-Mobile-Ads-SDK (7.65.0):
-    - GoogleAppMeasurement (~> 6.0)
+  - EasyNotificationBadge (1.2.3)
+  - Google-Mobile-Ads-SDK (7.68.0):
+    - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
-  - GoogleAppMeasurement (6.8.2):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
-    - GoogleUtilities/MethodSwizzler (~> 6.7)
-    - GoogleUtilities/Network (~> 6.7)
-    - "GoogleUtilities/NSData+zlib (~> 6.7)"
-    - nanopb (~> 1.30906.0)
+  - GoogleAppMeasurement (7.1.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
+    - GoogleUtilities/MethodSwizzler (~> 7.0)
+    - GoogleUtilities/Network (~> 7.0)
+    - "GoogleUtilities/NSData+zlib (~> 7.0)"
+    - nanopb (~> 2.30906.0)
   - GoogleMaps (3.10.0):
     - GoogleMaps/Maps (= 3.10.0)
   - GoogleMaps/Base (3.10.0)
@@ -21,23 +21,23 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (3.10.0):
     - GoogleMaps/Base (= 3.10.0)
-  - GoogleUserMessagingPlatform (1.2.0)
-  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
+  - GoogleUserMessagingPlatform (1.4.0)
+  - GoogleUtilities/AppDelegateSwizzler (7.1.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.7.2):
+  - GoogleUtilities/Environment (7.1.1):
     - PromisesObjC (~> 1.2)
-  - GoogleUtilities/Logger (6.7.2):
+  - GoogleUtilities/Logger (7.1.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.7.2):
+  - GoogleUtilities/MethodSwizzler (7.1.1):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.7.2):
+  - GoogleUtilities/Network (7.1.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.7.2)"
-  - GoogleUtilities/Reachability (6.7.2):
+  - "GoogleUtilities/NSData+zlib (7.1.1)"
+  - GoogleUtilities/Reachability (7.1.1):
     - GoogleUtilities/Logger
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
@@ -48,22 +48,19 @@ PODS:
     - ObjectMapper
   - Moya/Core (14.0.0):
     - Alamofire (~> 5.0)
-  - nanopb (1.30906.0):
-    - nanopb/decode (= 1.30906.0)
-    - nanopb/encode (= 1.30906.0)
-  - nanopb/decode (1.30906.0)
-  - nanopb/encode (1.30906.0)
+  - nanopb (2.30906.0):
+    - nanopb/decode (= 2.30906.0)
+    - nanopb/encode (= 2.30906.0)
+  - nanopb/decode (2.30906.0)
+  - nanopb/encode (2.30906.0)
   - ObjectMapper (4.2.0)
-  - PromisesObjC (1.2.10)
-  - Realm (5.4.2):
-    - Realm/Headers (= 5.4.2)
-  - Realm/Headers (5.4.2)
-  - RealmSwift (5.4.2):
-    - Realm (= 5.4.2)
+  - PromisesObjC (1.2.11)
+  - Realm (10.1.4):
+    - Realm/Headers (= 10.1.4)
+  - Realm/Headers (10.1.4)
+  - RealmSwift (10.1.4):
+    - Realm (= 10.1.4)
   - Result (5.0.0)
-  - RxRealm (3.1.0):
-    - RealmSwift (~> 5.2)
-    - RxSwift (~> 5.0)
   - RxSwift (5.1.1)
 
 DEPENDENCIES:
@@ -72,8 +69,8 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.65)
   - GoogleMaps (= 3.10.0)
   - GooglePlaces (= 3.10.0)
-  - RealmSwift (~> 5.3)
-  - RxRealm
+  - RealmSwift
+  - RxSwift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -93,7 +90,6 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - Result
-    - RxRealm
     - RxSwift
 
 EXTERNAL SOURCES:
@@ -101,26 +97,25 @@ EXTERNAL SOURCES:
     :path: "../ClassicClientiOS/"
 
 SPEC CHECKSUMS:
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Alamofire: 3b6a534a3df22db367e4dedeeca73d1ddfcf0e2f
   ClassicClient: 53d0becafa90f12b3d85fb2427f5502329bf8dd9
-  EasyNotificationBadge: afeb15ed6f9a4262d626a2b745297e96afa26c2e
-  Google-Mobile-Ads-SDK: af735e001ee534d9dd2ce0a87cd8c355b19844b5
-  GoogleAppMeasurement: 1a66f478c68ecd6c16ee63ee60c7c3a648e6b337
+  EasyNotificationBadge: c1ebde82201d87ac2366a864f8eb5d6be299e95a
+  Google-Mobile-Ads-SDK: 29bbdb182d69ff606cc0301da1590b40be8d2205
+  GoogleAppMeasurement: 89e1a64593f968713b0506ba1b53b38a154bf9a5
   GoogleMaps: 8c080862ff2748ece9929471b30feb56a6c5079d
   GooglePlaces: 9a6f5f3a0c88da2aa1bf7426a65d3e004f5e69a1
-  GoogleUserMessagingPlatform: c85530d930ba509583aa5a6d50a10aca22cf8502
-  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
+  GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
+  GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Moya-ObjectMapper: 967a99d9ea3aa9c93ddbe112aeca3667f53bfe93
-  nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
+  nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
-  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
-  Realm: ced868eb0254f8d33a21c06981355e5aa33bc005
-  RealmSwift: aedc4363150f3c61f91ae0537ed116d2d080a4dd
+  PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
+  Realm: 80f4fb2971ccb9adc27a47d0955ae8e533a7030b
+  RealmSwift: 0e566ca714edb377bba8ea0811eafcea0b93734e
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
-  RxRealm: 50e5fe5c1f22518205afbb313fbc5580d73bc586
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: f98364574b50ecbf9429ead8412c533cc1ec1ab9
+PODFILE CHECKSUM: 00a096e926df04897f0a3bbb6e113aaf8675aea9
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0

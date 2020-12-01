@@ -36,15 +36,15 @@ public class ResolvedLocation: Object {
 }
 
 public class Coordinate: Object {
-    @objc dynamic var latitude: Double
-    @objc dynamic var longitude: Double
+    @objc public dynamic var latitude: Double
+    @objc public dynamic var longitude: Double
 
     init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }
     
-    required init() {
+    required override init() {
         self.latitude = 0.0
         self.longitude = 0.0
     }
@@ -58,19 +58,20 @@ public class Coordinate: Object {
 }
 
 public protocol UnresolvedItem {
-    var timestamp: Date? { get set }
+    var timestamp: Date? { get }
 }
 
 public class UnresolvedLocation: Object, UnresolvedItem {
-    @objc public dynamic var coordinates: Coordinate?
-    @objc public dynamic var timestamp: Date?
+    @objc public dynamic var coordinate: Coordinate?
+    @objc public dynamic let timestamp: Date?
     
-    public init(coordinate: CLLocationCoordinate2D) {
-        coordinates = Coordinate(latitude: coordinate.latitude, longitude: coordinate.longitude)
+    public init(coordinate coord: CLLocationCoordinate2D) {
+        coordinate = Coordinate(latitude: coord.latitude, longitude: coord.longitude)
         timestamp = Date()
     }
     
-    required init() {
+    required override init() {
+        coordinate = nil
         timestamp = Date()
     }
 }
