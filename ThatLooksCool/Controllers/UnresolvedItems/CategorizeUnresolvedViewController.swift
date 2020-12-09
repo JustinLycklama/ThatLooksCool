@@ -13,21 +13,21 @@ import RxSwift
 import TLCModel
 import ClassicClient
 
-class CategorizeUnresolvedViewController: AdViewController {
+class CategorizePendingItemsViewController: AdViewController {
 
     let previewView = UnresolvedItemPreviewView()
-    let detailViewArea = UIView()
+    var detailViewArea = UIView()
     
     private var disposeBag = DisposeBag()
     
-    var currentItem: UnresolvedLocation? {
+    var currentItem: PendingItem? {
         didSet {
             updateItemPreview()
             loadLocalPlaces()
         }
     }
     
-    var items: [UnresolvedLocation] = [] {
+    var items: [PendingItem] = [] {
         didSet {
             if let firstItem = items.first,
                 currentItem == nil {
@@ -38,6 +38,14 @@ class CategorizeUnresolvedViewController: AdViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let categoriesViewController = CategoriesViewController()
+        self.addChild(categoriesViewController)
+        
+        categoriesViewController.canAddCategories = true
+        
+        detailViewArea = categoriesViewController.view
+        
         
         let margin = TLCStyle.topLevelMargin
         let padding = TLCStyle.topLevelPadding
@@ -52,8 +60,10 @@ class CategorizeUnresolvedViewController: AdViewController {
         previewView.layer.cornerRadius = 10
         detailViewArea.layer.cornerRadius = 10
         
+        detailViewArea.layer.masksToBounds = true
+        detailViewArea.layer.isOpaque = false
         
-        (previewView).backgroundColor = .red
+        previewView.backgroundColor = .red
         detailViewArea.backgroundColor = .green
         
         contentView.constrainSubviewToBounds(previewView, onEdges: [.top, .left, .right])
@@ -66,7 +76,7 @@ class CategorizeUnresolvedViewController: AdViewController {
         ////
         
 //
-        UnresolvedItemModel.sharedInstance.unresolvedItemsSubject.subscribe(onNext: { [weak self] (unresolvedItems: [UnresolvedLocation]) in
+        RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (unresolvedItems: [PendingItem]) in
             DispatchQueue.main.async {
                 self?.items = unresolvedItems
 

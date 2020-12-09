@@ -31,8 +31,29 @@ public struct TLC_Constants {
     }
 }
 
-public class ResolvedLocation: Object {
+public class ResolvedItem: Object {
+
+    @objc public dynamic var title: String?
+
+    @objc public dynamic var coordinate: Coordinate?
+    @objc public dynamic var category: ResolvedItemCategory?
     
+    public init(pendingItem: PendingItem, category: ResolvedItemCategory) {
+        self.title = "Resolved Item From Pending!"
+        self.coordinate = pendingItem.coordinate
+        self.category = category
+    }
+    
+    public init(category: ResolvedItemCategory) {
+        title = "Resolved Item From Nothing"
+        self.category = category
+    }
+    
+    required override init() {
+        self.title = "??"
+        self.coordinate = nil
+        self.category = ResolvedItemCategory()
+    }
 }
 
 public class Coordinate: Object {
@@ -57,20 +78,29 @@ public class Coordinate: Object {
     }
 }
 
-public protocol UnresolvedItem {
-    var timestamp: Date? { get }
-}
+//public protocol UnresolvedItem {
+//    var timestamp: Date? { get }
+//}
 
-public class UnresolvedLocation: Object, UnresolvedItem {
+public class PendingItem: Object {
+    
+    @objc public dynamic var title: String?
     @objc public dynamic var coordinate: Coordinate?
     @objc public dynamic let timestamp: Date?
     
+    public init(title: String) {
+        self.title = title
+        timestamp = Date()
+    }
+    
     public init(coordinate coord: CLLocationCoordinate2D) {
+        self.title = ""
         coordinate = Coordinate(latitude: coord.latitude, longitude: coord.longitude)
         timestamp = Date()
     }
     
     required override init() {
+        self.title = ""
         coordinate = nil
         timestamp = Date()
     }

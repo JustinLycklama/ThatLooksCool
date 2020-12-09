@@ -13,14 +13,16 @@ import RealmSwift
 //import RxRealm
 import RxSwift
 
-class UnresolvedItemModel {
-    public static let sharedInstance = UnresolvedItemModel()
+class RealmSubjects {
+    public static let sharedInstance = RealmSubjects()
     
     // A behavior subject will give any subscriber the most recent element and everything that is emitted by that sequence after the subscription happened.
     public var unresolvedItemCountSubject = BehaviorSubject<Int>(value: 0)
     
     public var unresolvedItemsSubject = BehaviorSubject<[UnresolvedLocation]>(value: [])
 
+    
+    
     
     private var disposeBag: DisposeBag
     

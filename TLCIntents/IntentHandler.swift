@@ -233,7 +233,7 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
 //        let puppies = realm.objects(Dog.self).filter("age < 2")
 //        puppies.count // => 0 because no dogs have been added to the Realm yet
 
-        let unresolvedLocation = UnresolvedLocation(coordinate: coordinate)
+        let unresolvedLocation = PendingItem(coordinate: coordinate)
         
         
         // Persist your data easily
@@ -255,7 +255,7 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         }
 
         
-        let locations = realm.objects(UnresolvedLocation.self)
+        let locations = realm.objects(PendingItem.self)
         print(locations.count)
         
 

@@ -27,7 +27,7 @@ class AdViewController: UIViewController {
         let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
 
         
-        adBanner.adUnitID = ResolvedLocationsViewController.Tast_Ad_Unit_Id
+        adBanner.adUnitID = HomeViewController.Tast_Ad_Unit_Id
         adBanner.rootViewController = self
         adBanner.load(GADRequest())
         
