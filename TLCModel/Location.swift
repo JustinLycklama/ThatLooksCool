@@ -39,7 +39,7 @@ public class ResolvedItem: Object {
     @objc public dynamic var category: ResolvedItemCategory?
     
     public init(pendingItem: PendingItem, category: ResolvedItemCategory) {
-        self.title = "Resolved Item From Pending!"
+        self.title = pendingItem.title
         self.coordinate = pendingItem.coordinate
         self.category = category
     }
@@ -87,6 +87,13 @@ public class PendingItem: Object {
     @objc public dynamic var title: String?
     @objc public dynamic var coordinate: Coordinate?
     @objc public dynamic let timestamp: Date?
+    
+    public init(resolvedItem: ResolvedItem) {
+        self.title = resolvedItem.title
+        self.coordinate = resolvedItem.coordinate
+        
+        timestamp = Date()
+    }
     
     public init(title: String) {
         self.title = title

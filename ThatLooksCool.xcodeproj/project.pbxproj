@@ -33,6 +33,7 @@
 		7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBE4250136DA00F0ADC0 /* HomeViewController.swift */; };
 		7D98BBEB2501A04200F0ADC0 /* TitleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBEA2501A04200F0ADC0 /* TitleContentView.swift */; };
 		7DA16E2E250941DB00536F58 /* TLCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA16E2D250941DB00536F58 /* TLCTests.swift */; };
+		7DCD46602581B2310042C4A9 /* ItemIterationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */; };
 		7DEDAF502515568300D15306 /* RealmSubjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF4F2515568300D15306 /* RealmSubjects.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizePendingItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizePendingItemsViewController.swift */; };
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
@@ -137,6 +138,7 @@
 		7DA16E2B250941DB00536F58 /* TLCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA16E2D250941DB00536F58 /* TLCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLCTests.swift; sourceTree = "<group>"; };
 		7DA16E2F250941DB00536F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIterationView.swift; sourceTree = "<group>"; };
 		7DEDAF4F2515568300D15306 /* RealmSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSubjects.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizePendingItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizePendingItemsViewController.swift; sourceTree = "<group>"; };
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
@@ -228,12 +230,12 @@
 			path = ResolvedItems;
 			sourceTree = "<group>";
 		};
-		7D0A4858257D84DD00912AD1 /* UnresolvedItems */ = {
+		7D0A4858257D84DD00912AD1 /* PendingItems */ = {
 			isa = PBXGroup;
 			children = (
 				7DEDAF51251A806800D15306 /* CategorizePendingItemsViewController.swift */,
 			);
-			path = UnresolvedItems;
+			path = PendingItems;
 			sourceTree = "<group>";
 		};
 		7D0A4859257D84ED00912AD1 /* Home */ = {
@@ -344,7 +346,7 @@
 				7DEDAF53251A809200D15306 /* AdViewController.swift */,
 				7D0A4859257D84ED00912AD1 /* Home */,
 				7D2C56E02580812A003F12FF /* Categories */,
-				7D0A4858257D84DD00912AD1 /* UnresolvedItems */,
+				7D0A4858257D84DD00912AD1 /* PendingItems */,
 				7D0A4857257D84D500912AD1 /* ResolvedItems */,
 			);
 			path = Controllers;
@@ -355,6 +357,7 @@
 			children = (
 				7D98BBEA2501A04200F0ADC0 /* TitleContentView.swift */,
 				7DEDAF57251A84CF00D15306 /* UnresolvedItemPreviewView.swift */,
+				7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 				7D2C56DB257DDBD3003F12FF /* ResolvedItemsViewController.swift in Sources */,
 				7DEDAF65251BB22700D15306 /* FourSquareModel.swift in Sources */,
 				7DEDAF502515568300D15306 /* RealmSubjects.swift in Sources */,
+				7DCD46602581B2310042C4A9 /* ItemIterationView.swift in Sources */,
 				7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */,
 				7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */,
 				7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */,

@@ -68,7 +68,7 @@ class UnresolvedItemPreviewView: UIView {
         mapView = GMSMapView(frame: .zero)
         mapView?.translatesAutoresizingMaskIntoConstraints = false
         
-        stackView.addArrangedSubview(mapView!)
+//        stackView.addArrangedSubview(mapView!)
           
         let heightConstraint = NSLayoutConstraint.init(item: mapView!, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150)
         mapView?.addConstraint(heightConstraint)
@@ -76,7 +76,7 @@ class UnresolvedItemPreviewView: UIView {
     
     // TODO: Any unresolved Item
     public func setItem(item: PendingItem?) {
-        title.text = String(item?.timestamp?.timeIntervalSinceNow ?? 0.0)
+        title.text = item?.title
         currentCoordinate = item?.coordinate?.coreLocationCoordinate
     }
 }

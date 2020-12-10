@@ -55,11 +55,12 @@ class RealmSubjects {
 
             switch changes {
             case .initial(let results), .update(let results, _, _, _):
-                
-                let categories = results.list()
-                self.updateResolvedItemSubjects(for: categories)
-                                
-                self.resolvedItemCategoriesSubject.onNext(categories)
+                DispatchQueue.main.async {
+                    let categories = results.list()
+                    self.updateResolvedItemSubjects(for: categories)
+                    
+                    self.resolvedItemCategoriesSubject.onNext(categories)
+                }
             case .error:
                 break
             }
@@ -73,17 +74,19 @@ class RealmSubjects {
         
         let pendingItems = realm.objects(PendingItem.self)
         
-        let unresolvedToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<PendingItem>>) in
+        let pendingToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<PendingItem>>) in
             switch changes {
             case .initial(let results), .update(let results, _, _, _):
-                self?.pendingItemsSubject.onNext(results.list())
+                DispatchQueue.main.async {
+                    self?.pendingItemsSubject.onNext(results.list())
+                }
             case .error:
                 break
    
             }
         }
         
-        tokenList.append(unresolvedToken)
+        tokenList.append(pendingToken)
         
         /*
          Resolved Items
@@ -114,9 +117,11 @@ class RealmSubjects {
                     
                     switch changes {
                     case .initial(let results), .update(let results, _, _, _):
-                        self.resolvedItemCategoriesCount[category] = (self.resolvedItemCategoriesCount[category] ?? 0) + 1
-                        self.resolvedItemCategoriesCountSubject.onNext(self.resolvedItemCategoriesCount)
-                        self.resolvedItemSubjectsByCategory[category]?.onNext(results.list())
+                        DispatchQueue.main.async {
+                            self.resolvedItemCategoriesCount[category] = (self.resolvedItemCategoriesCount[category] ?? 0) + 1
+                            self.resolvedItemCategoriesCountSubject.onNext(self.resolvedItemCategoriesCount)
+                            self.resolvedItemSubjectsByCategory[category]?.onNext(results.list())
+                        }
                     case .error:
                         break
            
@@ -141,8 +146,22 @@ class RealmSubjects {
         }
     }
     
+    func removeAllPendingItems() {
+        
+        let pendingItems = realm.objects(PendingItem.self)
+        
+        realm.beginWrite()
+        realm.delete(pendingItems)
+        
+        do {
+            try realm.commitWrite()
+        } catch {
+            fatalError()
+        }
+    }
+    
     func addPendingItem(title: String) {
-        let newItem = PendingItem(title: "lololol")
+        let newItem = PendingItem(title: title)
 
         realm.beginWrite()
         realm.add(newItem)
@@ -183,7 +202,8 @@ class RealmSubjects {
         }
     }
     
-    func categorize(item: PendingItem, as category: ResolvedItemCategory) {
+    @discardableResult
+    func categorize(item: PendingItem, as category: ResolvedItemCategory) -> ResolvedItem {
         
         let resolvedItem = ResolvedItem(pendingItem: item, category: category)
         
@@ -197,16 +217,33 @@ class RealmSubjects {
         } catch {
             fatalError()
         }
+        
+        return resolvedItem
+    }
+    
+    func uncategorize(item: ResolvedItem) {
+        
+        let pendingItem = PendingItem(resolvedItem: item)
+        
+        realm.beginWrite()
+        
+        realm.delete(item)
+        realm.add(pendingItem)
+        
+        do {
+            try realm.commitWrite()
+        } catch {
+            fatalError()
+        }
     }
 }
 
 
 
-
+// .list function must be called from the thread we are planning to use it
+// If we create the list on a background thread and then wait until the main thread to use it, the objects in the list could be invalidated
 extension Results {
     func list() -> [Element] {
-      return compactMap {
-        $0
-      }
+        return Array(self)
     }
  }
