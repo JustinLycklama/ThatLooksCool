@@ -109,8 +109,11 @@ class HomeViewController: AdViewController {
         
         
         // Resolved Locations
+        
+        
         let navController = UINavigationController(rootViewController: categoriesController)
 
+        categoriesController.canAddCategories = true
         categoriesController.delegate = self
         
 
@@ -177,7 +180,7 @@ class HomeViewController: AdViewController {
 }
 
 extension HomeViewController: CategorySelectionDelegate {
-    func didSelectCategory(_ category: ResolvedItemCategory) {
+    func didSelectCategory(_ category: ItemCategory) {
         
         let newVc = ResolvedItemsViewController(category: category)
         

@@ -10,9 +10,23 @@ import UIKit
 import ClassicClient
 
 class TitleContentView: UIView {
-
+        
     public let titleLabel = UILabel()
-    public let contentView = UILabel()
+    private let titleStackView = UIStackView()
+    
+    public let contentView = UIView()
+        
+    public var leftTitleItem: UIView? {
+        didSet {
+            arrangeTitleStack()
+        }
+    }
+    
+    public var rightTitleItem: UIView? {
+        didSet {
+            arrangeTitleStack()
+        }
+    }
     
     init() {
         super.init(frame: .zero)
@@ -26,21 +40,60 @@ class TitleContentView: UIView {
         initialize()
     }
     
-    
     private func initialize() {
         
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
+        backgroundColor = .white
         
+        // Title Views
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
+        titleLabel.textAlignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleStackView.axis = .horizontal
+        titleStackView.distribution = .fillEqually
+        titleStackView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        titleStackView.addConstraint(NSLayoutConstraint.init(item: titleStackView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
+        
+        // Content Area
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        contentView.backgroundColor = .clear
         
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(contentView)
+        // View Layout
+        addSubview(titleStackView)
+        addSubview(contentView)
         
-        addSubview(stackView)
-        constrainSubviewToBounds(stackView)
+        let views = ["title" : titleStackView, "content": contentView]
+        let metrics = ["spacing" : 12]
+        
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-(spacing)-[content]-|", options: .alignAllCenterX, metrics: metrics, views: views))
+        
+        constrainSubviewToBounds(titleStackView, onEdges: [.left, .right])
+        constrainSubviewToBounds(contentView, onEdges: [.left, .right])
+        
+        arrangeTitleStack()
+    }
+    
+    private func arrangeTitleStack() {
+        
+        titleStackView.removeAllArrangedSubviews()
+        
+        let leftItem = leftTitleItem ?? UIView()
+        titleStackView.addArrangedSubview(leftItem)
+        
+        titleStackView.addArrangedSubview(titleLabel)
+                
+        let rightItem = rightTitleItem ?? UIView()
+        titleStackView.addArrangedSubview(rightItem)
+    }
+}
+
+extension UIStackView {
+    func removeAllArrangedSubviews() {
+        arrangedSubviews.forEach {
+            self.removeArrangedSubview($0)
+            NSLayoutConstraint.deactivate($0.constraints)
+            $0.removeFromSuperview()
+        }
     }
 }

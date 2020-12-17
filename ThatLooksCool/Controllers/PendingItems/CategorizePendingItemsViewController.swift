@@ -13,10 +13,16 @@ import RxSwift
 import TLCModel
 import ClassicClient
 
+struct DisplayItemAndView {
+    let displayItem: Item
+    let displayView: AnyItemDisplayView
+}
+
 class CategorizePendingItemsViewController: AdViewController {
 
+    private var currentDisplayItemAndView: DisplayItemAndView? = nil
+    private let itemDisplayArea = UIView()
     
-    private let previewView = UnresolvedItemPreviewView()
     private let iterationView = ItemIterationView()
     
 //    let previewView = UnresolvedItemPreviewView()
@@ -34,7 +40,7 @@ class CategorizePendingItemsViewController: AdViewController {
 //    }
     
     
-    var currentItem: PendingItem? {
+    var currentItem: Item? {
         if let index = currentItemIndex {
             return items[index]
         }
@@ -44,19 +50,19 @@ class CategorizePendingItemsViewController: AdViewController {
     
     var currentItemIndex: Int? {
         didSet {
-            updateItemPreview()
-            loadLocalPlaces()
+            updateItemDisplay()
+//            loadLocalPlaces()
         }
     }
     
-    var lastResolvedItem: ResolvedItem? = nil {
+    var lastResolvedItem: Item? = nil {
         didSet {
             iterationView.canUndo = lastResolvedItem != nil
         }
     }
     
-    var _tempItem: PendingItem?
-    var items: [PendingItem] = [] {
+    var _tempItem: Item?
+    var items: [Item] = [] {
         willSet {
             if let item = currentItem {
                 _tempItem = item
@@ -99,7 +105,7 @@ class CategorizePendingItemsViewController: AdViewController {
         stackView.axis = .vertical
         stackView.spacing = TLCStyle.topLevelPadding
         
-        stackView.addArrangedSubview(previewView)
+        stackView.addArrangedSubview(itemDisplayArea)
         stackView.addArrangedSubview(iterationView)
         stackView.addArrangedSubview(categoriesView)
         
@@ -109,8 +115,8 @@ class CategorizePendingItemsViewController: AdViewController {
 //        contentView.addSubview(previewView)
 //        contentView.addSubview(detailViewArea)
         
-        previewView.setContentHuggingPriority(.required, for: .vertical)
-        previewView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        itemDisplayArea.setContentHuggingPriority(.required, for: .vertical)
+        itemDisplayArea.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         iterationView.delegate = self
         iterationView.translatesAutoresizingMaskIntoConstraints = false
@@ -121,17 +127,22 @@ class CategorizePendingItemsViewController: AdViewController {
         
         categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
         
-        previewView.layer.cornerRadius = 10
+        itemDisplayArea.layer.cornerRadius = 10
+        itemDisplayArea.clipsToBounds = true
+        itemDisplayArea.backgroundColor = .red
+        
         categoriesView.layer.cornerRadius = 10
         
         categoriesView.layer.masksToBounds = true
         categoriesView.layer.isOpaque = false
         
-        previewView.backgroundColor = .red
         categoriesView.backgroundColor = .green
         
         
         contentView.constrainSubviewToBounds(stackView)
+        
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
         
 //        contentView.constrainSubviewToBounds(previewView, onEdges: [.top, .left, .right])
 //        contentView.constrainSubviewToBounds(categoriesView, onEdges: [.bottom, .left, .right])
@@ -143,7 +154,7 @@ class CategorizePendingItemsViewController: AdViewController {
         ////
         
 //
-        RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (pendingItems: [PendingItem]) in
+        RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (pendingItems: [Item]) in
                 self?.items = pendingItems
         }, onError: { (err: Error) in
 
@@ -158,21 +169,85 @@ class CategorizePendingItemsViewController: AdViewController {
         
         RealmSubjects.shared.removeAllPendingItems()
         RealmSubjects.shared.addPendingItem(title: "1")
-        RealmSubjects.shared.addPendingItem(title: "2")
+        RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
         RealmSubjects.shared.addPendingItem(title: "3")
         
     }
     
     
-    private func updateItemPreview() {
-        previewView.setItem(item: currentItem)
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    private var isAnimatingOut: Bool = false
+    private func updateItemDisplay() {
+        let duration: TimeInterval = 0.33
+        
+//        var createItemBlock: (() -> Void)? = nil
+        
+        guard currentItem != currentDisplayItemAndView?.displayItem else {
+            return
+        }
+        
+        let createItemBlock = { [weak self] in
+                        
+            if let currentItem = self?.currentItem {
+                let newDisplayView = AnyItemDisplayView(item: currentItem)
+                
+                newDisplayView.alpha = 0
+                newDisplayView.backgroundColor = .blue
+                newDisplayView.setContentHuggingPriority(.required, for: .vertical)
+                
+                self?.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayView: newDisplayView)
+                self?.itemDisplayArea.addSubview(newDisplayView)
+                self?.itemDisplayArea.constrainSubviewToBounds(newDisplayView, withInset: UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10))
+                
+                
+                // Grow view to fit constraints
+                UIView.animate(withDuration: 0.15) {
+                    self?.view.layoutIfNeeded()
+                } completion: { _ in
+                    // Then make view visible
+                    UIView.animate(withDuration: duration) {
+                        newDisplayView.alpha = 1
+                    }
+                }
+
+            } else {
+                // Grow to fit no view
+                UIView.animate(withDuration: 0.15) { [weak self] in
+                    self?.view.layoutIfNeeded()
+                }
+            }
+        }
+
+        if let oldDisplayItemAndView = currentDisplayItemAndView {
+
+            if !isAnimatingOut {
+                isAnimatingOut = true
+                
+                UIView.animate(withDuration: 0.20, animations: {
+                    oldDisplayItemAndView.displayView.alpha = 0
+                    
+                }, completion: { [weak self] _ in
+                    oldDisplayItemAndView.displayView.removeFromSuperview()
+
+                    self?.isAnimatingOut = false
+                    self?.currentDisplayItemAndView = nil
+                    
+                    createItemBlock()
+                })
+            }
+        } else {
+            createItemBlock()
+        }
+        
     }
     
     private func loadLocalPlaces() {
         guard let coordinate = currentItem?.coordinate else {
             return
         }
-        
         
         FSPlacesRequest.init(coordinate: coordinate).request { (result: Result<FSPlace>) in
             //            switch result {
@@ -191,10 +266,12 @@ class CategorizePendingItemsViewController: AdViewController {
 }
 
 extension CategorizePendingItemsViewController: CategorySelectionDelegate {
-    func didSelectCategory(_ category: ResolvedItemCategory) {
+    func didSelectCategory(_ category: ItemCategory) {
         
         if let item = currentItem {
-            lastResolvedItem = RealmSubjects.shared.categorize(item: item, as: category)
+
+            
+//            lastResolvedItem = RealmSubjects.shared.categorize(item: item, as: category)
         }
     }
 }
@@ -227,10 +304,8 @@ extension CategorizePendingItemsViewController: ItemIterationDelegate {
     
     func didPressUndo() {
         if let lastResolvedItem = self.lastResolvedItem {
-            RealmSubjects.shared.uncategorize(item: lastResolvedItem)
+//            RealmSubjects.shared.uncategorize(item: lastResolvedItem)
             self.lastResolvedItem = nil
         }
     }
-    
-    
 }

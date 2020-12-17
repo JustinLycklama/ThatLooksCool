@@ -12,11 +12,16 @@ import RxSwift
 import TLCModel
 
 protocol CategorySelectionDelegate: AnyObject {
-    func didSelectCategory(_ category: ResolvedItemCategory)
+    func didSelectCategory(_ category: ItemCategory)
 }
 
 class CategoriesViewController: UIViewController {
 
+    struct Constants {
+        static let categoryCell = "CategoryCell"
+        static let addCell = "AddCell"
+    }
+    
     weak var delegate: CategorySelectionDelegate?
     
     fileprivate var alertTextField: UITextField?
@@ -24,7 +29,7 @@ class CategoriesViewController: UIViewController {
     private let tableView = UITableView()
     private let disposeBag = DisposeBag()
     
-    fileprivate var categories = [ResolvedItemCategory]()
+    fileprivate var categories = [ItemCategory]()
     
     var canAddCategories = false {
         didSet {
@@ -38,13 +43,14 @@ class CategoriesViewController: UIViewController {
         self.view.addSubview(tableView)
         self.view.constrainSubviewToBounds(tableView)
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "ANY")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.addCell)
+        tableView.register(CategoryCell.self, forCellReuseIdentifier: Constants.categoryCell)
         
         tableView.delegate = self
         tableView.dataSource = self
         
         RealmSubjects.shared.resolvedItemCategoriesSubject
-            .subscribe(onNext: { [weak self] (categories: [ResolvedItemCategory]) in
+            .subscribe(onNext: { [weak self] (categories: [ItemCategory]) in
                 print(categories.count)
                 self?.categories = categories
                 self?.tableView.reloadData()
@@ -55,6 +61,15 @@ class CategoriesViewController: UIViewController {
             }) {
                 
         }.disposed(by: disposeBag)
+    }
+    
+    func presentEditCategory(_ category: ItemCategory?) {
+        let editView = EditCategoryViewController(category: category)
+
+        editView.delegate = self
+        editView.modalPresentationStyle = .overFullScreen
+        
+        self.present(editView, animated: true, completion: nil)
     }
 }
 
@@ -69,12 +84,14 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ANY", for: indexPath)
+        let cell: UITableViewCell!
         
         if isAddCategoryRow(indexPath) {
+            cell = tableView.dequeueReusableCell(withIdentifier: Constants.addCell, for: indexPath)
             cell.textLabel?.text = "Add New Category"
         } else {
-            cell.textLabel?.text = categories[indexPath.row].title
+            cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath)
+            (cell as? CategoryCell)?.displayCategory(displayable: categories[indexPath.row])
         }
         
         return cell
@@ -85,7 +102,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration(actions: [UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+        let remove = UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
                 completion(false)
                 return
@@ -93,7 +110,19 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             
             RealmSubjects.shared.removeCategory(self.categories[indexPath.row])
             completion(true)
-        })])
+        })
+        
+        let edit = UIContextualAction(style: .destructive, title: "Edit", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+            guard let self = self else {
+                completion(false)
+                return
+            }
+            
+            self.presentEditCategory(self.categories[indexPath.row])
+            completion(true)
+        })
+        
+        return UISwipeActionsConfiguration(actions: [edit, remove])
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -101,21 +130,29 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if isAddCategoryRow(indexPath) {
 
-            func configurationTextField(textField: UITextField) {
-                self.alertTextField = textField //Save reference to the UITextField
-                self.alertTextField?.placeholder = "New Category";
-            }
-
-            let alert = UIAlertController(title: "Alert Title", message: "Alert Message", preferredStyle: UIAlertController.Style.alert)
-            alert.addTextField(configurationHandler: configurationTextField)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler:{ (UIAlertAction) in
-                RealmSubjects.shared.addCategory(title: self.alertTextField?.text ?? "")
-            }))
+//            func configurationTextField(textField: UITextField) {
+//                self.alertTextField = textField //Save reference to the UITextField
+//                self.alertTextField?.placeholder = "New Category";
+//            }
+//
+//            let alert = UIAlertController(title: "Alert Title", message: "Alert Message", preferredStyle: UIAlertController.Style.alert)
+//            alert.addTextField(configurationHandler: configurationTextField)
+//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
+//            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler:{ (UIAlertAction) in
+//                RealmSubjects.shared.addCategory(title: self.alertTextField?.text ?? "")
+//            }))
             
-            self.present(alert, animated: true, completion: nil)
+//            self.present(alert, animated: true, completion: nil)
+            
+            presentEditCategory(nil)
         } else {
             delegate?.didSelectCategory(categories[indexPath.row])
         }
+    }
+}
+
+extension CategoriesViewController: EditCategoryDelegate {
+    func didFinishEditing() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

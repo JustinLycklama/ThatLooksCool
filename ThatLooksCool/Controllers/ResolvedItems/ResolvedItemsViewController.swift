@@ -13,14 +13,14 @@ import TLCModel
 
 class ResolvedItemsViewController: UIViewController {
 
-    let category: ResolvedItemCategory
-    var resolvedItems = [ResolvedItem]()
+    let category: ItemCategory
+    var resolvedItems = [Item]()
     
     let disposeBag = DisposeBag()
     
     private let tableview = UITableView()
     
-    init(category: ResolvedItemCategory) {
+    init(category: ItemCategory) {
         self.category = category
         
         super.init(nibName: nil, bundle: nil)
@@ -45,7 +45,7 @@ class ResolvedItemsViewController: UIViewController {
         tableview.dataSource = self
         
         RealmSubjects.shared.resolvedItemSubjectsByCategory[category]?.subscribe(
-            onNext: { [weak self] (itemList: [ResolvedItem]) in
+            onNext: { [weak self] (itemList: [Item]) in
                 self?.resolvedItems = itemList
                 self?.tableview.reloadData()
                 

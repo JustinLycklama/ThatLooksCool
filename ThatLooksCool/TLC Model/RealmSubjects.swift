@@ -19,20 +19,20 @@ class RealmSubjects {
     
     // MARK: Unresolved Items
     public var pendingItemCountSubject = BehaviorSubject<Int>(value: 0)
-    public var pendingItemsSubject = BehaviorSubject<[PendingItem]>(value: [])
+    public var pendingItemsSubject = BehaviorSubject<[Item]>(value: [])
     
     // MARK: Resolved Items
-    public var resolvedItemCategoriesSubject = BehaviorSubject<[ResolvedItemCategory]>(value: [])
+    public var resolvedItemCategoriesSubject = BehaviorSubject<[ItemCategory]>(value: [])
     
-    private var resolvedItemCategoriesCount = [ResolvedItemCategory : Int]()
-    public var resolvedItemCategoriesCountSubject = BehaviorSubject<[ResolvedItemCategory : Int]>(value: [:])
+    private var resolvedItemCategoriesCount = [ItemCategory : Int]()
+    public var resolvedItemCategoriesCountSubject = BehaviorSubject<[ItemCategory : Int]>(value: [:])
     
-    public var resolvedItemSubjectsByCategory = [ResolvedItemCategory : BehaviorSubject<[ResolvedItem]>]()
+    public var resolvedItemSubjectsByCategory = [ItemCategory : BehaviorSubject<[Item]>]()
     
     private let realm: Realm
     
     private var tokenList = [NotificationToken]()
-    private var categoryTokens = [ResolvedItemCategory : NotificationToken]()
+    private var categoryTokens = [ItemCategory : NotificationToken]()
     
     init() {
 
@@ -45,10 +45,10 @@ class RealmSubjects {
         /*
          Categories
          */
-        let categories = realm.objects(ResolvedItemCategory.self)
+        let categories = realm.objects(ItemCategory.self)
         updateResolvedItemSubjects(for: categories.list())
         
-        let categoriesToken = categories.observe { [weak self] (changes: RealmCollectionChange<Results<ResolvedItemCategory>>) in
+        let categoriesToken = categories.observe { [weak self] (changes: RealmCollectionChange<Results<ItemCategory>>) in
             guard let self = self else {
                 fatalError()
             }
@@ -72,9 +72,9 @@ class RealmSubjects {
          Pending Items
          */
         
-        let pendingItems = realm.objects(PendingItem.self)
+        let pendingItems = realm.objects(Item.self).filter("category == nil")
         
-        let pendingToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<PendingItem>>) in
+        let pendingToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
             switch changes {
             case .initial(let results), .update(let results, _, _, _):
                 DispatchQueue.main.async {
@@ -102,15 +102,15 @@ class RealmSubjects {
         }
     }
     
-    private func updateResolvedItemSubjects(for categories: [ResolvedItemCategory]) {
+    private func updateResolvedItemSubjects(for categories: [ItemCategory]) {
         // Add new categories to item Subjects
         for category in categories {
             if !self.resolvedItemSubjectsByCategory.keys.contains(category) {
-                self.resolvedItemSubjectsByCategory[category] = BehaviorSubject<[ResolvedItem]>(value: [])
+                self.resolvedItemSubjectsByCategory[category] = BehaviorSubject<[Item]>(value: [])
                 
-                let objectsInCategory = self.realm.objects(ResolvedItem.self).filter("category == %@", category)
+                let objectsInCategory = self.realm.objects(Item.self).filter("category == %@", category)
                 
-                let token = objectsInCategory.observe { [weak self] (changes: RealmCollectionChange<Results<ResolvedItem>>) in
+                let token = objectsInCategory.observe { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
                     guard let self = self else {
                         fatalError()
                     }
@@ -148,7 +148,7 @@ class RealmSubjects {
     
     func removeAllPendingItems() {
         
-        let pendingItems = realm.objects(PendingItem.self)
+        let pendingItems = realm.objects(Item.self)
         
         realm.beginWrite()
         realm.delete(pendingItems)
@@ -161,7 +161,7 @@ class RealmSubjects {
     }
     
     func addPendingItem(title: String) {
-        let newItem = PendingItem(title: title)
+        let newItem = Item(title: title)
 
         realm.beginWrite()
         realm.add(newItem)
@@ -173,24 +173,27 @@ class RealmSubjects {
         }
     }
     
-    func addCategory(title: String) {
-        
-        let newCategory = ResolvedItemCategory(title: title)
-        
-        realm.beginWrite()
-        
-        realm.add(newCategory)
-        
+    func addCategory(withMock mock: MockCategory) {
         do {
-            try realm.commitWrite()
+            try realm.write {
+                realm.add(ItemCategory(mock: mock))
+            }
+        } catch {
+            fatalError()
+        }        
+    }
+    
+    func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
+        do {
+            try realm.write {
+                category.update(usingMock: mock)
+            }
         } catch {
             fatalError()
         }
-        
     }
     
-    
-    func removeCategory(_ category: ResolvedItemCategory) {
+    func removeCategory(_ category: ItemCategory) {
         realm.beginWrite()
         
         realm.delete(category)
@@ -201,44 +204,7 @@ class RealmSubjects {
             fatalError()
         }
     }
-    
-    @discardableResult
-    func categorize(item: PendingItem, as category: ResolvedItemCategory) -> ResolvedItem {
-        
-        let resolvedItem = ResolvedItem(pendingItem: item, category: category)
-        
-        realm.beginWrite()
-        
-        realm.delete(item)
-        realm.add(resolvedItem)
-        
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-        
-        return resolvedItem
-    }
-    
-    func uncategorize(item: ResolvedItem) {
-        
-        let pendingItem = PendingItem(resolvedItem: item)
-        
-        realm.beginWrite()
-        
-        realm.delete(item)
-        realm.add(pendingItem)
-        
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
 }
-
-
 
 // .list function must be called from the thread we are planning to use it
 // If we create the list on a background thread and then wait until the main thread to use it, the objects in the list could be invalidated

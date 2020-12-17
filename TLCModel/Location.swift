@@ -31,30 +31,30 @@ public struct TLC_Constants {
     }
 }
 
-public class ResolvedItem: Object {
-
-    @objc public dynamic var title: String?
-
-    @objc public dynamic var coordinate: Coordinate?
-    @objc public dynamic var category: ResolvedItemCategory?
-    
-    public init(pendingItem: PendingItem, category: ResolvedItemCategory) {
-        self.title = pendingItem.title
-        self.coordinate = pendingItem.coordinate
-        self.category = category
-    }
-    
-    public init(category: ResolvedItemCategory) {
-        title = "Resolved Item From Nothing"
-        self.category = category
-    }
-    
-    required override init() {
-        self.title = "??"
-        self.coordinate = nil
-        self.category = ResolvedItemCategory()
-    }
-}
+//public class ResolvedItem: Object {
+//
+//    @objc public dynamic var title: String?
+//
+//    @objc public dynamic var coordinate: Coordinate?
+//    @objc public dynamic var category: ItemCategory?
+//
+//    public init(pendingItem: Item, category: ItemCategory) {
+//        self.title = pendingItem.title
+//        self.coordinate = pendingItem.coordinate
+//        self.category = category
+//    }
+//
+//    public init(category: ItemCategory) {
+//        title = "Resolved Item From Nothing"
+//        self.category = category
+//    }
+//
+//    required override init() {
+//        self.title = "??"
+//        self.coordinate = nil
+//        self.category = ItemCategory()
+//    }
+//}
 
 public class Coordinate: Object {
     @objc public dynamic var latitude: Double
@@ -78,22 +78,24 @@ public class Coordinate: Object {
     }
 }
 
-//public protocol UnresolvedItem {
-//    var timestamp: Date? { get }
-//}
+public protocol Displayable: AnyObject {
+    var title: String? { get set }
+}
 
-public class PendingItem: Object {
+public class Item: Object, Displayable {
     
     @objc public dynamic var title: String?
     @objc public dynamic var coordinate: Coordinate?
+    @objc public dynamic var category: ItemCategory?
+    
     @objc public dynamic let timestamp: Date?
     
-    public init(resolvedItem: ResolvedItem) {
-        self.title = resolvedItem.title
-        self.coordinate = resolvedItem.coordinate
-        
-        timestamp = Date()
-    }
+//    public init(resolvedItem: ResolvedItem) {
+//        self.title = resolvedItem.title
+//        self.coordinate = resolvedItem.coordinate
+//
+//        timestamp = Date()
+//    }
     
     public init(title: String) {
         self.title = title
