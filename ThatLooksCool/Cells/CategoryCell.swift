@@ -11,7 +11,7 @@ import TLCModel
 
 class CategoryCell: UITableViewCell {
 
-    private let cellDisplayView = CategoryCellView(frame: .zero)
+    private var cellDisplayView: CategoryCellView?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,12 +23,15 @@ class CategoryCell: UITableViewCell {
     }
     
     func setup() {
-        self.contentView.addSubview(cellDisplayView)
-        self.contentView.constrainSubviewToBounds(cellDisplayView)
+        let cellDisplay = UIView.instanceFromNib("CategoryCellView", inBundle: Bundle.main) as! CategoryCellView
+        cellDisplayView = cellDisplay
+        
+        self.contentView.addSubview(cellDisplay)
+        self.contentView.constrainSubviewToBounds(cellDisplay)
     }
     
     func displayCategory(displayable: CategoryDisplayable) {
-        cellDisplayView.displayCategory(displayable: displayable)
+        cellDisplayView?.displayCategory(displayable: displayable)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

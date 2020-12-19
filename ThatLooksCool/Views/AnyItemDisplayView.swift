@@ -13,7 +13,7 @@ import GoogleMaps
 
 class AnyItemDisplayView: UIView {
     
-    internal let item: Displayable
+    internal let item: ItemDisplayable
         
     private let titleLabel = UILabel()
     
@@ -39,7 +39,7 @@ class AnyItemDisplayView: UIView {
         }
     }
 
-    init(item: Displayable) {
+    init(item: ItemDisplayable) {
         self.item = item
         super.init(frame: .zero)
         setup()

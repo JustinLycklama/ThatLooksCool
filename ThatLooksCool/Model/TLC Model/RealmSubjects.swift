@@ -42,9 +42,19 @@ class RealmSubjects {
             fatalError()
         }
         
-        /*
-         Categories
-         */
+        createCategorySubjects()
+        createPendingItemSubjects()
+    }
+    
+    deinit {
+        for token in tokenList {
+            token.invalidate()
+        }
+    }
+    
+    // MARK: - Subject Helpers
+    
+    private func createCategorySubjects() {
         let categories = realm.objects(ItemCategory.self)
         updateResolvedItemSubjects(for: categories.list())
         
@@ -67,11 +77,10 @@ class RealmSubjects {
         }
         
         tokenList.append(categoriesToken)
-        
-        /*
-         Pending Items
-         */
-        
+    }
+    
+    /// Pending items are Items with no category
+    private func createPendingItemSubjects() {
         let pendingItems = realm.objects(Item.self).filter("category == nil")
         
         let pendingToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
@@ -87,21 +96,9 @@ class RealmSubjects {
         }
         
         tokenList.append(pendingToken)
-        
-        /*
-         Resolved Items
-         */
-        
-        
-        
     }
     
-    deinit {
-        for token in tokenList {
-            token.invalidate()
-        }
-    }
-    
+    /// Resolved Items are items that have a category
     private func updateResolvedItemSubjects(for categories: [ItemCategory]) {
         // Add new categories to item Subjects
         for category in categories {
@@ -146,7 +143,70 @@ class RealmSubjects {
         }
     }
     
-    func removeAllPendingItems() {
+    // MARK: - Item
+    
+    // TODO remove
+    internal func addPendingItem(title: String) {
+        let newItem = Item(title: title)
+
+        realm.beginWrite()
+        realm.add(newItem)
+
+        do {
+            try realm.commitWrite()
+        } catch {
+            fatalError()
+        }
+    }
+    
+    @discardableResult
+    internal func createItem(withMock mock: MockItem, toCategory category: ItemCategory?) -> Item {
+        do {
+            let item = Item(mock: mock, category: category)
+            
+            try realm.write {
+                realm.add(item)
+            }
+            
+            return item
+        } catch {
+            fatalError()
+        }
+    }
+    
+    internal func updateItem(item: Item, usingMock mock: MockItem) {
+        do {
+            try realm.write {
+                item.update(usingMock: mock)
+            }
+        } catch {
+            fatalError()
+        }
+    }
+    
+    internal func categorizeItem(_ item: Item, toCategory category: ItemCategory?) {
+        do {
+            try realm.write {
+                item.updateCategory(category)
+            }
+        } catch {
+            fatalError()
+        }
+    }
+    
+    internal func removeItem(_ item: Item) {
+        realm.beginWrite()
+        
+        realm.delete(item)
+        
+        do {
+            try realm.commitWrite()
+        } catch {
+            fatalError()
+        }
+    }
+    
+    internal func removeAllPendingItems() {
         
         let pendingItems = realm.objects(Item.self)
         
@@ -160,20 +220,9 @@ class RealmSubjects {
         }
     }
     
-    func addPendingItem(title: String) {
-        let newItem = Item(title: title)
-
-        realm.beginWrite()
-        realm.add(newItem)
-
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
+    // MARK: - Category
     
-    func addCategory(withMock mock: MockCategory) {
+    internal func addCategory(withMock mock: MockCategory) {
         do {
             try realm.write {
                 realm.add(ItemCategory(mock: mock))
@@ -183,7 +232,7 @@ class RealmSubjects {
         }        
     }
     
-    func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
+    internal func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
         do {
             try realm.write {
                 category.update(usingMock: mock)
@@ -193,7 +242,7 @@ class RealmSubjects {
         }
     }
     
-    func removeCategory(_ category: ItemCategory) {
+    internal func removeCategory(_ category: ItemCategory) {
         realm.beginWrite()
         
         realm.delete(category)

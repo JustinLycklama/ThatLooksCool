@@ -192,9 +192,9 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
         saveCoordinate(coordinate)
     }
     
-    func saveCoordinate(_ coordinate: CLLocationCoordinate2D) {
+    func saveCoordinate(_ coreLocationCoordinate: CLLocationCoordinate2D) {
         
-        print("location: \(coordinate.latitude), \(coordinate.longitude)")
+        print("location: \(coreLocationCoordinate.latitude), \(coreLocationCoordinate.longitude)")
 
 //        guard let realmPath = TLC_Constants.realmPath else {
 //
@@ -233,6 +233,8 @@ class TestIntentHandler: INExtension, NewItemIntentHandling, CLLocationManagerDe
 //        let puppies = realm.objects(Dog.self).filter("age < 2")
 //        puppies.count // => 0 because no dogs have been added to the Realm yet
 
+        let coordinate = Coordinate(coreLocationCoordinate: coreLocationCoordinate)
+        
         let unresolvedLocation = Item(coordinate: coordinate)
         
         

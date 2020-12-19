@@ -8,21 +8,18 @@
 
 import UIKit
 
+import ClassicClient
 import TLCModel
-
-protocol EditCategoryDelegate: AnyObject {
-    func didFinishEditing()
-}
 
 class EditCategoryViewController: UIViewController {
 
     private let databaseObject: ItemCategory?
     private let mockObject: MockCategory
         
-    private let previewCell = CategoryCellView()
+    private var previewCellView: CategoryCellView?
     private let titleContentView = TitleContentView()
     
-    weak var delegate: EditCategoryDelegate?
+    weak var delegate: CompletableActionDelegate?
     
     init(category: ItemCategory?) {
         mockObject = MockCategory(category: category)
@@ -40,6 +37,9 @@ class EditCategoryViewController: UIViewController {
         let contentView = UIView()
         
         // Cell Preview
+        let previewCell = UIView.instanceFromNib("CategoryCellView", inBundle: Bundle.main) as! CategoryCellView
+        previewCellView = previewCell
+        
         previewCell.displayCategory(displayable: mockObject)
         previewCell.translatesAutoresizingMaskIntoConstraints = false
         previewCell.layer.cornerRadius = 10
@@ -71,21 +71,21 @@ class EditCategoryViewController: UIViewController {
         editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         editableFieldsController.view.translatesAutoresizingMaskIntoConstraints = false
         
-        editableFieldsController.addField(field: Field(title: "Name", type: .shortText(initialValue: mockObject.title, onUpdate: { [weak self] newVal in
+        editableFieldsController.addField(.shortText(title: "Name", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
             
             if let mockObject = self?.mockObject {
                 mockObject.title = newVal
-                self?.previewCell.displayCategory(displayable: mockObject)
+                self?.previewCellView?.displayCategory(displayable: mockObject)
             }
-        })))
+        }))
         
-        editableFieldsController.addField(field: Field(title: "Color", type: .color(onUpdate: { [weak self] newCol in
+        editableFieldsController.addField(.color(onUpdate: { [weak self] newCol in
             
             if let mockObject = self?.mockObject {
                 mockObject.color = newCol
-                self?.previewCell.displayCategory(displayable: mockObject)
+                self?.previewCellView?.displayCategory(displayable: mockObject)
             }
-        })))
+        }))
         
         titleContentView.contentView.addSubview(editableFieldsController.view)
         titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
@@ -128,7 +128,7 @@ class EditCategoryViewController: UIViewController {
         
     @objc
     func close() {
-        delegate?.didFinishEditing()
+        delegate?.complete()
     }
 }
 

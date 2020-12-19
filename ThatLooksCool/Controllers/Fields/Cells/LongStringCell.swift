@@ -1,17 +1,17 @@
 //
-//  ShortStringCell.swift
+//  LongStringCell.swift
 //  ThatLooksCool
 //
-//  Created by Justin Lycklama on 2020-12-15.
+//  Created by Justin Lycklama on 2020-12-19.
 //  Copyright © 2020 Justin Lycklama. All rights reserved.
 //
 
 import UIKit
 
-class ShortStringCell: UITableViewCell {
-    
+class LongStringCell: UITableViewCell {
+
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var valueTextField: UITextField!
+    @IBOutlet var textView: UITextView!
     
     var title: String = "" {
         didSet {
@@ -19,9 +19,9 @@ class ShortStringCell: UITableViewCell {
         }
     }
     
-    var initialValue: String = "" {
+    var initialValue: String? = nil {
         didSet {
-            valueTextField.text = initialValue
+            textView.text = initialValue
         }
     }
     
@@ -31,17 +31,18 @@ class ShortStringCell: UITableViewCell {
         super.awakeFromNib()
         
         selectionStyle = .none
-        valueTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        textView.delegate = self
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
-    
-    @objc
-    func textFieldDidChange(textField: UITextField) {
-        onUpdate?(textField.text ?? "")
+}
+
+extension LongStringCell: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        onUpdate?(textView.text ?? "")
     }
 }

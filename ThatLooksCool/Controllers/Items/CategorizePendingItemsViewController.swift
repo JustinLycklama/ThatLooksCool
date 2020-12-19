@@ -15,13 +15,14 @@ import ClassicClient
 
 struct DisplayItemAndView {
     let displayItem: Item
-    let displayView: AnyItemDisplayView
+    let displayController: EditItemViewController
 }
 
 class CategorizePendingItemsViewController: AdViewController {
 
     private var currentDisplayItemAndView: DisplayItemAndView? = nil
     private let itemDisplayArea = UIView()
+//    private let editItem = EditableFieldsViewController()
     
     private let iterationView = ItemIterationView()
     
@@ -97,7 +98,6 @@ class CategorizePendingItemsViewController: AdViewController {
         
         let categoriesView = categoriesViewController.view!
         
-        
 //        let margin = TLCStyle.topLevelMargin
 //        let padding = TLCStyle.topLevelPadding
         
@@ -105,9 +105,12 @@ class CategorizePendingItemsViewController: AdViewController {
         stackView.axis = .vertical
         stackView.spacing = TLCStyle.topLevelPadding
         
-        stackView.addArrangedSubview(itemDisplayArea)
-        stackView.addArrangedSubview(iterationView)
         stackView.addArrangedSubview(categoriesView)
+        stackView.addArrangedSubview(iterationView)
+        stackView.addArrangedSubview(itemDisplayArea)
+
+        itemDisplayArea.addConstraint(NSLayoutConstraint.init(item: itemDisplayArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 350))
+        
         
         contentView.addSubview(stackView)
 
@@ -126,10 +129,21 @@ class CategorizePendingItemsViewController: AdViewController {
         iterationView.layer.cornerRadius = 10
         
         categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
+//
+//        itemDisplayArea.layer.cornerRadius = 10
+//        itemDisplayArea.clipsToBounds = true
+        itemDisplayArea.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.25)
         
-        itemDisplayArea.layer.cornerRadius = 10
-        itemDisplayArea.clipsToBounds = true
-        itemDisplayArea.backgroundColor = .red
+//        addChild(fieldsController)
+//        itemDisplayArea.addSubview(fieldsController.view)
+//        itemDisplayArea.constrainSubviewToBounds(fieldsController.view)
+        
+        
+        
+        
+        
+        
+        
         
         categoriesView.layer.cornerRadius = 10
         
@@ -192,15 +206,24 @@ class CategorizePendingItemsViewController: AdViewController {
         let createItemBlock = { [weak self] in
                         
             if let currentItem = self?.currentItem {
-                let newDisplayView = AnyItemDisplayView(item: currentItem)
+                let newDisplayController = EditItemViewController(item: currentItem, category: nil)
+                let newDisplayView = newDisplayController.view!
                 
                 newDisplayView.alpha = 0
-                newDisplayView.backgroundColor = .blue
                 newDisplayView.setContentHuggingPriority(.required, for: .vertical)
                 
-                self?.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayView: newDisplayView)
+                newDisplayView.clipsToBounds = true
+                newDisplayView.layer.cornerRadius = 10
+                newDisplayView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+                
+                
+//                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
+                
+                self?.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)
+                
+                self?.addChild(newDisplayController)
                 self?.itemDisplayArea.addSubview(newDisplayView)
-                self?.itemDisplayArea.constrainSubviewToBounds(newDisplayView, withInset: UIEdgeInsets.init(top: 10, left: 10, bottom: 10, right: 10))
+                self?.itemDisplayArea.constrainSubviewToBounds(newDisplayView, withInset: UIEdgeInsets.init(top: 10, left: 10, bottom: 0, right: 10))
                 
                 
                 // Grow view to fit constraints
@@ -227,10 +250,11 @@ class CategorizePendingItemsViewController: AdViewController {
                 isAnimatingOut = true
                 
                 UIView.animate(withDuration: 0.20, animations: {
-                    oldDisplayItemAndView.displayView.alpha = 0
+                    oldDisplayItemAndView.displayController.view.alpha = 0
                     
                 }, completion: { [weak self] _ in
-                    oldDisplayItemAndView.displayView.removeFromSuperview()
+                    oldDisplayItemAndView.displayController.removeFromParent()
+                    oldDisplayItemAndView.displayController.view.removeFromSuperview()
 
                     self?.isAnimatingOut = false
                     self?.currentDisplayItemAndView = nil
@@ -266,16 +290,16 @@ class CategorizePendingItemsViewController: AdViewController {
 }
 
 extension CategorizePendingItemsViewController: CategorySelectionDelegate {
-    func didSelectCategory(_ category: ItemCategory) {
-        
-        if let item = currentItem {
-
-            
-//            lastResolvedItem = RealmSubjects.shared.categorize(item: item, as: category)
+    func editCategory(_ category: ItemCategory?) {
+        // TODO:
+    }
+    
+    func selectCategory(_ category: ItemCategory) {
+        if let currentEditItemController = currentDisplayItemAndView?.displayController {
+            RealmSubjects.shared.categorizeItem(currentEditItemController.saveItem(), toCategory: category)
         }
     }
 }
-
 
 extension CategorizePendingItemsViewController: ItemIterationDelegate {
     func didPressPrevious() {
@@ -304,7 +328,7 @@ extension CategorizePendingItemsViewController: ItemIterationDelegate {
     
     func didPressUndo() {
         if let lastResolvedItem = self.lastResolvedItem {
-//            RealmSubjects.shared.uncategorize(item: lastResolvedItem)
+            RealmSubjects.shared.categorizeItem(lastResolvedItem, toCategory: nil)            
             self.lastResolvedItem = nil
         }
     }

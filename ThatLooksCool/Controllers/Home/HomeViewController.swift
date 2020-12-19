@@ -179,11 +179,48 @@ class HomeViewController: AdViewController {
     }
 }
 
+extension HomeViewController: CompletableActionDelegate {
+    func complete() {
+        self.dismiss(animated: true) {
+            
+        }
+    }
+}
+
 extension HomeViewController: CategorySelectionDelegate {
-    func didSelectCategory(_ category: ItemCategory) {
+    func editCategory(_ category: ItemCategory?) {
+        let editView = EditCategoryViewController(category: category)
+
+        editView.delegate = self
+        editView.modalPresentationStyle = .overFullScreen
         
-        let newVc = ResolvedItemsViewController(category: category)
+        self.present(editView, animated: true, completion: nil)
+    }
+    
+    func selectCategory(_ category: ItemCategory) {
+        let itemsVc = ItemsViewController(category: category)
+        itemsVc.delegate = itemsVc
         
-        categoriesController.navigationController?.pushViewController(newVc, animated: true)
+        let navController = UINavigationController(rootViewController: itemsVc)
+        self.present(navController, animated: true, completion: nil)
+        
+//        categoriesController.navigationController?.pushViewController(itemsVc, animated: true)
+    }
+}
+
+extension HomeViewController: ItemSelectionDelegate {
+    func ediItem(_ item: Item?) {
+        let editView = EditItemViewController(item: item, category: nil)
+        
+        editView.completeDelegate = self
+        
+//        editView.delegate = self
+//        editView.modalPresentationStyle = .overFullScreen
+        
+        self.present(editView, animated: true, completion: nil)
+    }
+    
+    func selectItem(_ item: Item) {
+        ediItem(item)
     }
 }

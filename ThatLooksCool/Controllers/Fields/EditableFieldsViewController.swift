@@ -8,21 +8,22 @@
 
 import UIKit
 
-enum FieldType {
-    case shortText(initialValue: String, onUpdate: ((String) -> Void))
-    case color(onUpdate: ((UIColor) -> Void))
-}
+import TLCModel
 
-struct Field {
-    var title: String
-    var type: FieldType
+enum Field {
+    case shortText(title: String, initialValue: String?, onUpdate: ((String) -> Void))
+    case longText(title: String, initialValue: String?, onUpdate: ((String) -> Void))
+    case color(onUpdate: ((UIColor) -> Void))
+    case map(coordinate: Coordinate)
 }
 
 class EditableFieldsViewController: UIViewController {
 
     struct Constants {
         static let ShortTextCell = "ShortTextCell"
+        static let LongTextCell = "LongTextCell"
         static let ColorCell = "ColorCell"
+        static let MapCell = "MapCell"
     }
         
     private let editItemsTable = UITableView()
@@ -33,7 +34,9 @@ class EditableFieldsViewController: UIViewController {
         super.viewDidLoad()
 
         editItemsTable.register(UINib(nibName: "ShortStringCell", bundle: nil), forCellReuseIdentifier: Constants.ShortTextCell)
+        editItemsTable.register(UINib(nibName: "LongStringCell", bundle: nil), forCellReuseIdentifier: Constants.LongTextCell)
         editItemsTable.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: Constants.ColorCell)
+        editItemsTable.register(UINib(nibName: "MapCell", bundle: nil), forCellReuseIdentifier: Constants.MapCell)
         
         editItemsTable.delegate = self
         editItemsTable.dataSource = self
@@ -44,12 +47,16 @@ class EditableFieldsViewController: UIViewController {
         editItemsTable.backgroundColor = .clear
 
         self.view.addSubview(editItemsTable)
-        self.view.constrainSubviewToBounds(editItemsTable)
+        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
     }
     
-    func addField(field: Field) {
+    func addField(_ field: Field) {
         fields.append(field)
-        
+        editItemsTable.reloadData()
+    }
+    
+    func removeAllFields() {
+        fields.removeAll()
         editItemsTable.reloadData()
     }
 }
@@ -63,21 +70,35 @@ extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelega
         let cell: UITableViewCell!
         let field = fields[indexPath.row]
         
-        switch field.type {
-        case .shortText(let initialValue, let onUpdate):
+        switch field {
+        case .shortText(let title, let initialValue, let onUpdate):
             let shortStringCell = tableView.dequeueReusableCell(withIdentifier: Constants.ShortTextCell, for: indexPath) as! ShortStringCell
             
-            shortStringCell.title = field.title
+            shortStringCell.title = title
             shortStringCell.initialValue = initialValue
             shortStringCell.onUpdate = onUpdate
             
             cell = shortStringCell
+        case .longText(let title, let initialValue, let onUpdate):
+            let longStringCell = tableView.dequeueReusableCell(withIdentifier: Constants.LongTextCell, for: indexPath) as! LongStringCell
+            
+            longStringCell.title = title
+            longStringCell.initialValue = initialValue
+            longStringCell.onUpdate = onUpdate
+            
+            cell = longStringCell
         case .color(let onUpdate):
             let colorCell = tableView.dequeueReusableCell(withIdentifier: Constants.ColorCell, for: indexPath) as! ColorCell
             
             colorCell.onUpdate = onUpdate
             
             cell = colorCell
+        case .map(let coordinate):
+            let mapCell = tableView.dequeueReusableCell(withIdentifier: Constants.MapCell, for: indexPath) as! MapCell
+
+            mapCell.coordinate = coordinate
+            
+            cell = mapCell
         }
         
         return cell

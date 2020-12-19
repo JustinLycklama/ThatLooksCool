@@ -15,6 +15,7 @@ public struct TLCStyle {
     public static let interiorMargin: CGFloat = 8
     public static let interiorPadding: CGFloat = 8
 
+    public static let cornerRadius: CGFloat = 10
     
     public static let primaryBackgroundColor = UIColor.gray
     

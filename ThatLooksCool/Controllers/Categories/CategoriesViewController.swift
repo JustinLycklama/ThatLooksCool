@@ -12,7 +12,8 @@ import RxSwift
 import TLCModel
 
 protocol CategorySelectionDelegate: AnyObject {
-    func didSelectCategory(_ category: ItemCategory)
+    func editCategory(_ category: ItemCategory?)
+    func selectCategory(_ category: ItemCategory)
 }
 
 class CategoriesViewController: UIViewController {
@@ -62,15 +63,6 @@ class CategoriesViewController: UIViewController {
                 
         }.disposed(by: disposeBag)
     }
-    
-    func presentEditCategory(_ category: ItemCategory?) {
-        let editView = EditCategoryViewController(category: category)
-
-        editView.delegate = self
-        editView.modalPresentationStyle = .overFullScreen
-        
-        self.present(editView, animated: true, completion: nil)
-    }
 }
 
 extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -88,7 +80,8 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if isAddCategoryRow(indexPath) {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.addCell, for: indexPath)
-            cell.textLabel?.text = "Add New Category"
+            cell.textLabel?.text = "- Add New Category -"
+            cell.textLabel?.textAlignment = .center
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath)
             (cell as? CategoryCell)?.displayCategory(displayable: categories[indexPath.row])
@@ -118,7 +111,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
                 return
             }
             
-            self.presentEditCategory(self.categories[indexPath.row])
+            self.delegate?.editCategory(self.categories[indexPath.row])
             completion(true)
         })
         
@@ -129,30 +122,9 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
         
         if isAddCategoryRow(indexPath) {
-
-//            func configurationTextField(textField: UITextField) {
-//                self.alertTextField = textField //Save reference to the UITextField
-//                self.alertTextField?.placeholder = "New Category";
-//            }
-//
-//            let alert = UIAlertController(title: "Alert Title", message: "Alert Message", preferredStyle: UIAlertController.Style.alert)
-//            alert.addTextField(configurationHandler: configurationTextField)
-//            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
-//            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler:{ (UIAlertAction) in
-//                RealmSubjects.shared.addCategory(title: self.alertTextField?.text ?? "")
-//            }))
-            
-//            self.present(alert, animated: true, completion: nil)
-            
-            presentEditCategory(nil)
+            self.delegate?.editCategory(nil)
         } else {
-            delegate?.didSelectCategory(categories[indexPath.row])
+            delegate?.selectCategory(categories[indexPath.row])
         }
-    }
-}
-
-extension CategoriesViewController: EditCategoryDelegate {
-    func didFinishEditing() {
-        self.dismiss(animated: true, completion: nil)
     }
 }
