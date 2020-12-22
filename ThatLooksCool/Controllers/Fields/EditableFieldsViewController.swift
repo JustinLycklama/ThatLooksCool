@@ -33,6 +33,8 @@ class EditableFieldsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
+        
         editItemsTable.register(UINib(nibName: "ShortStringCell", bundle: nil), forCellReuseIdentifier: Constants.ShortTextCell)
         editItemsTable.register(UINib(nibName: "LongStringCell", bundle: nil), forCellReuseIdentifier: Constants.LongTextCell)
         editItemsTable.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: Constants.ColorCell)
@@ -43,11 +45,21 @@ class EditableFieldsViewController: UIViewController {
         
         editItemsTable.tableFooterView = UIView()
         editItemsTable.separatorStyle = .none
-        editItemsTable.isScrollEnabled = false
+        editItemsTable.isScrollEnabled = true
+        editItemsTable.bounces = false
+        editItemsTable.showsVerticalScrollIndicator = true
         editItemsTable.backgroundColor = .clear
+        
+        
 
         self.view.addSubview(editItemsTable)
-        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: 16, left: 0, bottom: 0, right: 0))
+        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        editItemsTable.flashScrollIndicators()
     }
     
     func addField(_ field: Field) {
@@ -62,6 +74,7 @@ class EditableFieldsViewController: UIViewController {
 }
 
 extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fields.count
     }

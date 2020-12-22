@@ -96,6 +96,9 @@ class HomeViewController: AdViewController {
         let unresolvedView = TitleContentView()
         unresolvedView.titleLabel.text = "UnResolved"
 
+        let tapGSetup = UITapGestureRecognizer.init(target: self, action: #selector(openHelp))
+        unresolvedView.addGestureRecognizer(tapGSetup)
+
         // Style
         for view in [mapView, unresolvedView] {
             view.backgroundColor = .white
@@ -150,15 +153,15 @@ class HomeViewController: AdViewController {
     // Present the Add Shortcut view controller after the
     // user taps the "Add to Siri" button.
     @objc
-    func addToSiri(_ sender: Any) {
-//        let intent = NewItemIntent()
-//
-//        if let shortcut = INShortcut(intent: intent) {
-//            let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
-//            viewController.modalPresentationStyle = .formSheet
-//            viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
-//            present(viewController, animated: true, completion: nil)
-//        }
+    func openHelp() {
+        let helpController = SetupHelpViewController()
+        let navc = UINavigationController(rootViewController: helpController)
+        
+        navc.modalPresentationStyle = .fullScreen
+        
+        self.navigationController?.present(navc, animated: true, completion: {
+            navc.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: .done, target: self, action: #selector(self.close))
+        })
     }
     
     @objc

@@ -109,7 +109,7 @@ class CategorizePendingItemsViewController: AdViewController {
         stackView.addArrangedSubview(iterationView)
         stackView.addArrangedSubview(itemDisplayArea)
 
-        itemDisplayArea.addConstraint(NSLayoutConstraint.init(item: itemDisplayArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 350))
+        itemDisplayArea.addConstraint(NSLayoutConstraint.init(item: itemDisplayArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250))
         
         
         contentView.addSubview(stackView)
@@ -123,7 +123,7 @@ class CategorizePendingItemsViewController: AdViewController {
         
         iterationView.delegate = self
         iterationView.translatesAutoresizingMaskIntoConstraints = false
-        iterationView.addConstraint(NSLayoutConstraint.init(item: iterationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
+        iterationView.addConstraint(NSLayoutConstraint.init(item: iterationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
 
         iterationView.backgroundColor = .cyan
         iterationView.layer.cornerRadius = 10
@@ -181,10 +181,10 @@ class CategorizePendingItemsViewController: AdViewController {
         
         
         
-        RealmSubjects.shared.removeAllPendingItems()
-        RealmSubjects.shared.addPendingItem(title: "1")
-        RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
-        RealmSubjects.shared.addPendingItem(title: "3")
+//        RealmSubjects.shared.removeAllPendingItems()
+//        RealmSubjects.shared.addPendingItem(title: "1")
+//        RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
+//        RealmSubjects.shared.addPendingItem(title: "3")
         
     }
     
@@ -328,7 +328,7 @@ extension CategorizePendingItemsViewController: ItemIterationDelegate {
     
     func didPressUndo() {
         if let lastResolvedItem = self.lastResolvedItem {
-            RealmSubjects.shared.categorizeItem(lastResolvedItem, toCategory: nil)            
+            RealmSubjects.shared.categorizeItem(lastResolvedItem, toCategory: nil)
             self.lastResolvedItem = nil
         }
     }

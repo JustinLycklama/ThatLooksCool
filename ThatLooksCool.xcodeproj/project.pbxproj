@@ -29,6 +29,8 @@
 		7D278B35258D7DFA00D776EC /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D278B33258D7DFA00D776EC /* MapCell.xib */; };
 		7D2C56DB257DDBD3003F12FF /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2C56DA257DDBD3003F12FF /* ItemsViewController.swift */; };
 		7D4CD04D257D812A006F1CD7 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CD04C257D812A006F1CD7 /* CategoriesViewController.swift */; };
+		7D59511725917BB600D5B05E /* LocationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59511625917BB600D5B05E /* LocationIntentHandler.swift */; };
+		7D59512125917BC100D5B05E /* PhraseIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */; };
 		7D864F3E257B20C000FBA5D4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */; };
 		7D864F45257B20C000FBA5D4 /* TLCShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7D864F52257B34B400FBA5D4 /* ShareNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F51257B34B400FBA5D4 /* ShareNavController.swift */; };
@@ -51,6 +53,7 @@
 		7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBE4250136DA00F0ADC0 /* HomeViewController.swift */; };
 		7D98BBEB2501A04200F0ADC0 /* TitleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBEA2501A04200F0ADC0 /* TitleContentView.swift */; };
 		7DA16E2E250941DB00536F58 /* TLCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA16E2D250941DB00536F58 /* TLCTests.swift */; };
+		7DCA594D259189B5004FB7E9 /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA594C259189B5004FB7E9 /* RealmObjects.swift */; };
 		7DCD46602581B2310042C4A9 /* ItemIterationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */; };
 		7DEDAF502515568300D15306 /* RealmSubjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF4F2515568300D15306 /* RealmSubjects.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizePendingItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizePendingItemsViewController.swift */; };
@@ -149,6 +152,8 @@
 		7D278B33258D7DFA00D776EC /* MapCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapCell.xib; sourceTree = "<group>"; };
 		7D2C56DA257DDBD3003F12FF /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		7D4CD04C257D812A006F1CD7 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		7D59511625917BB600D5B05E /* LocationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIntentHandler.swift; sourceTree = "<group>"; };
+		7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseIntentHandler.swift; sourceTree = "<group>"; };
 		7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TLCIntents.entitlements; sourceTree = "<group>"; };
 		7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TLCShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +183,7 @@
 		7DA16E2B250941DB00536F58 /* TLCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA16E2D250941DB00536F58 /* TLCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLCTests.swift; sourceTree = "<group>"; };
 		7DA16E2F250941DB00536F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DCA594C259189B5004FB7E9 /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemIterationView.swift; sourceTree = "<group>"; };
 		7DEDAF4F2515568300D15306 /* RealmSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSubjects.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizePendingItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizePendingItemsViewController.swift; sourceTree = "<group>"; };
@@ -258,10 +264,13 @@
 		7D03140F2511B0CC00F9CCBD /* TLCIntents */ = {
 			isa = PBXGroup;
 			children = (
-				7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */,
-				7D0314102511B0CC00F9CCBD /* IntentHandler.swift */,
 				7D0314122511B0CC00F9CCBD /* Info.plist */,
+				7DCA594C259189B5004FB7E9 /* RealmObjects.swift */,
+				7D0314102511B0CC00F9CCBD /* IntentHandler.swift */,
+				7D59511625917BB600D5B05E /* LocationIntentHandler.swift */,
+				7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */,
 				7D0314192511B19100F9CCBD /* Intents.intentdefinition */,
+				7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */,
 			);
 			path = TLCIntents;
 			sourceTree = "<group>";
@@ -805,7 +814,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D03141B2511B19100F9CCBD /* Intents.intentdefinition in Sources */,
+				7D59511725917BB600D5B05E /* LocationIntentHandler.swift in Sources */,
 				7D0314112511B0CC00F9CCBD /* IntentHandler.swift in Sources */,
+				7D59512125917BC100D5B05E /* PhraseIntentHandler.swift in Sources */,
+				7DCA594D259189B5004FB7E9 /* RealmObjects.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

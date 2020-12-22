@@ -5,15 +5,15 @@
 	<key>INEnums</key>
 	<array/>
 	<key>INIntentDefinitionModelVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>INIntentDefinitionNamespace</key>
 	<string>i94Ud8</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>19F101</string>
+	<string>19H2</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>11E801a</string>
+	<string>12C33</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>11.7</string>
+	<string>12.3</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -22,31 +22,80 @@
 			<key>INIntentConfigurable</key>
 			<true/>
 			<key>INIntentDescription</key>
-			<string>Remember Location</string>
+			<string>Remember Spoken Phrase</string>
 			<key>INIntentDescriptionID</key>
-			<string>LKk2Fz</string>
+			<string>SEoKv6</string>
+			<key>INIntentEligibleForWidgets</key>
+			<true/>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentLastParameterTag</key>
+			<integer>1</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key></key>
+				<key>itemToRemember</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>This is a summary for shortcuts?</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>4IEuX8</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
 					<true/>
 				</dict>
 			</dict>
 			<key>INIntentName</key>
-			<string>NewItem</string>
-			<key>INIntentParameterCombinations</key>
-			<dict>
-				<key></key>
+			<string>RememberPhrase</string>
+			<key>INIntentParameters</key>
+			<array>
 				<dict>
-					<key>INIntentParameterCombinationIsPrimary</key>
+					<key>INIntentParameterConfigurable</key>
 					<true/>
-					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<key>INIntentParameterDisplayName</key>
+					<string>ItemToRemember</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>LYa5qW</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>1</integer>
+					<key>INIntentParameterMetadata</key>
+					<dict>
+						<key>INIntentParameterMetadataCapitalization</key>
+						<string>Sentences</string>
+						<key>INIntentParameterMetadataDefaultValue</key>
+						<string>Nothing</string>
+						<key>INIntentParameterMetadataDefaultValueID</key>
+						<string>Q9HhT0</string>
+					</dict>
+					<key>INIntentParameterName</key>
+					<string>itemToRemember</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>What should I Remember?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>Jrjazr</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
 					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>1</integer>
+					<key>INIntentParameterType</key>
+					<string>String</string>
 				</dict>
-			</dict>
+			</array>
 			<key>INIntentResponse</key>
 			<dict>
 				<key>INIntentResponseCodes</key>
@@ -64,9 +113,57 @@
 				</array>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>New Item</string>
+			<string>Remember Spoken Phrase</string>
 			<key>INIntentTitleID</key>
-			<string>rPP8Uh</string>
+			<string>TZBAsh</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Do</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>generic</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescription</key>
+			<string>Remember Location</string>
+			<key>INIntentDescriptionID</key>
+			<string>Oc3N6N</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>RememberLocation</string>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Remember Location</string>
+			<key>INIntentTitleID</key>
+			<string>0aygUX</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>

@@ -14,33 +14,54 @@ class SetupHelpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let stack = UIStackView()
+        stack.axis = .vertical
         
-        let button = INUIAddVoiceShortcutButton(style: .blackOutline)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        // Location Intent
+        let rememberLocationIntentButton = INUIAddVoiceShortcutButton(style: .blackOutline)
+        rememberLocationIntentButton.translatesAutoresizingMaskIntoConstraints = false
 
-        let intent = NewItemIntent()
+        let intent = RememberLocationIntent()
         
-        button.shortcut = INShortcut(intent: intent )
-        button.delegate = self
+        rememberLocationIntentButton.shortcut = INShortcut(intent: intent )
+        rememberLocationIntentButton.delegate = self
         
-        button.addTarget(self, action: #selector(addToSiri(_:)), for: .touchUpInside)
+//        rememberLocationIntentButton.addTarget(self, action: #selector(addToSiri(_:)), for: .touchUpInside)
+        
+        stack.addArrangedSubview(rememberLocationIntentButton)
+        
+        // Speech Intent
+        let rememberSpeechIntentButton = INUIAddVoiceShortcutButton(style: .blackOutline)
+        rememberSpeechIntentButton.translatesAutoresizingMaskIntoConstraints = false
+
+        let rememberIntent = RememberPhraseIntent()
+        
+        rememberSpeechIntentButton.shortcut = INShortcut(intent: rememberIntent)
+        rememberSpeechIntentButton.delegate = self
+        
+//        rememberSpeechIntentButton.addTarget(self, action: #selector(addToSiri(_:)), for: .touchUpInside)
+        
+        stack.addArrangedSubview(rememberSpeechIntentButton)
+        
+        view.addSubview(stack)
+        view.constrainSubviewToBounds(stack)
         
         // Do any additional setup after loading the view.
     }
     
     // Present the Add Shortcut view controller after the
     // user taps the "Add to Siri" button.
-    @objc
-    func addToSiri(_ sender: Any) {
-        let intent = NewItemIntent()
-        
-        if let shortcut = INShortcut(intent: intent) {
-            let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
-            viewController.modalPresentationStyle = .formSheet
-            viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
-            present(viewController, animated: true, completion: nil)
-        }
-    }
+//    @objc
+//    func addToSiri(_ sender: Any) {
+//        let intent = NewItemIntent()
+//
+//        if let shortcut = INShortcut(intent: intent) {
+//            let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
+//            viewController.modalPresentationStyle = .formSheet
+//            viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
+//            present(viewController, animated: true, completion: nil)
+//        }
+//    }
 }
 
 extension SetupHelpViewController: INUIAddVoiceShortcutButtonDelegate {

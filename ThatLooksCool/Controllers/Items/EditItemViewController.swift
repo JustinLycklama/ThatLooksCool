@@ -85,15 +85,15 @@ class EditItemViewController: UIViewController {
             }
         }))
         
+        if let coord = mockObject.coordinate {
+            editableFieldsController.addField(.map(coordinate: coord))
+        }
+        
         editableFieldsController.addField(.longText(title: "Info", initialValue: mockObject.info, onUpdate: { [weak self] newVal in
             if let mockObject = self?.mockObject {
                 mockObject.info = newVal
             }
         }))
-        
-        let coord = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D())
-        
-        editableFieldsController.addField(.map(coordinate: coord))
 
         self.view.addSubview(editableFieldsController.view)
         self.view.constrainSubviewToBounds(editableFieldsController.view)
