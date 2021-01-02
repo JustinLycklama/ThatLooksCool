@@ -147,10 +147,9 @@ class CategorizePendingItemsViewController: AdViewController {
         
         categoriesView.layer.cornerRadius = 10
         
-        categoriesView.layer.masksToBounds = true
         categoriesView.layer.isOpaque = false
         
-        categoriesView.backgroundColor = .green
+//        categoriesView.backgroundColor = .green
         
         
         contentView.constrainSubviewToBounds(stackView)

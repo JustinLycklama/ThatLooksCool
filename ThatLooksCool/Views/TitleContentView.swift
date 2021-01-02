@@ -28,6 +28,12 @@ class TitleContentView: UIView {
         }
     }
     
+    override var bounds: CGRect {
+        didSet {
+            addContactShadow()
+        }
+    }
+    
     init() {
         super.init(frame: .zero)
         

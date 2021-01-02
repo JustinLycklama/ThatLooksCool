@@ -15,6 +15,12 @@ class CategoryCellView: UIView {
     
 //    let stack = UIStackView()
     
+    override var bounds: CGRect {
+        didSet {
+            addBorderShadow()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -27,6 +33,12 @@ class CategoryCellView: UIView {
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black
         
+        self.layer.cornerRadius = TLCStyle.cornerRadius
+
+        self.clipsToBounds = false
+        
+        
+        addBorderShadow()
 //        stack.addArrangedSubview(titleLabel)
 //
 //        self.addSubview(stack)

@@ -9,6 +9,8 @@
 import UIKit
 import TLCModel
 
+// Plus Icon http://www.flaticon.com/free-icon/sushi_187463#term=sushi&page=1&position=68
+
 class CategoryCell: UITableViewCell {
 
     private var cellDisplayView: CategoryCellView?
@@ -23,19 +25,26 @@ class CategoryCell: UITableViewCell {
     }
     
     func setup() {
+        backgroundColor = .clear
+        
+        self.contentView.clipsToBounds = false
+        
         let cellDisplay = UIView.instanceFromNib("CategoryCellView", inBundle: Bundle.main) as! CategoryCellView
         cellDisplayView = cellDisplay
         
+
         self.contentView.addSubview(cellDisplay)
-        self.contentView.constrainSubviewToBounds(cellDisplay)
+        self.contentView.constrainSubviewToBounds(cellDisplay, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
+                                                                                       left: 0,
+                                                                                       bottom: TLCStyle.interiorMargin,
+                                                                                       right: 0))
     }
     
     func displayCategory(displayable: CategoryDisplayable) {
         cellDisplayView?.displayCategory(displayable: displayable)
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//    }
 }

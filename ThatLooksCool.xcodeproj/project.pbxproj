@@ -31,6 +31,8 @@
 		7D4CD04D257D812A006F1CD7 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CD04C257D812A006F1CD7 /* CategoriesViewController.swift */; };
 		7D59511725917BB600D5B05E /* LocationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59511625917BB600D5B05E /* LocationIntentHandler.swift */; };
 		7D59512125917BC100D5B05E /* PhraseIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */; };
+		7D80424825A01C8600EF5BA5 /* CategoryAddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D80424725A01C8600EF5BA5 /* CategoryAddCell.swift */; };
+		7D80424E25A01D4600EF5BA5 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D80424D25A01D4600EF5BA5 /* ShadowView.swift */; };
 		7D864F3E257B20C000FBA5D4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */; };
 		7D864F45257B20C000FBA5D4 /* TLCShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7D864F52257B34B400FBA5D4 /* ShareNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F51257B34B400FBA5D4 /* ShareNavController.swift */; };
@@ -155,6 +157,8 @@
 		7D59511625917BB600D5B05E /* LocationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIntentHandler.swift; sourceTree = "<group>"; };
 		7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseIntentHandler.swift; sourceTree = "<group>"; };
 		7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TLCIntents.entitlements; sourceTree = "<group>"; };
+		7D80424725A01C8600EF5BA5 /* CategoryAddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAddCell.swift; sourceTree = "<group>"; };
+		7D80424D25A01D4600EF5BA5 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TLCShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		7D864F42257B20C000FBA5D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 				7DEDAF57251A84CF00D15306 /* AnyItemDisplayView.swift */,
 				7DCD465F2581B2310042C4A9 /* ItemIterationView.swift */,
 				7D8994D1258AF8720006EE23 /* HSBColorPicker.swift */,
+				7D80424D25A01D4600EF5BA5 /* ShadowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				7DEFAE572585563E0026494A /* CategoryCell.swift */,
+				7D80424725A01C8600EF5BA5 /* CategoryAddCell.swift */,
 				7DEFAE7125856DB50026494A /* CategoryCellView.swift */,
 				7D196A98258EAC500000BE9C /* CategoryCellView.xib */,
 				7D8CAE8F258C648D004CF260 /* ItemCell.swift */,
@@ -850,9 +856,11 @@
 				7DEFAE592585563E0026494A /* CategoryCell.swift in Sources */,
 				7D8CAE91258C648D004CF260 /* ItemCell.swift in Sources */,
 				7D98BBCB25008F8700F0ADC0 /* AppDelegate.swift in Sources */,
+				7D80424E25A01D4600EF5BA5 /* ShadowView.swift in Sources */,
 				7D2C56DB257DDBD3003F12FF /* ItemsViewController.swift in Sources */,
 				7DEDAF65251BB22700D15306 /* FourSquareModel.swift in Sources */,
 				7DEFAE7225856DB50026494A /* CategoryCellView.swift in Sources */,
+				7D80424825A01C8600EF5BA5 /* CategoryAddCell.swift in Sources */,
 				7DEDAF502515568300D15306 /* RealmSubjects.swift in Sources */,
 				7DEFAE512585498F0026494A /* EditCategoryViewController.swift in Sources */,
 				7D8CAE62258C2E01004CF260 /* Protocols.swift in Sources */,

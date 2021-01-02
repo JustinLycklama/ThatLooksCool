@@ -114,21 +114,25 @@ class HomeViewController: AdViewController {
         // Resolved Locations
         
         
-        let navController = UINavigationController(rootViewController: categoriesController)
 
         categoriesController.canAddCategories = true
         categoriesController.delegate = self
         
 
-        self.addChild(navController)
+//        let navController = UINavigationController(rootViewController: categoriesController)
+//        self.addChild(navController)
+//        let categoriesView = navController.view!
+//
+        self.addChild(categoriesController)
+        let categoriesView = categoriesController.view!
         
-        let categoriesView = navController.view!
         
-        categoriesView.backgroundColor = .white
-        categoriesView.layer.cornerRadius = 10
+//        categoriesView.clipsToBounds = false
+//        categoriesView.backgroundColor = .white
         
-        categoriesView.layer.masksToBounds = true
-        categoriesView.layer.isOpaque = false
+//        categoriesView.layer.cornerRadius = 10
+//        categoriesView.layer.masksToBounds = true
+//        categoriesView.layer.isOpaque = false
         
         categoriesView.translatesAutoresizingMaskIntoConstraints = false
         

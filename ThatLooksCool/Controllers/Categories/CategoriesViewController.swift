@@ -41,18 +41,39 @@ class CategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super .viewDidLoad()
         
-        self.view.addSubview(tableView)
-        self.view.constrainSubviewToBounds(tableView)
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = TLCStyle.topLevelPadding
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.addCell)
+        self.view.clipsToBounds = false
+        self.view.backgroundColor = TLCStyle.primaryBackgroundColor
+        
+        self.view.addSubview(stack)
+        self.view.constrainSubviewToBounds(stack)
+        
+        // Title
+        let label = UILabel()
+        label.text = "Categories"
+        label.style(.heading)
+        
+        stack.addArrangedSubview(label)
+        
+        // Table
+        tableView.register(CategoryAddCell.self, forCellReuseIdentifier: Constants.addCell)
         tableView.register(CategoryCell.self, forCellReuseIdentifier: Constants.categoryCell)
         
         tableView.delegate = self
         tableView.dataSource = self
         
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.bounces = false
+        tableView.clipsToBounds = false
+        
+        stack.addArrangedSubview(tableView)
+        
         RealmSubjects.shared.resolvedItemCategoriesSubject
             .subscribe(onNext: { [weak self] (categories: [ItemCategory]) in
-                print(categories.count)
                 self?.categories = categories
                 self?.tableView.reloadData()
             }, onError: { (err: Error) in
@@ -80,8 +101,6 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
         
         if isAddCategoryRow(indexPath) {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.addCell, for: indexPath)
-            cell.textLabel?.text = "- Add New Category -"
-            cell.textLabel?.textAlignment = .center
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath)
             (cell as? CategoryCell)?.displayCategory(displayable: categories[indexPath.row])
@@ -95,6 +114,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+                    
         let remove = UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
                 completion(false)
@@ -104,6 +124,8 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             RealmSubjects.shared.removeCategory(self.categories[indexPath.row])
             completion(true)
         })
+        
+        remove.backgroundColor = .clear
         
         let edit = UIContextualAction(style: .destructive, title: "Edit", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {

@@ -45,7 +45,7 @@ class AdViewController: UIViewController {
         self.view.addSubview(bannerView)
 
         contentView.backgroundColor = .clear
-       
+        contentView.clipsToBounds = false
         
         let margin = TLCStyle.topLevelMargin
         
