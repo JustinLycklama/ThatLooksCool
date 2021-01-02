@@ -41,22 +41,23 @@ class CategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super .viewDidLoad()
         
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = TLCStyle.topLevelPadding
-        
         self.view.clipsToBounds = false
         self.view.backgroundColor = TLCStyle.primaryBackgroundColor
         
-        self.view.addSubview(stack)
-        self.view.constrainSubviewToBounds(stack)
+        let maskingView = UIView()
+        maskingView.clipsToBounds = true
+                
+        self.view.addSubview(maskingView)
+        self.view.constrainSubviewToBounds(maskingView, withInset: UIEdgeInsets(top: -TLCStyle.interiorMargin,
+                                                                                left: -TLCStyle.interiorMargin,
+                                                                                bottom: -TLCStyle.interiorMargin,
+                                                                                right: -TLCStyle.interiorMargin))
         
-        // Title
-        let label = UILabel()
-        label.text = "Categories"
-        label.style(.heading)
-        
-        stack.addArrangedSubview(label)
+        maskingView.addSubview(tableView)
+        maskingView.constrainSubviewToBounds(tableView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
+                                                                                left: TLCStyle.interiorMargin,
+                                                                                bottom: TLCStyle.interiorMargin,
+                                                                                right: TLCStyle.interiorMargin))
         
         // Table
         tableView.register(CategoryAddCell.self, forCellReuseIdentifier: Constants.addCell)
@@ -69,8 +70,8 @@ class CategoriesViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.bounces = false
         tableView.clipsToBounds = false
-        
-        stack.addArrangedSubview(tableView)
+
+        tableView.tableFooterView = UIView()
         
         RealmSubjects.shared.resolvedItemCategoriesSubject
             .subscribe(onNext: { [weak self] (categories: [ItemCategory]) in
@@ -88,18 +89,30 @@ class CategoriesViewController: UIViewController {
 
 extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
-    private func isAddCategoryRow(_ indexPath: IndexPath) -> Bool {
-        return canAddCategories && indexPath.row == categories.count
+    private func isAddCategorySection(_ section: Int) -> Bool {
+        return section == 0
+    }
+    
+    private func isAddCategoryIndex(_ indexPath: IndexPath) -> Bool {
+        return canAddCategories && isAddCategorySection(indexPath.section)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return canAddCategories ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count + (canAddCategories ? 1 : 0)
+        if canAddCategories && isAddCategorySection(section) {
+            return 1
+        }
+        
+        return categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell!
         
-        if isAddCategoryRow(indexPath) {
+        if isAddCategoryIndex(indexPath) {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.addCell, for: indexPath)
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath)
@@ -109,8 +122,26 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if canAddCategories && section == 0 {
+            let footer = UIView()
+//            footer.addBorder(edges: .top, color: .lightGray, thickness: 1.0)
+            return footer
+        }
+        
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if canAddCategories && section == 0 {
+            return TLCStyle.topLevelPadding
+        }
+        
+        return 0
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryRow(indexPath)
+        return !isAddCategoryIndex(indexPath)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -125,7 +156,6 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             completion(true)
         })
         
-        remove.backgroundColor = .clear
         
         let edit = UIContextualAction(style: .destructive, title: "Edit", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
@@ -136,6 +166,19 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             self.delegate?.editCategory(self.categories[indexPath.row])
             completion(true)
         })
+
+        remove.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0)
+        edit.backgroundColor = TLCStyle.primaryIconColor.withAlphaComponent(0)
+        
+        edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
+            ctx.cgContext.setFillColor(TLCStyle.primaryIconColor.cgColor)
+            UIImage(named: "edit")?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        }
+        
+        remove.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
+            ctx.cgContext.setFillColor(TLCStyle.destructiveIconColor.cgColor)
+            UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        }
         
         return UISwipeActionsConfiguration(actions: [edit, remove])
     }
@@ -143,7 +186,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        if isAddCategoryRow(indexPath) {
+        if isAddCategoryIndex(indexPath) {
             self.delegate?.editCategory(nil)
         } else {
             delegate?.selectCategory(categories[indexPath.row])

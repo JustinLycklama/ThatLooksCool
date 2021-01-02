@@ -13,12 +13,13 @@ import GoogleMobileAds
 
 class AdViewController: UIViewController {
 
+    private static let Test_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
+
     public let contentView = UIView()
     private let bannerView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         edgesForExtendedLayout = []
         self.view.backgroundColor = TLCStyle.primaryBackgroundColor
@@ -27,7 +28,7 @@ class AdViewController: UIViewController {
         let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
 
         
-        adBanner.adUnitID = HomeViewController.Tast_Ad_Unit_Id
+        adBanner.adUnitID = AdViewController.Test_Ad_Unit_Id
         adBanner.rootViewController = self
         adBanner.load(GADRequest())
         
@@ -45,7 +46,7 @@ class AdViewController: UIViewController {
         self.view.addSubview(bannerView)
 
         contentView.backgroundColor = .clear
-        contentView.clipsToBounds = false
+//        contentView.clipsToBounds = false
         
         let margin = TLCStyle.topLevelMargin
         

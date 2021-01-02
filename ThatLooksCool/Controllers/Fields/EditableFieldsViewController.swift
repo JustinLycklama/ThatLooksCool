@@ -53,7 +53,7 @@ class EditableFieldsViewController: UIViewController {
         
 
         self.view.addSubview(editItemsTable)
-        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: 24, left: 0, bottom: 0, right: 0))
+        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin, left: 0, bottom: 0, right: 0))
     }
     
     override func viewDidAppear(_ animated: Bool) {

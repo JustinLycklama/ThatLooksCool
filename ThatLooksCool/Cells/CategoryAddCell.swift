@@ -26,7 +26,7 @@ class CategoryAddCell: UITableViewCell {
         selectionStyle = .none
                 
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "plus")?.withRenderingMode(.alwaysTemplate)
+        imageView.image = UIImage(named: "add")?.withRenderingMode(.alwaysTemplate)
         imageView.tintColor = TLCStyle.primaryIconColor
         
         shadowView.addSubview(imageView)

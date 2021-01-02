@@ -23,16 +23,7 @@ import EasyNotificationBadge
 // AppId: ca-app-pub-9795717139224841~5361159859
 
 class HomeViewController: AdViewController {
-
-    let test = UITableViewController()
-    
-    public static let Tast_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
-    
-    let margin: CGFloat = 32
-    let padding: CGFloat = 16
-    
-    let actionHeight: CGFloat = 175
-    
+            
     let disposeBag = DisposeBag()
     
     fileprivate let categoriesController = CategoriesViewController()
@@ -54,108 +45,149 @@ class HomeViewController: AdViewController {
                 
         }.disposed(by: disposeBag)
         
-//        let realm = try! Realm(configuration: TLC_Constants.realmConfig)
-//
-//        let locations = realm.objects(UnResolvedLocation.self)
-//        print(locations.count)
-
-
-        
-//        addBannerViewToView(adBannerView)
-       
-        
-        
-//        self.view.constrainSubviewToBounds(contentView, withInset: UIEdgeInsets(top: margin*2, left: margin, bottom: margin, right: margin))
-        
-        // Actions
-        let horStackView = UIStackView()
-        horStackView.axis = .horizontal
-        horStackView.alignment = .center
-        horStackView.distribution = .fillEqually
-        horStackView.translatesAutoresizingMaskIntoConstraints = false
-        horStackView.spacing = padding
-        
-        // Map Action
-        let mapView = TitleContentView()
-        mapView.titleLabel.text = "Map"
-        
-        let mapImage = UIImageView()
-        mapView.contentView.addSubview(mapImage)
-        mapView.contentView.constrainSubviewToBounds(mapImage)
-
-        mapView.badge(text: "1")
-        
-        let tapG = UITapGestureRecognizer.init(target: self, action: #selector(presentUnresolvedItems))
-        mapView.addGestureRecognizer(tapG)
-        mapView.isUserInteractionEnabled = true
-        
-//        let badgeView = BadgeHub(view: mapView)
-//        badgeView.increment()
-        
-        // Unresolved Action
-        let unresolvedView = TitleContentView()
-        unresolvedView.titleLabel.text = "UnResolved"
-
-        let tapGSetup = UITapGestureRecognizer.init(target: self, action: #selector(openHelp))
-        unresolvedView.addGestureRecognizer(tapGSetup)
-
-        // Style
-        for view in [mapView, unresolvedView] {
-            view.backgroundColor = .white
-            view.layer.cornerRadius = 10
-            
-            view.translatesAutoresizingMaskIntoConstraints = false
-            
-            horStackView.addArrangedSubview(view)
-            horStackView.addConstraint(NSLayoutConstraint.init(item: view, attribute: .height, relatedBy: .equal, toItem: horStackView, attribute: .height, multiplier: 1, constant: 0))
-        }
-        
-        
-        // Resolved Locations
-        
-        
-
-        categoriesController.canAddCategories = true
-        categoriesController.delegate = self
-        
-
-//        let navController = UINavigationController(rootViewController: categoriesController)
-//        self.addChild(navController)
-//        let categoriesView = navController.view!
-//
-        self.addChild(categoriesController)
-        let categoriesView = categoriesController.view!
-        
-        
-//        categoriesView.clipsToBounds = false
-//        categoriesView.backgroundColor = .white
-        
-//        categoriesView.layer.cornerRadius = 10
-//        categoriesView.layer.masksToBounds = true
-//        categoriesView.layer.isOpaque = false
-        
-        categoriesView.translatesAutoresizingMaskIntoConstraints = false
-        
-
         // Layout
-        contentView.addSubview(horStackView)
-        contentView.addSubview(categoriesView)
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = TLCStyle.topLevelPadding
         
         
-        let views = ["actions" : horStackView, "locations" : categoriesView]
-        let metrics = ["margin" : margin, "padding" : padding, "actionHeight" : actionHeight]
+        // Pending Items
+        let pendingAndSetupLabel = UILabel()
+        pendingAndSetupLabel.text = "Categorize New Items"
+        pendingAndSetupLabel.style(.heading)
         
-        let verticalConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-(margin)-[actions(actionHeight)]-(padding)-[locations]-(0)-|", options: .alignAllCenterX, metrics: metrics, views: views)
+        let pendingItemsView = createPendingItemsView()
         
+        stack.addArrangedSubview(pendingAndSetupLabel)
+        stack.addArrangedSubview(pendingItemsView)
         
-        let horActions = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[actions]-(0)-|", options: .alignAllCenterY, metrics: metrics, views: views)
-        let horLocations = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[locations]-(0)-|", options: .alignAllCenterY, metrics: metrics, views: views)
+        // Categories
+        let categoriesLabel = UILabel()
+        categoriesLabel.text = "View by Category"
+        categoriesLabel.style(.heading)
+        
+        let categoriesView = createCategoryView()
+        
+        stack.addArrangedSubview(categoriesLabel)
+        stack.addArrangedSubview(categoriesView)
 
-        contentView.addConstraints(verticalConstraints + horActions + horLocations)
+        // MapView
+        let mapLabel = UILabel()
+        mapLabel.text = "View by Map"
+        mapLabel.style(.heading)
+        
+        let mapView = createMapView()
+        
+        stack.addArrangedSubview(mapLabel)
+        stack.addArrangedSubview(mapView)
+
+        contentView.addSubview(stack)
+        contentView.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(top: TLCStyle.topLevelMargin,
+                                                                            left: 0,
+                                                                            bottom: TLCStyle.topLevelPadding,
+                                                                            right: 0))
     }
     
-    // Present the Add Shortcut view controller after the
-    // user taps the "Add to Siri" button.
+    // MARK: - View Creation
+    
+    private func createPendingItemsView() -> UIView {
+        // Categorize Pending Items
+        let pendingAndSetupStackView = UIStackView()
+        pendingAndSetupStackView.axis = .horizontal
+        pendingAndSetupStackView.alignment = .center
+        pendingAndSetupStackView.distribution = .fillProportionally
+        pendingAndSetupStackView.translatesAutoresizingMaskIntoConstraints = false
+        pendingAndSetupStackView.spacing = TLCStyle.topLevelPadding
+        
+        pendingAndSetupStackView.addConstraint(.init(item: pendingAndSetupStackView,
+                                                     attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 72))
+        
+        // Categorize Action
+        let categorizeView = ShadowView()
+
+        let zAxisView = TrippleItemZAzisView()
+        
+        categorizeView.addSubview(zAxisView)
+        categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.topLevelPadding,
+                                                                                   left: TLCStyle.topLevelPadding,
+                                                                                   bottom: TLCStyle.interiorMargin,
+                                                                                   right: TLCStyle.topLevelPadding))
+
+        let tapG = UITapGestureRecognizer.init(target: self, action: #selector(presentUnresolvedItems))
+        categorizeView.addGestureRecognizer(tapG)
+
+        // Settings Action
+        let settingsView = ShadowView()
+
+        let settingsImage = UIImageView()
+        settingsView.addSubview(settingsImage)
+        settingsView.constrainSubviewToBounds(settingsImage, withInset: UIEdgeInsets(TLCStyle.topLevelPadding))
+        
+        settingsImage.image = UIImage(named: "settings")?.withRenderingMode(.alwaysTemplate)
+        settingsImage.tintColor = TLCStyle.primaryIconColor
+        
+        settingsView.addConstraint(.init(item: settingsView, attribute: .width, relatedBy: .equal, toItem: settingsView, attribute: .height, multiplier: 1, constant: 0))
+        
+        let tapGSetup = UITapGestureRecognizer.init(target: self, action: #selector(openHelp))
+        settingsView.addGestureRecognizer(tapGSetup)
+
+        // Style Actions
+        for view in [categorizeView, settingsView] {
+            view.backgroundColor = .white
+            view.layer.cornerRadius = 10
+
+            view.translatesAutoresizingMaskIntoConstraints = false
+
+            pendingAndSetupStackView.addArrangedSubview(view)
+            pendingAndSetupStackView.addConstraint(NSLayoutConstraint.init(item: view, attribute: .height, relatedBy: .equal, toItem: pendingAndSetupStackView, attribute: .height, multiplier: 1, constant: 0))
+        }
+        
+        let pendingItemContainer = UIView()
+        pendingItemContainer.addSubview(pendingAndSetupStackView)
+        pendingItemContainer.constrainSubviewToBounds(pendingAndSetupStackView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+        
+        return pendingItemContainer
+    }
+    
+    private func createCategoryView() -> UIView {
+        // View By Category
+        categoriesController.title = "View Items By Category"
+        categoriesController.canAddCategories = true
+        categoriesController.delegate = self
+    
+        self.addChild(categoriesController)
+        
+        let categoriesView = categoriesController.view!
+        categoriesView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let categoriesContrainer = UIView()
+        categoriesContrainer.backgroundColor = .clear
+        
+        categoriesContrainer.addSubview(categoriesView)
+        categoriesContrainer.constrainSubviewToBounds(categoriesView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+
+        return categoriesContrainer
+    }
+    
+    private func createMapView() -> UIView {
+        let mapView = ShadowView()
+        mapView.shadowType = .contact(distance: 10)
+        
+        let mapImage = UIImageView()
+        mapImage.image = UIImage(named: "map_image")
+        mapImage.layer.cornerRadius = TLCStyle.cornerRadius
+        mapImage.clipsToBounds = true
+        
+        mapView.addSubview(mapImage)
+        mapView.constrainSubviewToBounds(mapImage)
+        
+        mapView.addConstraint(NSLayoutConstraint.init(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 128))
+        
+        return mapView
+    }
+    
+    // MARK: - Actions
+    
     @objc
     func openHelp() {
         let helpController = SetupHelpViewController()
@@ -186,6 +218,7 @@ class HomeViewController: AdViewController {
     }
 }
 
+// MARK: - CompletableActionDelegate
 extension HomeViewController: CompletableActionDelegate {
     func complete() {
         self.dismiss(animated: true) {
@@ -194,6 +227,7 @@ extension HomeViewController: CompletableActionDelegate {
     }
 }
 
+// MARK: - CategorySelectionDelegate
 extension HomeViewController: CategorySelectionDelegate {
     func editCategory(_ category: ItemCategory?) {
         let editView = EditCategoryViewController(category: category)
@@ -215,6 +249,7 @@ extension HomeViewController: CategorySelectionDelegate {
     }
 }
 
+// MARK: - ItemSelectionDelegate
 extension HomeViewController: ItemSelectionDelegate {
     func ediItem(_ item: Item?) {
         let editView = EditItemViewController(item: item, category: nil)

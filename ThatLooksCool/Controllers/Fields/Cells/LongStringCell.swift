@@ -12,6 +12,7 @@ class LongStringCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var textView: UITextView!
+    @IBOutlet var borderView: UIView!
     
     var title: String = "" {
         didSet {
@@ -32,6 +33,10 @@ class LongStringCell: UITableViewCell {
         
         selectionStyle = .none
         textView.delegate = self
+        
+        borderView.layer.cornerRadius = TLCStyle.textCornerRadius
+        borderView.layer.borderWidth = 1
+        borderView.layer.borderColor = TLCStyle.textBorderColor.cgColor
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

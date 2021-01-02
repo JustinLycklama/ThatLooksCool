@@ -9,8 +9,6 @@
 import UIKit
 import TLCModel
 
-// Plus Icon http://www.flaticon.com/free-icon/sushi_187463#term=sushi&page=1&position=68
-
 class CategoryCell: UITableViewCell {
 
     private var cellDisplayView: CategoryCellView?
@@ -26,6 +24,7 @@ class CategoryCell: UITableViewCell {
     
     func setup() {
         backgroundColor = .clear
+        selectionStyle = .none
         
         self.contentView.clipsToBounds = false
         

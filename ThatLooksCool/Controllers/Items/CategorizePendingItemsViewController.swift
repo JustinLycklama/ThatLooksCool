@@ -20,26 +20,16 @@ struct DisplayItemAndView {
 
 class CategorizePendingItemsViewController: AdViewController {
 
+    private let categoriesViewController = CategoriesViewController()
+
+    private let itemDisplayAndNavigationView = UIView()
+    private let trippleItemDisplayView = TrippleItemZAzisView()
+    
+//    private let displayControllerArea = UIView()
+    private let itemControlView = ItemControlView()
     private var currentDisplayItemAndView: DisplayItemAndView? = nil
-    private let itemDisplayArea = UIView()
-//    private let editItem = EditableFieldsViewController()
-    
-    private let iterationView = ItemIterationView()
-    
-//    let previewView = UnresolvedItemPreviewView()
-//    var detailViewArea = UIView()
-    
-//    let container = UIStackView()
     
     private var disposeBag = DisposeBag()
-    
-//    var currentItem: PendingItem? {
-//        didSet {
-//            updateItemPreview()
-//            loadLocalPlaces()
-//        }
-//    }
-    
     
     var currentItem: Item? {
         if let index = currentItemIndex {
@@ -52,13 +42,12 @@ class CategorizePendingItemsViewController: AdViewController {
     var currentItemIndex: Int? {
         didSet {
             updateItemDisplay()
-//            loadLocalPlaces()
         }
     }
     
     var lastResolvedItem: Item? = nil {
         didSet {
-            iterationView.canUndo = lastResolvedItem != nil
+            itemControlView.canUndo = lastResolvedItem != nil
         }
     }
     
@@ -73,6 +62,8 @@ class CategorizePendingItemsViewController: AdViewController {
         }
         
         didSet {
+            trippleItemDisplayView.badge(text: String(items.count))
+            
             let defaultIndex: Int? = items.count > 0 ? 0 : nil
             
             if let item = _tempItem {
@@ -82,91 +73,73 @@ class CategorizePendingItemsViewController: AdViewController {
                 currentItemIndex = defaultIndex
             }
             
-            iterationView.canPreviousNext = items.count > 1
+            itemControlView.canPreviousNext = items.count > 1
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let categoriesViewController = CategoriesViewController()
-        self.addChild(categoriesViewController)
+        title = "Categorize New Items"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
         
-        
+        // Categories
         categoriesViewController.canAddCategories = true
         categoriesViewController.delegate = self
         
-        let categoriesView = categoriesViewController.view!
+        let categoriesView = categoriesViewController.view ?? UIView()
+        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
+
+        categoriesView.layer.cornerRadius = 10
+        categoriesView.layer.isOpaque = false
+                
+        // Item Display
+
+        let itemViewStack = UIStackView()
+        itemViewStack.axis = .vertical
+        itemViewStack.spacing = -TLCStyle.interiorPadding
+
+
+        itemDisplayAndNavigationView.layer.cornerRadius = TLCStyle.cornerRadius
+        itemDisplayAndNavigationView.backgroundColor = .clear //TLCStyle.secondaryBackgroundColor
+        itemDisplayAndNavigationView.setContentHuggingPriority(.required, for: .vertical)
+        itemDisplayAndNavigationView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
-//        let margin = TLCStyle.topLevelMargin
-//        let padding = TLCStyle.topLevelPadding
+        setupItemDisplay()
         
+        itemDisplayAndNavigationView.addSubview(itemViewStack)
+        itemDisplayAndNavigationView.constrainSubviewToBounds(itemViewStack)
+
+        itemViewStack.addArrangedSubview(trippleItemDisplayView)
+        itemViewStack.addArrangedSubview(itemControlView)
+        
+        
+        // Item Navigation
+        itemControlView.delegate = self
+        itemControlView.translatesAutoresizingMaskIntoConstraints = false
+
+        itemControlView.backgroundColor = .white
+        itemControlView.layer.cornerRadius = TLCStyle.cornerRadius
+        itemControlView.layer.borderWidth = 1
+        itemControlView.layer.borderColor = TLCStyle.darkBorderColor.cgColor
+        
+        itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
+        
+        itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
+        
+        // Stack Setup
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = TLCStyle.topLevelPadding
-        
+        stackView.spacing = TLCStyle.topLevelPadding + TLCStyle.interiorPadding
+                        
+        stackView.addArrangedSubview(itemDisplayAndNavigationView)
         stackView.addArrangedSubview(categoriesView)
-        stackView.addArrangedSubview(iterationView)
-        stackView.addArrangedSubview(itemDisplayArea)
-
-        itemDisplayArea.addConstraint(NSLayoutConstraint.init(item: itemDisplayArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250))
-        
         
         contentView.addSubview(stackView)
-
-        
-//        contentView.addSubview(previewView)
-//        contentView.addSubview(detailViewArea)
-        
-        itemDisplayArea.setContentHuggingPriority(.required, for: .vertical)
-        itemDisplayArea.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        iterationView.delegate = self
-        iterationView.translatesAutoresizingMaskIntoConstraints = false
-        iterationView.addConstraint(NSLayoutConstraint.init(item: iterationView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
-
-        iterationView.backgroundColor = .cyan
-        iterationView.layer.cornerRadius = 10
-        
-        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
-//
-//        itemDisplayArea.layer.cornerRadius = 10
-//        itemDisplayArea.clipsToBounds = true
-        itemDisplayArea.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.25)
-        
-//        addChild(fieldsController)
-//        itemDisplayArea.addSubview(fieldsController.view)
-//        itemDisplayArea.constrainSubviewToBounds(fieldsController.view)
+        contentView.constrainSubviewToBounds(stackView, withInset: UIEdgeInsets(top: TLCStyle.topLevelMargin, left: 0, bottom: 0, right: 0))
         
         
-        
-        
-        
-        
-        
-        
-        categoriesView.layer.cornerRadius = 10
-        
-        categoriesView.layer.isOpaque = false
-        
-//        categoriesView.backgroundColor = .green
-        
-        
-        contentView.constrainSubviewToBounds(stackView)
-        
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
-        
-//        contentView.constrainSubviewToBounds(previewView, onEdges: [.top, .left, .right])
-//        contentView.constrainSubviewToBounds(categoriesView, onEdges: [.bottom, .left, .right])
-
-//        contentView.addConstraint(NSLayoutConstraint.init(item: previewView, attribute: .bottom, relatedBy: .equal, toItem: detailViewArea, attribute: .top, multiplier: 1, constant: -padding))
-    
-        
-        
-        ////
-        
-//
+        // Reactive
         RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (pendingItems: [Item]) in
                 self?.items = pendingItems
         }, onError: { (err: Error) in
@@ -177,16 +150,15 @@ class CategorizePendingItemsViewController: AdViewController {
 
         }.disposed(by: disposeBag)
         
+        RealmSubjects.shared.removeAllPendingItems()
+        RealmSubjects.shared.addPendingItem(title: "1")
+        RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
+        RealmSubjects.shared.addPendingItem()
+    }
         
-        
-        
-//        RealmSubjects.shared.removeAllPendingItems()
-//        RealmSubjects.shared.addPendingItem(title: "1")
-//        RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
-//        RealmSubjects.shared.addPendingItem(title: "3")
+    private func setupItemDisplay() {
         
     }
-    
     
     @objc func close() {
         self.dismiss(animated: true, completion: nil)
@@ -214,16 +186,16 @@ class CategorizePendingItemsViewController: AdViewController {
                 newDisplayView.clipsToBounds = true
                 newDisplayView.layer.cornerRadius = 10
                 newDisplayView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-                
+                                
+                newDisplayView.addConstraint(NSLayoutConstraint.init(item: newDisplayView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 250))
                 
 //                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
                 
                 self?.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)
                 
                 self?.addChild(newDisplayController)
-                self?.itemDisplayArea.addSubview(newDisplayView)
-                self?.itemDisplayArea.constrainSubviewToBounds(newDisplayView, withInset: UIEdgeInsets.init(top: 10, left: 10, bottom: 0, right: 10))
-                
+                self?.trippleItemDisplayView.itemDisplayArea.addSubview(newDisplayView)
+                self?.trippleItemDisplayView.itemDisplayArea.constrainSubviewToBounds(newDisplayView)
                 
                 // Grow view to fit constraints
                 UIView.animate(withDuration: 0.15) {
@@ -264,33 +236,23 @@ class CategorizePendingItemsViewController: AdViewController {
         } else {
             createItemBlock()
         }
-        
     }
-    
-    private func loadLocalPlaces() {
-        guard let coordinate = currentItem?.coordinate else {
-            return
-        }
-        
-        FSPlacesRequest.init(coordinate: coordinate).request { (result: Result<FSPlace>) in
-            //            switch result {
-            //            case .success(let plants):
-            ////                self?.plantList = plants
-            //                print("Success")
-            //            case .error(let err):
-            //                print("Fail")
-            //            }
-            //
-            //            self?.reloadData()
-            //            self?.loadingView?.setLoading(false)
-            //        }
-        }
+}
+
+extension CategorizePendingItemsViewController: CompletableActionDelegate {
+    func complete() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension CategorizePendingItemsViewController: CategorySelectionDelegate {
     func editCategory(_ category: ItemCategory?) {
-        // TODO:
+        let editView = EditCategoryViewController(category: category)
+
+        editView.delegate = self
+        editView.modalPresentationStyle = .overFullScreen
+        
+        self.present(editView, animated: true, completion: nil)
     }
     
     func selectCategory(_ category: ItemCategory) {

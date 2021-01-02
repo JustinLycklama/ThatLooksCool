@@ -12,6 +12,9 @@ import TLCModel
 import RealmSwift
 import RxSwift
 
+//TODO: Remove
+import CoreLocation
+
 class RealmSubjects {
     public static let shared = RealmSubjects()
     
@@ -148,6 +151,21 @@ class RealmSubjects {
     // TODO remove
     internal func addPendingItem(title: String) {
         let newItem = Item(title: title)
+
+        realm.beginWrite()
+        realm.add(newItem)
+
+        do {
+            try realm.commitWrite()
+        } catch {
+            fatalError()
+        }
+    }
+    
+    // TODO remove
+    internal func addPendingItem() {        
+        let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D())
+        let newItem = Item(coordinate: coordinate)
 
         realm.beginWrite()
         realm.add(newItem)

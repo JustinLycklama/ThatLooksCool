@@ -72,7 +72,7 @@ class TitleContentView: UIView {
         let views = ["title" : titleStackView, "content": contentView]
         let metrics = ["spacing" : 12]
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[title]-(spacing)-[content]-|", options: .alignAllCenterX, metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(0)-[title]-(spacing)-[content]-(0)-|", options: .alignAllCenterX, metrics: metrics, views: views))
         
         constrainSubviewToBounds(titleStackView, onEdges: [.left, .right])
         constrainSubviewToBounds(contentView, onEdges: [.left, .right])
