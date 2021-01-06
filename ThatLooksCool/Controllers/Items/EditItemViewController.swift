@@ -150,12 +150,25 @@ class EditItemViewController: UIViewController {
             savedItem = RealmSubjects.shared.createItem(withMock: mockObject, toCategory: associatedCategory)
         }
         
-        close()
+        complete()
         return savedItem
+    }
+    
+    @discardableResult
+    func deleteItem() -> MockItem? {
+        var deletedItem: MockItem? = nil
+        
+        if let item = databaseObject {
+            deletedItem = MockItem(item: item)
+            RealmSubjects.shared.removeItem(item)
+        }
+        
+        complete()
+        return deletedItem
     }
         
     @objc
-    func close() {
+    func complete() {
         completeDelegate?.complete()
     }
 }

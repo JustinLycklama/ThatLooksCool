@@ -36,6 +36,8 @@ class RealmObjects {
             completion(false)
         }
         
+        updateNotificationCount(givenRealm: realm)
+        
         completion(true)
     }
     
@@ -57,11 +59,16 @@ class RealmObjects {
             completion(false)
         }
         
+        updateNotificationCount(givenRealm: realm)
+        
         completion(true)
     }
     
     private func updateNotificationCount(givenRealm realm: Realm) {
         let results = realm.objects(Item.self).filter("category == nil")
+        
+        // Our application is not open, so we cannot directly modify the badge count
+        // send a notification with the new badge count instead
         
         let content = UNMutableNotificationContent()
         content.sound = .none

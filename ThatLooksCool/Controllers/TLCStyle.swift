@@ -25,6 +25,7 @@ public struct TLCStyle {
     // MARK: - Colors
     
     fileprivate struct ColorPallet {
+        static let offWhite = UIColor(rgb: 0xFAF9F9)
         static let lightGrey = UIColor(rgb: 0xEFF0F3)
         static let mediumGrey = UIColor(rgb: 0x9fa7bb)
         static let darkGrey = UIColor(rgb: 0x424B54)
@@ -49,13 +50,30 @@ public struct TLCStyle {
     public static let shadowColor = ColorPallet.mediumGrey
     
     public static let textBorderColor = ColorPallet.mediumGrey
-    public static let darkBorderColor = ColorPallet.darkGrey
+    public static let viewBorderColor = ColorPallet.darkGrey
     
     public static let primaryBackgroundColor = ColorPallet.lightGrey
-//    public static let secondaryBackgroundColor = ColorPallet.mediumGrey
+    public static let secondaryBackgroundColor = ColorPallet.offWhite
 
-    public static let primaryIconColor = ColorPallet.turquoise
+    public static let progressIconColor = ColorPallet.turquoise
+    public static let modificationIconColor = ColorPallet.yellow
     public static let destructiveIconColor = ColorPallet.red
+}
+
+class ImagesResources {
+    static let shared = ImagesResources()
+    
+    lazy var editIcon = renderIcon("edit", withColor: TLCStyle.modificationIconColor)
+    lazy var deleteIcon = renderIcon("delete", withColor: TLCStyle.destructiveIconColor)
+    lazy var undoIcon = renderIcon("undo", withColor: TLCStyle.modificationIconColor)
+    lazy var nextIcon = renderIcon("next", withColor: TLCStyle.progressIconColor)
+
+    private func renderIcon(_ name: String, withColor color: UIColor) -> UIImage {
+        return UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
+            ctx.cgContext.setFillColor(color.cgColor)
+            UIImage(named: name)?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
+        }
+    }
 }
 
 extension UIEdgeInsets {

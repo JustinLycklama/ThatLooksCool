@@ -28,6 +28,11 @@
 	<string>Description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Description</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+    </array>    
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>RememberLocationIntent</string>

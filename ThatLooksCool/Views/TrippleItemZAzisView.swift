@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import EasyNotificationBadge
 
 class TrippleItemZAzisView: UIView {
     
     public let itemDisplayArea = ShadowView()
+    
+    let badgePositioner = UIView()
+    var badgeAppearance = BadgeAppearance()
     
     init() {
         super.init(frame: .zero)
@@ -34,7 +38,7 @@ class TrippleItemZAzisView: UIView {
         itemDisplayArea.backgroundColor = .white
         itemDisplayArea.layer.cornerRadius = TLCStyle.cornerRadius
         itemDisplayArea.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        itemDisplayArea.layer.borderColor = TLCStyle.darkBorderColor.cgColor
+        itemDisplayArea.layer.borderColor = TLCStyle.viewBorderColor.cgColor
         itemDisplayArea.layer.borderWidth = 1
         
         self.addSubview(itemDisplayArea)
@@ -44,7 +48,15 @@ class TrippleItemZAzisView: UIView {
                                                               bottom: borderWidth,
                                                               right: itemMargin + (itemSeperation * 2)))
         
-        itemDisplayArea.addConstraint(NSLayoutConstraint.init(item: itemDisplayArea, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
+        let minimumHeightContraint = NSLayoutConstraint.init(item: itemDisplayArea,
+                                                             attribute: .height,
+                                                             relatedBy: .greaterThanOrEqual,
+                                                             toItem: nil,
+                                                             attribute: .notAnAttribute,
+                                                             multiplier: 1, constant: 44)
+        
+        minimumHeightContraint.priority = .defaultHigh        
+        itemDisplayArea.addConstraint(minimumHeightContraint)
         
         // Fake Item Displays
         
@@ -52,7 +64,7 @@ class TrippleItemZAzisView: UIView {
         fakeItem1.backgroundColor = .white
         fakeItem1.layer.cornerRadius = TLCStyle.cornerRadius
         fakeItem1.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        fakeItem1.layer.borderColor = TLCStyle.darkBorderColor.cgColor
+        fakeItem1.layer.borderColor = TLCStyle.viewBorderColor.cgColor
         fakeItem1.layer.borderWidth = 1
         
         self.addSubview(fakeItem1)
@@ -68,7 +80,7 @@ class TrippleItemZAzisView: UIView {
         fakeItem2.backgroundColor = .white
         fakeItem2.layer.cornerRadius = TLCStyle.cornerRadius
         fakeItem2.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        fakeItem2.layer.borderColor = TLCStyle.darkBorderColor.cgColor
+        fakeItem2.layer.borderColor = TLCStyle.viewBorderColor.cgColor
         fakeItem2.layer.borderWidth = 1
         
         self.addSubview(fakeItem2)
@@ -79,5 +91,22 @@ class TrippleItemZAzisView: UIView {
                                                                          right: itemMargin))
         
         self.sendSubviewToBack(fakeItem2)
+                
+        badgeAppearance.duration = 2
+        badgeAppearance.borderWidth = 1
+        badgeAppearance.borderColor = TLCStyle.viewBorderColor
+        badgeAppearance.allowShadow = true
+        badgeAppearance.font = UIFont(name: "Avenir-Book", size: 18)!
+        
+        self.addSubview(badgePositioner)
+        self.constrainSubviewToBounds(badgePositioner, onEdges: [.right, .top],
+                                      withInset: UIEdgeInsets(top: -20,
+                                                              left: 0,
+                                                              bottom: 0,
+                                                              right: 10))
+    }
+    
+    func setBadge(_ value: Int) {
+        badgePositioner.badge(text: String(value), appearance: badgeAppearance)
     }
 }

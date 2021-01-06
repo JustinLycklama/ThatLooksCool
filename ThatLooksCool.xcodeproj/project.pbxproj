@@ -27,6 +27,7 @@
 		7D196A99258EAC500000BE9C /* CategoryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D196A98258EAC500000BE9C /* CategoryCellView.xib */; };
 		7D278B34258D7DFA00D776EC /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D278B32258D7DFA00D776EC /* MapCell.swift */; };
 		7D278B35258D7DFA00D776EC /* MapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D278B33258D7DFA00D776EC /* MapCell.xib */; };
+		7D2BDF8725A2C79300CCD952 /* CategoryAddCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2BDF8625A2C79300CCD952 /* CategoryAddCellView.swift */; };
 		7D2C56DB257DDBD3003F12FF /* ItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2C56DA257DDBD3003F12FF /* ItemsViewController.swift */; };
 		7D4CD04D257D812A006F1CD7 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4CD04C257D812A006F1CD7 /* CategoriesViewController.swift */; };
 		7D59511725917BB600D5B05E /* LocationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59511625917BB600D5B05E /* LocationIntentHandler.swift */; };
@@ -153,6 +154,7 @@
 		7D196A98258EAC500000BE9C /* CategoryCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoryCellView.xib; sourceTree = "<group>"; };
 		7D278B32258D7DFA00D776EC /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		7D278B33258D7DFA00D776EC /* MapCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapCell.xib; sourceTree = "<group>"; };
+		7D2BDF8625A2C79300CCD952 /* CategoryAddCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryAddCellView.swift; sourceTree = "<group>"; };
 		7D2C56DA257DDBD3003F12FF /* ItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsViewController.swift; sourceTree = "<group>"; };
 		7D4CD04C257D812A006F1CD7 /* CategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		7D59511625917BB600D5B05E /* LocationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIntentHandler.swift; sourceTree = "<group>"; };
@@ -485,9 +487,10 @@
 			isa = PBXGroup;
 			children = (
 				7DEFAE572585563E0026494A /* CategoryCell.swift */,
-				7D80424725A01C8600EF5BA5 /* CategoryAddCell.swift */,
 				7DEFAE7125856DB50026494A /* CategoryCellView.swift */,
 				7D196A98258EAC500000BE9C /* CategoryCellView.xib */,
+				7D80424725A01C8600EF5BA5 /* CategoryAddCell.swift */,
+				7D2BDF8625A2C79300CCD952 /* CategoryAddCellView.swift */,
 				7D8CAE8F258C648D004CF260 /* ItemCell.swift */,
 				7D8CAE90258C648D004CF260 /* ItemCell.xib */,
 			);
@@ -878,6 +881,7 @@
 				7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */,
 				7D4CD04D257D812A006F1CD7 /* CategoriesViewController.swift in Sources */,
 				7D8994D2258AF8730006EE23 /* HSBColorPicker.swift in Sources */,
+				7D2BDF8725A2C79300CCD952 /* CategoryAddCellView.swift in Sources */,
 				7D9F7D88259302610013D137 /* TrippleItemZAzisView.swift in Sources */,
 				7D8994D9258AF95F0006EE23 /* ColorCell.swift in Sources */,
 				7DEFAE972588574C0026494A /* EditableFieldsViewController.swift in Sources */,

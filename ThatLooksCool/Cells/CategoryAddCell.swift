@@ -9,8 +9,6 @@
 import UIKit
 
 class CategoryAddCell: UITableViewCell {
-
-    private var shadowView = ShadowView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -25,23 +23,12 @@ class CategoryAddCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
                 
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "add")?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = TLCStyle.primaryIconColor
+        let addView = CategoryAddCellView()
         
-        shadowView.addSubview(imageView)
-        shadowView.constrainSubviewToBounds(imageView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                               left: TLCStyle.interiorMargin,
-                                                                               bottom: TLCStyle.interiorMargin,
-                                                                               right: TLCStyle.interiorMargin))
-        
-        imageView.contentMode = .scaleAspectFit
-        imageView.addConstraint(NSLayoutConstraint.init(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
-        
-        self.contentView.addSubview(shadowView)
-        self.contentView.constrainSubviewToBounds(shadowView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                                      left: 0,
+        self.contentView.addSubview(addView)
+        self.contentView.constrainSubviewToBounds(addView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
+                                                                                      left: TLCStyle.topLevelMargin,
                                                                                       bottom: TLCStyle.interiorMargin,
-                                                                                      right: 0))
+                                                                                      right: TLCStyle.topLevelMargin))
     }
 }

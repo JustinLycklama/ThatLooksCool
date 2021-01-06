@@ -27,23 +27,13 @@ class HomeViewController: AdViewController {
     let disposeBag = DisposeBag()
     
     fileprivate let categoriesController = CategoriesViewController()
-    
+    fileprivate let zAxisView = TrippleItemZAzisView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        edgesForExtendedLayout = []
-        self.navigationController?.navigationBar.isHidden = true
-
-        RealmSubjects.shared.pendingItemCountSubject
-            .subscribe(onNext: { (count: Int) in
-                print(count)
-            }, onError: { (err: Error) in
-                
-            }, onCompleted: {
-                
-            }) {
-                
-        }.disposed(by: disposeBag)
+//        edgesForExtendedLayout = []
+//        self.navigationController?.navigationBar.isHidden = true
         
         // Layout
         let stack = UIStackView()
@@ -53,7 +43,7 @@ class HomeViewController: AdViewController {
         
         // Pending Items
         let pendingAndSetupLabel = UILabel()
-        pendingAndSetupLabel.text = "Categorize New Items"
+        pendingAndSetupLabel.text = "New Items"
         pendingAndSetupLabel.style(.heading)
         
         let pendingItemsView = createPendingItemsView()
@@ -62,30 +52,50 @@ class HomeViewController: AdViewController {
         stack.addArrangedSubview(pendingItemsView)
         
         // Categories
+    
+        let categoriesView = createCategoryView()
+        
+        // Header
+        let categoryHeaderStack = UIStackView()
+        categoryHeaderStack.axis = .horizontal
+        categoryHeaderStack.distribution = .fillProportionally
+        categoryHeaderStack.spacing = TLCStyle.topLevelPadding
+        
         let categoriesLabel = UILabel()
         categoriesLabel.text = "View by Category"
         categoriesLabel.style(.heading)
+        categoriesLabel.setContentHuggingPriority(.required, for: .horizontal)
+        categoriesLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
-        let categoriesView = createCategoryView()
+        let addCategoryView = CategoryAddCellView()
+        addCategoryView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+//        addCategoryView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         
-        stack.addArrangedSubview(categoriesLabel)
+        let spacerView = UIView()
+        spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        spacerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        
+        categoryHeaderStack.addArrangedSubview(categoriesLabel)
+        categoryHeaderStack.addArrangedSubview(addCategoryView)
+        categoryHeaderStack.addArrangedSubview(spacerView)
+        
+        stack.addArrangedSubview(categoryHeaderStack)
         stack.addArrangedSubview(categoriesView)
 
-        // MapView
-        let mapLabel = UILabel()
+        // MapView: Future Feature
+        
+        /*let mapLabel = UILabel()
         mapLabel.text = "View by Map"
         mapLabel.style(.heading)
         
         let mapView = createMapView()
         
         stack.addArrangedSubview(mapLabel)
-        stack.addArrangedSubview(mapView)
+        stack.addArrangedSubview(mapView)*/
 
         contentView.addSubview(stack)
-        contentView.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(top: TLCStyle.topLevelMargin,
-                                                                            left: 0,
-                                                                            bottom: TLCStyle.topLevelPadding,
-                                                                            right: 0))
+        contentView.constrainSubviewToBounds(stack)
     }
     
     // MARK: - View Creation
@@ -104,8 +114,6 @@ class HomeViewController: AdViewController {
         
         // Categorize Action
         let categorizeView = ShadowView()
-
-        let zAxisView = TrippleItemZAzisView()
         
         categorizeView.addSubview(zAxisView)
         categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.topLevelPadding,
@@ -118,13 +126,15 @@ class HomeViewController: AdViewController {
 
         // Settings Action
         let settingsView = ShadowView()
-
+        settingsView.layer.borderWidth = 1
+        settingsView.layer.borderColor = TLCStyle.viewBorderColor.cgColor
+        
         let settingsImage = UIImageView()
         settingsView.addSubview(settingsImage)
         settingsView.constrainSubviewToBounds(settingsImage, withInset: UIEdgeInsets(TLCStyle.topLevelPadding))
         
         settingsImage.image = UIImage(named: "settings")?.withRenderingMode(.alwaysTemplate)
-        settingsImage.tintColor = TLCStyle.primaryIconColor
+        settingsImage.tintColor = TLCStyle.shadowColor
         
         settingsView.addConstraint(.init(item: settingsView, attribute: .width, relatedBy: .equal, toItem: settingsView, attribute: .height, multiplier: 1, constant: 0))
         
@@ -146,13 +156,24 @@ class HomeViewController: AdViewController {
         pendingItemContainer.addSubview(pendingAndSetupStackView)
         pendingItemContainer.constrainSubviewToBounds(pendingAndSetupStackView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
         
+        RealmSubjects.shared.pendingItemCountSubject
+            .subscribe(onNext: { [weak self] (count: Int) in
+                self?.zAxisView.setBadge(count)
+            }, onError: { (err: Error) in
+                
+            }, onCompleted: {
+                
+            }) {
+                
+        }.disposed(by: disposeBag)
+        
         return pendingItemContainer
     }
     
     private func createCategoryView() -> UIView {
         // View By Category
         categoriesController.title = "View Items By Category"
-        categoriesController.canAddCategories = true
+        categoriesController.canAddCategories = false
         categoriesController.delegate = self
     
         self.addChild(categoriesController)

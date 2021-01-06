@@ -91,7 +91,10 @@ class RealmSubjects {
             case .initial(let results), .update(let results, _, _, _):
                 DispatchQueue.main.async {
                     self?.pendingItemsSubject.onNext(results.list())
+                    self?.pendingItemCountSubject.onNext(results.count)
                 }
+                
+                UIApplication.shared.applicationIconBadgeNumber = results.count
             case .error:
                 break
    
@@ -164,7 +167,7 @@ class RealmSubjects {
     
     // TODO remove
     internal func addPendingItem() {        
-        let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D())
+        let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(43.6331596), longitude: CLLocationDegrees(-79.4141207)))
         let newItem = Item(coordinate: coordinate)
 
         realm.beginWrite()

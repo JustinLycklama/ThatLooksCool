@@ -9,21 +9,26 @@
 import UIKit
 
 protocol ItemIterationDelegate: AnyObject {
-    func didPressPrevious()
+    func didPressDelete()
     func didPressNext()
     func didPressUndo()
 }
 
 class ItemControlView: ShadowView {
 
-    private let previousButton = UIButton()
+    private let deleteButton = UIButton()
     private let nextButton = UIButton()
     private let undoButton = UIButton()
     
-    var canPreviousNext: Bool = false {
+    var canDelete: Bool = false {
         didSet {
-            previousButton.isEnabled = canPreviousNext
-            nextButton.isEnabled = canPreviousNext
+            deleteButton.isEnabled = canDelete
+        }
+    }
+    
+    var canNext: Bool = false {
+        didSet {
+            nextButton.isEnabled = canNext
         }
     }
     
@@ -58,20 +63,29 @@ class ItemControlView: ShadowView {
     }
     
     private func setupViews() {
-        let stackView = UIStackView(arrangedSubviews: [previousButton, undoButton, nextButton])
+        self.backgroundColor = .white
+        self.layer.cornerRadius = TLCStyle.cornerRadius
+        self.layer.borderWidth = 1
+        self.layer.borderColor = TLCStyle.viewBorderColor.cgColor
+        
+        let stackView = UIStackView(arrangedSubviews: [deleteButton, undoButton, nextButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
 
-        previousButton.setTitle("previous", for: .normal)
-        previousButton.addTarget(self, action: #selector(didPressPrevious), for: .touchUpInside)
+//        previousButton.setTitle("previous", for: .normal)
         
-        nextButton.setTitle("next", for: .normal)
+        
+        deleteButton.setImage(ImagesResources.shared.deleteIcon, for: .normal)
+        deleteButton.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
+        
+        nextButton.setImage(ImagesResources.shared.nextIcon, for: .normal)
         nextButton.addTarget(self, action: #selector(didPressNext), for: .touchUpInside)
         
-        undoButton.setTitle("undo", for: .normal)
+        undoButton.setImage(ImagesResources.shared.undoIcon, for: .normal)
         undoButton.addTarget(self, action: #selector(didPressUndo), for: .touchUpInside)
-
-        for button in [previousButton, nextButton, undoButton] {
+        undoButton.addBorder(edges: [.left, .right])
+        
+        for button in [deleteButton, nextButton, undoButton] {
             button.setTitleColor(.black, for: .disabled)
         }
         
@@ -79,12 +93,12 @@ class ItemControlView: ShadowView {
         self.constrainSubviewToBounds(stackView)
                 
         canUndo = false
-        canPreviousNext = false
+        canNext = false
     }
     
     @objc
-    func didPressPrevious() {
-        delegate?.didPressPrevious()
+    func didPressDelete() {
+        delegate?.didPressDelete()
     }
 
     @objc

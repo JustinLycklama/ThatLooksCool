@@ -17,7 +17,6 @@ class EditCategoryViewController: UIViewController {
     private let mockObject: MockCategory
         
     private var previewCellView: CategoryCellView?
-    private let titleContentView = TitleContentView()
     
     weak var delegate: CompletableActionDelegate?
     
@@ -34,8 +33,54 @@ class EditCategoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        let contentView = UIView()
+        self.hideKeyboardWhenTappedAround()
         
+        // Page Layout
+        let stack = UIStackView()
+        stack.distribution = .equalSpacing
+        stack.axis = .vertical
+        stack.spacing = TLCStyle.topLevelPadding
+        
+        // Preview
+        let previewLabel = UILabel()
+        previewLabel.text = "Category Preview"
+        previewLabel.style(.heading)
+        
+        let previewView = createPreviewView()
+        
+        stack.addArrangedSubview(previewLabel)
+        stack.addArrangedSubview(previewView)
+        
+        // Edit View
+        let editLabel = UILabel()
+        editLabel.text = "Edit"
+        editLabel.style(.heading)
+        
+        let editView = createEditView()
+        
+        stack.addArrangedSubview(editLabel)
+        stack.addArrangedSubview(editView)
+        
+        view.addSubview(stack)
+        view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
+                                      withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin + TLCStyle.topLevelPadding,
+                                                                   left: TLCStyle.topLevelMargin,
+                                                                   bottom: 0,
+                                                                   right: TLCStyle.topLevelMargin))
+        
+        // Blur Background
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(blurEffectView)
+        view.constrainSubviewToBounds(blurEffectView)
+        
+        view.sendSubviewToBack(blurEffectView)
+    }
+    
+    private func createPreviewView() -> UIView {
         // Cell Preview
         let previewCell = UIView.instanceFromNib("CategoryCellView", inBundle: Bundle.main) as! CategoryCellView
         previewCellView = previewCell
@@ -43,6 +88,13 @@ class EditCategoryViewController: UIViewController {
         previewCell.displayCategory(displayable: mockObject)
         previewCell.translatesAutoresizingMaskIntoConstraints = false
         previewCell.layer.cornerRadius = 10
+        
+        return previewCell
+    }
+    
+    private func createEditView() -> UIView {
+        
+        let titleContentView = TitleContentView()
         
         // Edit Area Title Content
         let saveButton = UIButton()
@@ -59,10 +111,12 @@ class EditCategoryViewController: UIViewController {
         
         titleContentView.rightTitleItem = saveButton
         titleContentView.leftTitleItem = cancelButton
-
-//        titleContentView.titleLabel.text = "asdas"
         
-        titleContentView.layer.cornerRadius = 10
+        titleContentView.layer.cornerRadius = TLCStyle.cornerRadius
+        titleContentView.layer.borderWidth = 1
+        titleContentView.layer.borderColor = TLCStyle.viewBorderColor.cgColor
+                
+        titleContentView.addConstraint(NSLayoutConstraint.init(item: titleContentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
 
         // Editable Fields
         let editableFieldsController = EditableFieldsViewController()
@@ -90,29 +144,7 @@ class EditCategoryViewController: UIViewController {
         titleContentView.contentView.addSubview(editableFieldsController.view)
         titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
         
-        // Page Layout
-        contentView.addSubview(previewCell)
-        contentView.addSubview(titleContentView)
-        
-        let views = ["preview" : previewCell, "edit" : titleContentView]
-        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[preview]-(15)-[edit(200)]", options: .alignAllCenterX, metrics: nil, views: views))
-        
-        contentView.constrainSubviewToBounds(previewCell, onEdges: [.left, .right])
-        contentView.constrainSubviewToBounds(titleContentView, onEdges: [.left, .right])
-        
-        view.addSubview(contentView)
-        view.constrainSubviewToBounds(contentView, onEdges: [.top, .right, .left, .bottom], withInset: UIEdgeInsets.init(top: 200, left: 15, bottom: 0, right: 15))
-                
-        // Blur Background
-        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-
-        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(blurEffectView)
-        view.constrainSubviewToBounds(blurEffectView)
-        
-        view.sendSubviewToBack(blurEffectView)
+        return titleContentView
     }
     
     @objc

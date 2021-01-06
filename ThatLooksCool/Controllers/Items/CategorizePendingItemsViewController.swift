@@ -45,9 +45,27 @@ class CategorizePendingItemsViewController: AdViewController {
         }
     }
     
+    // Undo Items
     var lastResolvedItem: Item? = nil {
         didSet {
-            itemControlView.canUndo = lastResolvedItem != nil
+            // Only one of lastResolvedItem and lastDeletedItemMock can be set
+            if (lastResolvedItem != nil) {
+                lastDeletedItemMock = nil
+            }
+            
+            itemControlView.canUndo = lastResolvedItem != nil || lastDeletedItemMock != nil
+        }
+    }
+    
+    var lastDeletedItemMock: MockItem? = nil {
+        didSet {
+            
+            // Only one of lastResolvedItem and lastDeletedItemMock can be set
+            if lastDeletedItemMock != nil {
+                lastResolvedItem = nil
+            }
+            
+            itemControlView.canUndo = lastResolvedItem != nil || lastDeletedItemMock != nil
         }
     }
     
@@ -62,7 +80,7 @@ class CategorizePendingItemsViewController: AdViewController {
         }
         
         didSet {
-            trippleItemDisplayView.badge(text: String(items.count))
+            trippleItemDisplayView.setBadge(items.count)
             
             let defaultIndex: Int? = items.count > 0 ? 0 : nil
             
@@ -73,7 +91,8 @@ class CategorizePendingItemsViewController: AdViewController {
                 currentItemIndex = defaultIndex
             }
             
-            itemControlView.canPreviousNext = items.count > 1
+            itemControlView.canNext = items.count > 1
+            itemControlView.canDelete = items.count > 0
         }
     }
     
@@ -83,16 +102,10 @@ class CategorizePendingItemsViewController: AdViewController {
         title = "Categorize New Items"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
         
-        // Categories
-        categoriesViewController.canAddCategories = true
-        categoriesViewController.delegate = self
+        let navigationBarAppearance = self.navigationController!.navigationBar
+        navigationBarAppearance.setBackgroundImage(UIImage(named: "rocks_crop"), for: .default)
+//        navigationBarAppearance.setBackgroundImage(backImageForLandscapePhoneBarMetrics, for: .compact)
         
-        let categoriesView = categoriesViewController.view ?? UIView()
-        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
-
-        categoriesView.layer.cornerRadius = 10
-        categoriesView.layer.isOpaque = false
-                
         // Item Display
 
         let itemViewStack = UIStackView()
@@ -117,11 +130,6 @@ class CategorizePendingItemsViewController: AdViewController {
         // Item Navigation
         itemControlView.delegate = self
         itemControlView.translatesAutoresizingMaskIntoConstraints = false
-
-        itemControlView.backgroundColor = .white
-        itemControlView.layer.cornerRadius = TLCStyle.cornerRadius
-        itemControlView.layer.borderWidth = 1
-        itemControlView.layer.borderColor = TLCStyle.darkBorderColor.cgColor
         
         itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
         
@@ -132,7 +140,44 @@ class CategorizePendingItemsViewController: AdViewController {
         stackView.axis = .vertical
         stackView.spacing = TLCStyle.topLevelPadding + TLCStyle.interiorPadding
                         
+        
+        
+        // Header
+        let categoryHeaderStack = UIStackView()
+        categoryHeaderStack.axis = .horizontal
+        categoryHeaderStack.distribution = .fillProportionally
+        categoryHeaderStack.spacing = TLCStyle.topLevelPadding
+        
+        let categoriesLabel = UILabel()
+        categoriesLabel.text = "Categorize Item"
+        categoriesLabel.style(.heading)
+        categoriesLabel.setContentHuggingPriority(.required, for: .horizontal)
+        categoriesLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        let addCategoryView = CategoryAddCellView()
+        addCategoryView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+//        addCategoryView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        let spacerView = UIView()
+        spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        spacerView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+        categoryHeaderStack.addArrangedSubview(categoriesLabel)
+        categoryHeaderStack.addArrangedSubview(addCategoryView)
+        categoryHeaderStack.addArrangedSubview(spacerView)
+        
+        // Categories
+        categoriesViewController.canAddCategories = false
+        categoriesViewController.delegate = self
+        
+        let categoriesView = categoriesViewController.view ?? UIView()
+        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
+
+        categoriesView.layer.cornerRadius = 10
+        categoriesView.layer.isOpaque = false
+        
         stackView.addArrangedSubview(itemDisplayAndNavigationView)
+        stackView.addArrangedSubview(categoryHeaderStack)
         stackView.addArrangedSubview(categoriesView)
         
         contentView.addSubview(stackView)
@@ -150,10 +195,12 @@ class CategorizePendingItemsViewController: AdViewController {
 
         }.disposed(by: disposeBag)
         
+        #if targetEnvironment(simulator)
         RealmSubjects.shared.removeAllPendingItems()
         RealmSubjects.shared.addPendingItem(title: "1")
         RealmSubjects.shared.addPendingItem(title: "2\nasd asd asd\nasd ads")
         RealmSubjects.shared.addPendingItem()
+        #endif
     }
         
     private func setupItemDisplay() {
@@ -263,15 +310,9 @@ extension CategorizePendingItemsViewController: CategorySelectionDelegate {
 }
 
 extension CategorizePendingItemsViewController: ItemIterationDelegate {
-    func didPressPrevious() {
-        guard let currentIndex = currentItemIndex else {
-            return
-        }
-        
-        if currentIndex > 0 {
-            currentItemIndex = currentIndex - 1
-        } else {
-            currentItemIndex = items.count - 1
+    func didPressDelete() {
+        if let currentEditItemController = currentDisplayItemAndView?.displayController {
+            lastDeletedItemMock = currentEditItemController.deleteItem()
         }
     }
     
@@ -291,6 +332,9 @@ extension CategorizePendingItemsViewController: ItemIterationDelegate {
         if let lastResolvedItem = self.lastResolvedItem {
             RealmSubjects.shared.categorizeItem(lastResolvedItem, toCategory: nil)
             self.lastResolvedItem = nil
+        } else if let lastDeletedMock = self.lastDeletedItemMock {
+            RealmSubjects.shared.createItem(withMock: lastDeletedMock, toCategory: nil)
+            self.lastDeletedItemMock = nil
         }
     }
 }

@@ -42,7 +42,8 @@ class CategoriesViewController: UIViewController {
         super .viewDidLoad()
         
         self.view.clipsToBounds = false
-        self.view.backgroundColor = TLCStyle.primaryBackgroundColor
+        self.view.layer.cornerRadius = TLCStyle.cornerRadius
+        self.view.backgroundColor = .clear
         
         let maskingView = UIView()
         maskingView.clipsToBounds = true
@@ -155,7 +156,9 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             RealmSubjects.shared.removeCategory(self.categories[indexPath.row])
             completion(true)
         })
-        
+                
+        remove.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        remove.image = ImagesResources.shared.deleteIcon
         
         let edit = UIContextualAction(style: .destructive, title: "Edit", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
@@ -167,18 +170,8 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
             completion(true)
         })
 
-        remove.backgroundColor = UIColor(red: 0, green: 1, blue: 0, alpha: 0)
-        edit.backgroundColor = TLCStyle.primaryIconColor.withAlphaComponent(0)
-        
-        edit.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
-            ctx.cgContext.setFillColor(TLCStyle.primaryIconColor.cgColor)
-            UIImage(named: "edit")?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
-        }
-        
-        remove.image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
-            ctx.cgContext.setFillColor(TLCStyle.destructiveIconColor.cgColor)
-            UIImage(named: "delete")?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
-        }
+        edit.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        edit.image = ImagesResources.shared.editIcon
         
         return UISwipeActionsConfiguration(actions: [edit, remove])
     }

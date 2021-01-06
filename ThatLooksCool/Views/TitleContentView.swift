@@ -49,6 +49,8 @@ class TitleContentView: UIView {
     private func initialize() {
         
         backgroundColor = .white
+        clipsToBounds = true
+        
         
         // Title Views
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
@@ -70,9 +72,9 @@ class TitleContentView: UIView {
         addSubview(contentView)
         
         let views = ["title" : titleStackView, "content": contentView]
-        let metrics = ["spacing" : 12]
+        let metrics = ["spacing" : TLCStyle.interiorPadding, "margin" : TLCStyle.interiorMargin]
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(0)-[title]-(spacing)-[content]-(0)-|", options: .alignAllCenterX, metrics: metrics, views: views))
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(margin)-[title]-(spacing)-[content]-(margin)-|", options: .alignAllCenterX, metrics: metrics, views: views))
         
         constrainSubviewToBounds(titleStackView, onEdges: [.left, .right])
         constrainSubviewToBounds(contentView, onEdges: [.left, .right])

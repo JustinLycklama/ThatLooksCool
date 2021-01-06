@@ -19,6 +19,9 @@ class CategoryCellView: ShadowView {
         self.clipsToBounds = false
         self.layer.cornerRadius = TLCStyle.cornerRadius
         
+        self.layer.borderWidth = 1
+        self.layer.borderColor = TLCStyle.viewBorderColor.cgColor
+        
         titleLabel.text = "default Text"
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
