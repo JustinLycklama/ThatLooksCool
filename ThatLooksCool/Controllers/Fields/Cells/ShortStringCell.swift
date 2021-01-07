@@ -30,6 +30,9 @@ class ShortStringCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        titleLabel.style(.label)
+        valueTextField.style(.userText)
+        
         valueTextField.layer.cornerRadius = TLCStyle.textCornerRadius
         valueTextField.layer.borderWidth = 1
         valueTextField.layer.borderColor = TLCStyle.textBorderColor.cgColor

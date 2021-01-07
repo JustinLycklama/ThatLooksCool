@@ -40,6 +40,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        
+        UINavigationBar.appearance().barTintColor = TLCStyle.navBarBackgroundColor
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: TLCStyle.navBarFont ?? UIFont.systemFont(ofSize: 24),
+                                                            NSAttributedString.Key.foregroundColor: TLCStyle.navBarTextColor]
+        UINavigationBar.appearance().isTranslucent = false
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: TLCStyle.barButtonFont ?? UIFont.systemFont(ofSize: 14),
+                                                             NSAttributedString.Key.foregroundColor: TLCStyle.barButtonTextColor], for: .normal)
+
 //        let directoryUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: TLC_Constants.AppGroupId)!
 //        let realmPath = directoryUrl.path.appending("db.realm")
 //

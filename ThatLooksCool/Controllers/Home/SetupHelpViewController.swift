@@ -11,11 +11,21 @@ import IntentsUI
 
 class SetupHelpViewController: UIViewController {
 
+    weak var delegate: CompletableActionDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        edgesForExtendedLayout = []
+        self.view.backgroundColor = TLCStyle.primaryBackgroundColor
+        
+        title = "Setup"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
+        
         let stack = UIStackView()
         stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.spacing = TLCStyle.topLevelPadding
         
         // Location Intent
         let rememberLocationIntentButton = INUIAddVoiceShortcutButton(style: .blackOutline)
@@ -26,10 +36,23 @@ class SetupHelpViewController: UIViewController {
         rememberLocationIntentButton.shortcut = INShortcut(intent: intent )
         rememberLocationIntentButton.delegate = self
         
-//        rememberLocationIntentButton.addTarget(self, action: #selector(addToSiri(_:)), for: .touchUpInside)
+        let locationTitle = UILabel()
+        locationTitle.text = "Remember Location"
+        locationTitle.style(.heading)
         
+        let locationDetails = UILabel()
+        locationDetails.numberOfLines = 0
+        locationDetails.text = "This shortcut will be used to remember your location, when given phrase is spoken to siri. \n\nTry \'That Looks Cool'."
+        locationDetails.style(.instructions)
+        
+        stack.addArrangedSubview(locationTitle)
+        stack.addArrangedSubview(locationDetails)
         stack.addArrangedSubview(rememberLocationIntentButton)
         
+        // Spacer
+        let spacer = UIView()
+        stack.addArrangedSubview(spacer)
+
         // Speech Intent
         let rememberSpeechIntentButton = INUIAddVoiceShortcutButton(style: .blackOutline)
         rememberSpeechIntentButton.translatesAutoresizingMaskIntoConstraints = false
@@ -39,14 +62,41 @@ class SetupHelpViewController: UIViewController {
         rememberSpeechIntentButton.shortcut = INShortcut(intent: rememberIntent)
         rememberSpeechIntentButton.delegate = self
         
-//        rememberSpeechIntentButton.addTarget(self, action: #selector(addToSiri(_:)), for: .touchUpInside)
+        let rememberTitle = UILabel()
+        rememberTitle.text = "Remember Spoken Item"
+        rememberTitle.style(.heading)
         
+        let rememberDetails = UILabel()
+        rememberDetails.numberOfLines = 0
+        rememberDetails.text = "This shortcut will be used to remember the next thing you say to Siri. \n\nTry \'Remember'.\n\nExample: \'Hey Siri. Remember. Check out Game of Thrones\'."
+        rememberDetails.style(.instructions)
+        
+        stack.addArrangedSubview(rememberTitle)
+        stack.addArrangedSubview(rememberDetails)
         stack.addArrangedSubview(rememberSpeechIntentButton)
         
-        view.addSubview(stack)
-        view.constrainSubviewToBounds(stack)
+        // Spacer
+        let spacer2 = UIView()
+        stack.addArrangedSubview(spacer2)
         
-        // Do any additional setup after loading the view.
+        // Acknowledgements
+        let ack = UILabel()
+        ack.text = "About"
+        ack.textAlignment = .right
+        ack.style(.systemInfoLink)
+        
+        stack.addArrangedSubview(ack)
+        
+        view.addSubview(stack)
+        view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
+                                      withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin,
+                                                                   left: TLCStyle.topLevelMargin,
+                                                                   bottom: 0,
+                                                                   right: TLCStyle.topLevelMargin))
+    }
+    
+    @objc func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     // Present the Add Shortcut view controller after the

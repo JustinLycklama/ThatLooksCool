@@ -31,6 +31,9 @@ class LongStringCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        titleLabel.style(.label)
+        textView.style(.userText)
+        
         selectionStyle = .none
         textView.delegate = self
         

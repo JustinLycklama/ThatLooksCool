@@ -24,9 +24,7 @@ class CategoriesViewController: UIViewController {
     }
     
     weak var delegate: CategorySelectionDelegate?
-    
-    fileprivate var alertTextField: UITextField?
-    
+        
     private let tableView = UITableView()
     private let disposeBag = DisposeBag()
     
@@ -61,7 +59,7 @@ class CategoriesViewController: UIViewController {
                                                                                 right: TLCStyle.interiorMargin))
         
         // Table
-        tableView.register(CategoryAddCell.self, forCellReuseIdentifier: Constants.addCell)
+        tableView.register(AddCell.self, forCellReuseIdentifier: Constants.addCell)
         tableView.register(CategoryCell.self, forCellReuseIdentifier: Constants.categoryCell)
         
         tableView.delegate = self
@@ -91,7 +89,7 @@ class CategoriesViewController: UIViewController {
 extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
     private func isAddCategorySection(_ section: Int) -> Bool {
-        return section == 0
+        return section == 1
     }
     
     private func isAddCategoryIndex(_ indexPath: IndexPath) -> Bool {

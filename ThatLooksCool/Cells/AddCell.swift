@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryAddCell: UITableViewCell {
+class AddCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -23,7 +23,7 @@ class CategoryAddCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
                 
-        let addView = CategoryAddCellView()
+        let addView = AddCellView()
         
         self.contentView.addSubview(addView)
         self.contentView.constrainSubviewToBounds(addView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,

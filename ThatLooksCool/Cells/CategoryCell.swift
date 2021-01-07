@@ -42,8 +42,4 @@ class CategoryCell: UITableViewCell {
     func displayCategory(displayable: CategoryDisplayable) {
         cellDisplayView?.displayCategory(displayable: displayable)
     }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//    }
 }

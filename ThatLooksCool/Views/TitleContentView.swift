@@ -53,6 +53,7 @@ class TitleContentView: UIView {
         
         
         // Title Views
+        titleLabel.style(.label)
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false

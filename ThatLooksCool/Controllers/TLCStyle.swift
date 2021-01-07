@@ -29,7 +29,7 @@ public struct TLCStyle {
         static let lightGrey = UIColor(rgb: 0xEFF0F3)
         static let mediumGrey = UIColor(rgb: 0x9fa7bb)
         static let darkGrey = UIColor(rgb: 0x424B54)
-
+        static let black = UIColor.black
 
         static let darkBlue = UIColor(rgb: 0x344180)
         static let red = UIColor(rgb: 0xbb5a68)
@@ -58,6 +58,18 @@ public struct TLCStyle {
     public static let progressIconColor = ColorPallet.turquoise
     public static let modificationIconColor = ColorPallet.yellow
     public static let destructiveIconColor = ColorPallet.red
+    
+    // Nav Bar
+    public static let navBarBackgroundColor = ColorPallet.lightCyan
+
+    private static let navBarLabelType = LabelType.navBar
+    public static let navBarFont = UIFont(name: navBarLabelType.fontName, size: navBarLabelType.size)
+    public static let navBarTextColor = navBarLabelType.textColor
+    
+    // Bar Button Item
+    private static let barButtonLabelType = LabelType.barButton
+    public static let barButtonFont = UIFont(name: barButtonLabelType.fontName, size: barButtonLabelType.size)
+    public static let barButtonTextColor = barButtonLabelType.textColor
 }
 
 class ImagesResources {
@@ -109,31 +121,82 @@ extension UIView {
 }
 
 enum LabelType {
+    case navBar
+    case barButton
     case heading
+    case instructions
+    case label
+    case userText
+    case systemInfoLink
     
     var fontName: String {
         switch self {
-        case .heading:
+        case .navBar:
+            return "AvenirNext-Medium"
+        case .barButton:
+            return "AvenirNext-Regular"
+        case .heading, .instructions:
+            return "AvenirNext-Regular"
+        case .label:
+            return "AvenirNext-Regular"
+        case .userText:
             return "Avenir-Book"
+        case .systemInfoLink:
+            return "AvenirNextCondensed-Medium"
         }
     }
     
     var textColor: UIColor {
+        
         switch self {
-        case .heading:
+        case .navBar, .barButton:
             return TLCStyle.ColorPallet.darkGrey
+        case .heading, .instructions:
+            return TLCStyle.ColorPallet.darkGrey
+        case .label:
+            return TLCStyle.ColorPallet.darkGrey
+        case .userText:
+            return TLCStyle.ColorPallet.black
+        case .systemInfoLink:
+            return TLCStyle.ColorPallet.turquoise
         }
     }
     
     var size: CGFloat {
         switch self {
+        case .navBar:
+            return 22
+        case .barButton:
+            return 18
         case .heading:
             return 24
+        case .instructions:
+            return 16
+        case .label:
+            return 16
+        case .userText:
+            return 16
+        case .systemInfoLink:
+            return 16
         }
     }
 }
 
 extension UILabel {
+    func style(_ type: LabelType) {
+        self.font = UIFont(name: type.fontName, size: type.size)
+        self.textColor = type.textColor
+    }
+}
+
+extension UITextView {
+    func style(_ type: LabelType) {
+        self.font = UIFont(name: type.fontName, size: type.size)
+        self.textColor = type.textColor
+    }
+}
+
+extension UITextField {
     func style(_ type: LabelType) {
         self.font = UIFont(name: type.fontName, size: type.size)
         self.textColor = type.textColor

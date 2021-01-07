@@ -15,14 +15,11 @@ import ClassicClient
 
 struct DisplayItemAndView {
     let displayItem: Item
-    let displayController: EditItemViewController
+    let displayController: ItemEditableFieldsViewController
 }
 
 class CategorizePendingItemsViewController: AdViewController {
 
-    private let categoriesViewController = CategoriesViewController()
-
-    private let itemDisplayAndNavigationView = UIView()
     private let trippleItemDisplayView = TrippleItemZAzisView()
     
 //    private let displayControllerArea = UIView()
@@ -102,82 +99,36 @@ class CategorizePendingItemsViewController: AdViewController {
         title = "Categorize New Items"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
         
-        let navigationBarAppearance = self.navigationController!.navigationBar
-        navigationBarAppearance.setBackgroundImage(UIImage(named: "rocks_crop"), for: .default)
+//        let navigationBarAppearance = self.navigationController!.navigationBar
+//        navigationBarAppearance.setBackgroundImage(UIImage(named: "rocks_crop"), for: .default)
 //        navigationBarAppearance.setBackgroundImage(backImageForLandscapePhoneBarMetrics, for: .compact)
-        
-        // Item Display
 
-        let itemViewStack = UIStackView()
-        itemViewStack.axis = .vertical
-        itemViewStack.spacing = -TLCStyle.interiorPadding
+        
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default) //UIImage.init(named: "transparent.png")
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.view.backgroundColor = TLCStyle.navBarBackgroundColor
+        
 
-
-        itemDisplayAndNavigationView.layer.cornerRadius = TLCStyle.cornerRadius
-        itemDisplayAndNavigationView.backgroundColor = .clear //TLCStyle.secondaryBackgroundColor
-        itemDisplayAndNavigationView.setContentHuggingPriority(.required, for: .vertical)
-        itemDisplayAndNavigationView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        
-        setupItemDisplay()
-        
-        itemDisplayAndNavigationView.addSubview(itemViewStack)
-        itemDisplayAndNavigationView.constrainSubviewToBounds(itemViewStack)
-
-        itemViewStack.addArrangedSubview(trippleItemDisplayView)
-        itemViewStack.addArrangedSubview(itemControlView)
-        
-        
-        // Item Navigation
-        itemControlView.delegate = self
-        itemControlView.translatesAutoresizingMaskIntoConstraints = false
-        
-        itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
-        
-        itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
         
         // Stack Setup
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = TLCStyle.topLevelPadding + TLCStyle.interiorPadding
                         
+        // Item Display
+        let itemDisplay = createItemDisplay()
         
+        stackView.addArrangedSubview(itemDisplay)
         
-        // Header
-        let categoryHeaderStack = UIStackView()
-        categoryHeaderStack.axis = .horizontal
-        categoryHeaderStack.distribution = .fillProportionally
-        categoryHeaderStack.spacing = TLCStyle.topLevelPadding
-        
+        // Categories
         let categoriesLabel = UILabel()
         categoriesLabel.text = "Categorize Item"
         categoriesLabel.style(.heading)
-        categoriesLabel.setContentHuggingPriority(.required, for: .horizontal)
-        categoriesLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        
-        let addCategoryView = CategoryAddCellView()
-        addCategoryView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-//        addCategoryView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        
-        let spacerView = UIView()
-        spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        spacerView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        categoryHeaderStack.addArrangedSubview(categoriesLabel)
-        categoryHeaderStack.addArrangedSubview(addCategoryView)
-        categoryHeaderStack.addArrangedSubview(spacerView)
+        let categoriesView = createCategoryView()
         
-        // Categories
-        categoriesViewController.canAddCategories = false
-        categoriesViewController.delegate = self
-        
-        let categoriesView = categoriesViewController.view ?? UIView()
-        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
-
-        categoriesView.layer.cornerRadius = 10
-        categoriesView.layer.isOpaque = false
-        
-        stackView.addArrangedSubview(itemDisplayAndNavigationView)
-        stackView.addArrangedSubview(categoryHeaderStack)
+        stackView.addArrangedSubview(categoriesLabel)
         stackView.addArrangedSubview(categoriesView)
         
         contentView.addSubview(stackView)
@@ -203,12 +154,53 @@ class CategorizePendingItemsViewController: AdViewController {
         #endif
     }
         
-    private func setupItemDisplay() {
-        
-    }
-    
     @objc func close() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    private func createItemDisplay() -> UIView {
+        let itemDisplayAndNavigationView = UIView()
+        
+        let itemViewStack = UIStackView()
+        itemViewStack.axis = .vertical
+        itemViewStack.spacing = -TLCStyle.interiorPadding
+
+        itemDisplayAndNavigationView.layer.cornerRadius = TLCStyle.cornerRadius
+        itemDisplayAndNavigationView.backgroundColor = .clear //TLCStyle.secondaryBackgroundColor
+        itemDisplayAndNavigationView.setContentHuggingPriority(.required, for: .vertical)
+        itemDisplayAndNavigationView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+                
+        itemDisplayAndNavigationView.addSubview(itemViewStack)
+        itemDisplayAndNavigationView.constrainSubviewToBounds(itemViewStack)
+
+        itemViewStack.addArrangedSubview(trippleItemDisplayView)
+        itemViewStack.addArrangedSubview(itemControlView)
+        
+        // Item Navigation
+        itemControlView.delegate = self
+        itemControlView.translatesAutoresizingMaskIntoConstraints = false
+        
+        itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
+        
+        itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
+        
+        return itemDisplayAndNavigationView
+    }
+    
+    private func createCategoryView() -> UIView {
+        let categoriesViewController = CategoriesViewController()
+        addChild(categoriesViewController)
+        
+        categoriesViewController.canAddCategories = false
+        categoriesViewController.delegate = self
+        
+        let categoriesView = categoriesViewController.view ?? UIView()
+        categoriesView.setContentHuggingPriority(.defaultLow, for: .vertical)
+
+        categoriesView.layer.cornerRadius = 10
+        categoriesView.layer.isOpaque = false
+        
+        return categoriesView
     }
     
     private var isAnimatingOut: Bool = false
@@ -224,7 +216,7 @@ class CategorizePendingItemsViewController: AdViewController {
         let createItemBlock = { [weak self] in
                         
             if let currentItem = self?.currentItem {
-                let newDisplayController = EditItemViewController(item: currentItem, category: nil)
+                let newDisplayController = ItemEditableFieldsViewController(item: currentItem, category: nil)
                 let newDisplayView = newDisplayController.view!
                 
                 newDisplayView.alpha = 0
@@ -297,14 +289,16 @@ extension CategorizePendingItemsViewController: CategorySelectionDelegate {
         let editView = EditCategoryViewController(category: category)
 
         editView.delegate = self
-        editView.modalPresentationStyle = .overFullScreen
+        editView.modalPresentationStyle = .formSheet
         
         self.present(editView, animated: true, completion: nil)
     }
     
     func selectCategory(_ category: ItemCategory) {
         if let currentEditItemController = currentDisplayItemAndView?.displayController {
-            RealmSubjects.shared.categorizeItem(currentEditItemController.saveItem(), toCategory: category)
+            let item = currentEditItemController.saveItem()
+            RealmSubjects.shared.categorizeItem(item, toCategory: category)
+            lastResolvedItem = item
         }
     }
 }

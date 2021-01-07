@@ -52,16 +52,36 @@ class ItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .blue
+        self.view.clipsToBounds = false
+        self.view.layer.cornerRadius = TLCStyle.cornerRadius
+        self.view.backgroundColor = .clear
         
-        self.view.addSubview(tableView)
-        self.view.constrainSubviewToBounds(tableView)
+        let maskingView = UIView()
+        maskingView.clipsToBounds = true
+                
+        self.view.addSubview(maskingView)
+        self.view.constrainSubviewToBounds(maskingView, withInset: UIEdgeInsets(top: -TLCStyle.interiorMargin,
+                                                                                left: -TLCStyle.interiorMargin,
+                                                                                bottom: -TLCStyle.interiorMargin,
+                                                                                right: -TLCStyle.interiorMargin))
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.AddCell)
-        tableView.register(UINib(nibName: "ItemCell", bundle: nil), forCellReuseIdentifier: Constants.ItemCell)
+        maskingView.addSubview(tableView)
+        maskingView.constrainSubviewToBounds(tableView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
+                                                                                left: TLCStyle.interiorMargin,
+                                                                                bottom: TLCStyle.interiorMargin,
+                                                                                right: TLCStyle.interiorMargin))
+        
+        // Table
+        tableView.register(AddCell.self, forCellReuseIdentifier: Constants.AddCell)
+        tableView.register(ItemCell.self, forCellReuseIdentifier: Constants.ItemCell)
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
+        
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.bounces = false
+        tableView.clipsToBounds = false
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -82,36 +102,66 @@ class ItemsViewController: UIViewController {
 }
 
 extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
-    private func isAddItemRow(_ indexPath: IndexPath) -> Bool {
-        return canAddItems && indexPath.row == items.count
+    
+    private func isAddItemSection(_ section: Int) -> Bool {
+        return section == 0
+    }
+    
+    private func isAddItemIndex(_ indexPath: IndexPath) -> Bool {
+        return canAddItems && isAddItemSection(indexPath.section)
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return canAddItems ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count + (canAddItems ? 1 : 0)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        if canAddItems && isAddItemSection(section) {
+            return 1
+        }
+        
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell!
         
-        if isAddItemRow(indexPath) {
+        if isAddItemIndex(indexPath) {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.AddCell, for: indexPath)
-            cell.textLabel?.text = "Add New Item"
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.ItemCell, for: indexPath)
-            (cell as? ItemCell)?.displayItem(items[indexPath.row])
+            (cell as? ItemCell)?.displayItem(displayable: items[indexPath.row])
         }
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return !isAddItemIndex(indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+                    
+        let remove = UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+            guard let self = self else {
+                completion(false)
+                return
+            }
+            
+            RealmSubjects.shared.removeItem(self.items[indexPath.row])
+            completion(true)
+        })
+                
+        remove.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        remove.image = ImagesResources.shared.deleteIcon
+
+        return UISwipeActionsConfiguration(actions: [remove])
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        if isAddItemRow(indexPath) {
+        if isAddItemIndex(indexPath) {
             delegate?.ediItem(nil)
         } else {
             delegate?.selectItem(items[indexPath.row])
@@ -127,12 +177,9 @@ extension ItemsViewController : CompletableActionDelegate {
 
 extension ItemsViewController : ItemSelectionDelegate {
     func ediItem(_ item: Item?) {
-        let editView = EditItemViewController(item: item, category: category)
+        let editView = ItemEditableFieldsViewController(item: item, category: category)
         
         editView.completeDelegate = self
-        
-//        editView.delegate = self
-//        editView.modalPresentationStyle = .overFullScreen
         
         self.present(editView, animated: true, completion: nil)
     }
@@ -141,3 +188,5 @@ extension ItemsViewController : ItemSelectionDelegate {
         ediItem(item)
     }
 }
+
+

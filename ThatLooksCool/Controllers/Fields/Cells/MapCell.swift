@@ -95,10 +95,6 @@ class MapCell: UITableViewCell {
         
         addMapToView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 150)))
         layoutPin()
-        
-        self.mapView?.settings.scrollGestures = false
-        self.mapView?.settings.tiltGestures = false
-        self.mapView?.settings.zoomGestures = false
     }
         
     override func layoutSubviews() {
@@ -118,6 +114,10 @@ class MapCell: UITableViewCell {
         mapView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
                 
         mapView.delegate = self
+        
+        mapView.settings.scrollGestures = false
+        mapView.settings.tiltGestures = false
+        mapView.settings.zoomGestures = false
         
         self.mapView = mapView
         self.mapViewArea.addSubview(mapView)

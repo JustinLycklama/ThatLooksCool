@@ -2,43 +2,30 @@
 //  EditItemViewController.swift
 //  ThatLooksCool
 //
-//  Created by Justin Lycklama on 2020-12-16.
-//  Copyright © 2020 Justin Lycklama. All rights reserved.
-//
-
-//
-//  EditCategoryViewController.swift
-//  ThatLooksCool
-//
-//  Created by Justin Lycklama on 2020-12-12.
-//  Copyright © 2020 Justin Lycklama. All rights reserved.
+//  Created by Justin Lycklama on 2021-01-06.
+//  Copyright © 2021 Justin Lycklama. All rights reserved.
 //
 
 import UIKit
-
-//TODO REMOVE
-import CoreLocation
-
 import TLCModel
 
 class EditItemViewController: UIViewController {
 
-    private let associatedCategory: ItemCategory?
-    
-    private let databaseObject: Item?
-    private let mockObject: MockItem
+//    private let databaseObject: Item?
+//    private let mockObject: MockItem
         
-//    private let titleContentView = TitleContentView()
+    private var previewCellView: ItemCellView?
     
-    let scrollView = UIScrollView()
+    let editableFieldsController: ItemEditableFieldsViewController
     
+    weak var delegate: CompletableActionDelegate?
     
-    weak var completeDelegate: CompletableActionDelegate?
-    
-    init(item: Item?, category: ItemCategory?) {
-        mockObject = MockItem(item: item)
-        databaseObject = item
-        associatedCategory = category
+    init(item: Item?, category: ItemCategory) {
+//        mockObject = MockItem(item: item)
+//        databaseObject = item
+        
+        editableFieldsController = ItemEditableFieldsViewController(item: item, category: category)
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,128 +36,115 @@ class EditItemViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
   
-//        let contentView = UIView()
-        
-        
-        // Edit Area Title Content
-//        let saveButton = UIButton()
-//        saveButton.setTitle("Save", for: .normal)
-//        saveButton.setTitleColor(.black, for: .normal)
-//        saveButton.addTarget(self, action: #selector(saveItem), for: .touchUpInside)
-//
-//        let cancelButton = UIButton()
-//        cancelButton.setTitle("Cancel", for: .normal)
-//        cancelButton.setTitleColor(.black, for: .normal)
-//        cancelButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        
-//        titleContentView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        titleContentView.rightTitleItem = saveButton
-//        titleContentView.leftTitleItem = cancelButton
-//
-////        titleContentView.titleLabel.text = "asdas"
-//
-//        titleContentView.layer.cornerRadius = 10
-
-        // Editable Fields
-        let editableFieldsController = EditableFieldsViewController()
-        self.addChild(editableFieldsController)
-        
-        editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        editableFieldsController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        editableFieldsController.addField(.shortText(title: "Name", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
-            if let mockObject = self?.mockObject {
-                mockObject.title = newVal
-            }
-        }))
-        
-        if let coord = mockObject.coordinate {
-            editableFieldsController.addField(.map(coordinate: coord))
-        }
-        
-        editableFieldsController.addField(.longText(title: "Info", initialValue: mockObject.info, onUpdate: { [weak self] newVal in
-            if let mockObject = self?.mockObject {
-                mockObject.info = newVal
-            }
-        }))
-
-        self.view.addSubview(editableFieldsController.view)
-        self.view.constrainSubviewToBounds(editableFieldsController.view)
-        
-    
-//        scrollView.backgroundColor = .cyan
-//
-//        scrollView.addSubview(editableFieldsController.view)
-//        scrollView.constrainSubviewToBounds(editableFieldsController.view)
-//
-//
-//        self.view.addSubview(scrollView)
-//        self.view.constrainSubviewToBounds(scrollView)
-//
-        
-        ////////////
-        
-//        titleContentView.contentView.addSubview(editableFieldsController.view)
-//        titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
+        self.hideKeyboardWhenTappedAround()
         
         // Page Layout
-//        contentView.addSubview(previewCell)
-//        contentView.addSubview(titleContentView)
-//
-//        let views = ["preview" : previewCell, "edit" : titleContentView]
-//        contentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[preview]-(15)-[edit(200)]", options: .alignAllCenterX, metrics: nil, views: views))
-//
-//        contentView.constrainSubviewToBounds(previewCell, onEdges: [.left, .right])
-//        contentView.constrainSubviewToBounds(titleContentView, onEdges: [.left, .right])
+        let stack = UIStackView()
+        stack.distribution = .equalSpacing
+        stack.axis = .vertical
+        stack.spacing = TLCStyle.topLevelPadding
         
-//        view.addSubview(titleContentView)
-//        view.constrainSubviewToBounds(titleContentView, onEdges: [.top, .right, .left, .bottom], withInset: UIEdgeInsets.init(top: 200, left: 15, bottom: 0, right: 15))
+        // Preview
+//        let previewLabel = UILabel()
+//        previewLabel.text = "Item Preview"
+//        previewLabel.style(.heading)
 //
-//        // Blur Background
-//        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
-//        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+//        let previewView = createPreviewView()
 //
-//        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        view.addSubview(blurEffectView)
-//        view.constrainSubviewToBounds(blurEffectView)
-//
-//        view.sendSubviewToBack(blurEffectView)
+//        stack.addArrangedSubview(previewLabel)
+//        stack.addArrangedSubview(previewView)
+        
+        // Edit View
+        let editLabel = UILabel()
+        editLabel.text = "Edit"
+        editLabel.style(.heading)
+        
+        let editView = createEditView()
+        
+        stack.addArrangedSubview(editLabel)
+        stack.addArrangedSubview(editView)
+        
+        view.addSubview(stack)
+        view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
+                                      withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin + TLCStyle.topLevelPadding,
+                                                                   left: TLCStyle.topLevelMargin,
+                                                                   bottom: 0,
+                                                                   right: TLCStyle.topLevelMargin))
+        
+        // Blur Background
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+
+        blurEffectView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(blurEffectView)
+        view.constrainSubviewToBounds(blurEffectView)
+        
+        view.sendSubviewToBack(blurEffectView)
     }
     
-    @objc @discardableResult
-    func saveItem() -> Item {
-        let savedItem: Item!
+//    private func createPreviewView() -> UIView {
+//        // Cell Preview
+//        let previewCell = UIView.instanceFromNib("ItemCellView", inBundle: Bundle.main) as! ItemCellView
+//        previewCellView = previewCell
+//
+//        previewCell.displayItem(displayable: editableFieldsController.mo)
+//        previewCell.translatesAutoresizingMaskIntoConstraints = false
+//        previewCell.layer.cornerRadius = 10
+//
+//        return previewCell
+//    }
+    
+    private func createEditView() -> UIView {
         
-        if let item = databaseObject {
-            RealmSubjects.shared.updateItem(item: item, usingMock: mockObject)
-            savedItem = item
-        } else {
-            savedItem = RealmSubjects.shared.createItem(withMock: mockObject, toCategory: associatedCategory)
-        }
+        let titleContentView = TitleContentView()
         
-        complete()
-        return savedItem
+        // Edit Area Title Content
+        let saveButton = UIButton()
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.black, for: .normal)
+        saveButton.addTarget(self, action: #selector(saveItem), for: .touchUpInside)
+                
+        let cancelButton = UIButton()
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.setTitleColor(.black, for: .normal)
+        cancelButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+        
+        titleContentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleContentView.rightTitleItem = saveButton
+        titleContentView.leftTitleItem = cancelButton
+        
+        titleContentView.layer.cornerRadius = TLCStyle.cornerRadius
+        titleContentView.layer.borderWidth = 1
+        titleContentView.layer.borderColor = TLCStyle.viewBorderColor.cgColor
+                
+        titleContentView.addConstraint(NSLayoutConstraint.init(item: titleContentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 600))
+
+        // Editable Fields
+        self.addChild(editableFieldsController)
+        
+        titleContentView.contentView.addSubview(editableFieldsController.view)
+        titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
+        
+        return titleContentView
     }
     
-    @discardableResult
-    func deleteItem() -> MockItem? {
-        var deletedItem: MockItem? = nil
+    @objc
+    func saveItem() {
+        editableFieldsController.saveItem()
         
-        if let item = databaseObject {
-            deletedItem = MockItem(item: item)
-            RealmSubjects.shared.removeItem(item)
-        }
+//        if let itemCategory = databaseObject {
+//            RealmSubjects.shared.updateCategory(category: itemCategory, usingMock: mockObject)
+//        } else {
+//            RealmSubjects.shared.addCategory(withMock: mockObject)
+//        }
         
-        complete()
-        return deletedItem
+        close()
     }
         
     @objc
-    func complete() {
-        completeDelegate?.complete()
+    func close() {
+        delegate?.complete()
     }
 }
-
-

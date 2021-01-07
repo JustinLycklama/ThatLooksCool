@@ -31,7 +31,16 @@ class HomeViewController: AdViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-            
+
+
+        self.title = "That Looks Cool"
+//        self.navigationController?.view.backgroundColor = TLCStyle.navBarBackgroundColor
+//        UINavigationBar.appearance().tintColor = TLCStyle.navBarBackgroundColor
+
+
+
+
+        
 //        edgesForExtendedLayout = []
 //        self.navigationController?.navigationBar.isHidden = true
         
@@ -52,35 +61,14 @@ class HomeViewController: AdViewController {
         stack.addArrangedSubview(pendingItemsView)
         
         // Categories
-    
-        let categoriesView = createCategoryView()
-        
-        // Header
-        let categoryHeaderStack = UIStackView()
-        categoryHeaderStack.axis = .horizontal
-        categoryHeaderStack.distribution = .fillProportionally
-        categoryHeaderStack.spacing = TLCStyle.topLevelPadding
-        
+
         let categoriesLabel = UILabel()
         categoriesLabel.text = "View by Category"
         categoriesLabel.style(.heading)
-        categoriesLabel.setContentHuggingPriority(.required, for: .horizontal)
-        categoriesLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
         
-        let addCategoryView = CategoryAddCellView()
-        addCategoryView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-//        addCategoryView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        let categoriesView = createCategoryView()
         
-        let spacerView = UIView()
-        spacerView.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        spacerView.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        
-        categoryHeaderStack.addArrangedSubview(categoriesLabel)
-        categoryHeaderStack.addArrangedSubview(addCategoryView)
-        categoryHeaderStack.addArrangedSubview(spacerView)
-        
-        stack.addArrangedSubview(categoryHeaderStack)
+        stack.addArrangedSubview(categoriesLabel)
         stack.addArrangedSubview(categoriesView)
 
         // MapView: Future Feature
@@ -173,7 +161,7 @@ class HomeViewController: AdViewController {
     private func createCategoryView() -> UIView {
         // View By Category
         categoriesController.title = "View Items By Category"
-        categoriesController.canAddCategories = false
+        categoriesController.canAddCategories = true
         categoriesController.delegate = self
     
         self.addChild(categoriesController)
@@ -190,28 +178,13 @@ class HomeViewController: AdViewController {
         return categoriesContrainer
     }
     
-    private func createMapView() -> UIView {
-        let mapView = ShadowView()
-        mapView.shadowType = .contact(distance: 10)
-        
-        let mapImage = UIImageView()
-        mapImage.image = UIImage(named: "map_image")
-        mapImage.layer.cornerRadius = TLCStyle.cornerRadius
-        mapImage.clipsToBounds = true
-        
-        mapView.addSubview(mapImage)
-        mapView.constrainSubviewToBounds(mapImage)
-        
-        mapView.addConstraint(NSLayoutConstraint.init(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 128))
-        
-        return mapView
-    }
-    
     // MARK: - Actions
     
     @objc
     func openHelp() {
         let helpController = SetupHelpViewController()
+        helpController.delegate = self
+        
         let navc = UINavigationController(rootViewController: helpController)
         
         navc.modalPresentationStyle = .fullScreen
@@ -252,38 +225,20 @@ extension HomeViewController: CompletableActionDelegate {
 extension HomeViewController: CategorySelectionDelegate {
     func editCategory(_ category: ItemCategory?) {
         let editView = EditCategoryViewController(category: category)
-
+        
         editView.delegate = self
-        editView.modalPresentationStyle = .overFullScreen
+        editView.modalPresentationStyle = .formSheet
         
         self.present(editView, animated: true, completion: nil)
     }
     
     func selectCategory(_ category: ItemCategory) {
-        let itemsVc = ItemsViewController(category: category)
-        itemsVc.delegate = itemsVc
+        let itemsVc = ViewCategoryItemsViewController(category: category)
+        itemsVc.delegate = self
         
         let navController = UINavigationController(rootViewController: itemsVc)
+        navController.modalPresentationStyle = .fullScreen
+        
         self.present(navController, animated: true, completion: nil)
-        
-//        categoriesController.navigationController?.pushViewController(itemsVc, animated: true)
-    }
-}
-
-// MARK: - ItemSelectionDelegate
-extension HomeViewController: ItemSelectionDelegate {
-    func ediItem(_ item: Item?) {
-        let editView = EditItemViewController(item: item, category: nil)
-        
-        editView.completeDelegate = self
-        
-//        editView.delegate = self
-//        editView.modalPresentationStyle = .overFullScreen
-        
-        self.present(editView, animated: true, completion: nil)
-    }
-    
-    func selectItem(_ item: Item) {
-        ediItem(item)
     }
 }

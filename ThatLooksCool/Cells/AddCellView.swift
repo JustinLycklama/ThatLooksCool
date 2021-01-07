@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategoryAddCellView: UIView {
+class AddCellView: UIView {
 
     private var shadowView = ShadowView()
     
@@ -30,8 +30,12 @@ class CategoryAddCellView: UIView {
                                                                                right: TLCStyle.interiorMargin))
         
         imageView.contentMode = .scaleAspectFit
+        
+        let width = NSLayoutConstraint.init(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32)
+        width.priority = .defaultHigh
+
         imageView.addConstraint(NSLayoutConstraint.init(item: imageView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
-        imageView.addConstraint(NSLayoutConstraint.init(item: imageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
+        imageView.addConstraint(width)
 
         self.addSubview(shadowView)
         self.constrainSubviewToBounds(shadowView)

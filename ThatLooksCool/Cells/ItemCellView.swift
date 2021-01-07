@@ -1,22 +1,24 @@
 //
-//  CategoryCellView.swift
+//  ItemCellView.swift
 //  ThatLooksCool
 //
-//  Created by Justin Lycklama on 2020-12-12.
-//  Copyright © 2020 Justin Lycklama. All rights reserved.
+//  Created by Justin Lycklama on 2021-01-05.
+//  Copyright © 2021 Justin Lycklama. All rights reserved.
 //
 
 import UIKit
 import TLCModel
 
-class CategoryCellView: ShadowView {
+class ItemCellView: ShadowView {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
 
         titleLabel.style(.userText)
+        detailLabel.style(.userText)
         
         self.clipsToBounds = false
         self.layer.cornerRadius = TLCStyle.cornerRadius
@@ -30,8 +32,8 @@ class CategoryCellView: ShadowView {
         titleLabel.textColor = .black
     }
 
-    func displayCategory(displayable: CategoryDisplayable) {
+    func displayItem(displayable: ItemDisplayable) {
         titleLabel.text = displayable.title
-        backgroundColor = displayable.color
+        detailLabel.text = displayable.info
     }
 }
