@@ -50,7 +50,7 @@ class ItemEditableFieldsViewController: UIViewController {
         editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         editableFieldsController.view.translatesAutoresizingMaskIntoConstraints = false
         
-        editableFieldsController.addField(.shortText(title: "Name", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
+        editableFieldsController.addField(.shortText(title: "Tag", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
             if let mockObject = self?.mockObject {
                 mockObject.title = newVal
             }
@@ -60,7 +60,7 @@ class ItemEditableFieldsViewController: UIViewController {
             editableFieldsController.addField(.map(coordinate: coord))
         }
         
-        editableFieldsController.addField(.longText(title: "Additional Details", initialValue: mockObject.info, onUpdate: { [weak self] newVal in
+        editableFieldsController.addField(.longText(title: "Notes", initialValue: mockObject.info, onUpdate: { [weak self] newVal in
             if let mockObject = self?.mockObject {
                 mockObject.info = newVal
             }

@@ -8,38 +8,28 @@
 
 import UIKit
 import MapKit
-import CoreLocation
-
-import TLCModel
-
-import Realm
-import RealmSwift
 
 import GoogleMaps
-import GooglePlaces
 import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let locationManager = CLLocationManager()
     let GOOGLE_API = "AIzaSyDpgypd8RVgbUFwHqgp80mNzhjGu8Pr2j8"
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         GMSServices.provideAPIKey(GOOGLE_API)
-        GMSPlacesClient.provideAPIKey(GOOGLE_API)
-        
+//        GMSPlacesClient.provideAPIKey(GOOGLE_API) // Too expensive
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in
             if success {
-                print("All set!")
+                print("Badge authorized")
             } else if let error = error {
                 print(error.localizedDescription)
             }
         }
-        
         
         UINavigationBar.appearance().barTintColor = TLCStyle.navBarBackgroundColor
         UINavigationBar.appearance().tintColor = .white
@@ -50,32 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: TLCStyle.barButtonFont ?? UIFont.systemFont(ofSize: 14),
                                                              NSAttributedString.Key.foregroundColor: TLCStyle.barButtonTextColor], for: .normal)
 
-//        let directoryUrl = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: TLC_Constants.AppGroupId)!
-//        let realmPath = directoryUrl.path.appending("db.realm")
-//
-  
-        
-        // TOOD: Doesn't set default correctly?
-//        if let realmPath = TLC_Constants.realmPath {
-//            let config = RLMRealmConfiguration.default()
-//            config.pathOnDisk = realmPath.path
-//
-//            RLMRealmConfiguration.setDefault(config)
-//        }
-        
-        
-//        // Ask for Authorisation from the User.
-//        self.locationManager.requestAlwaysAuthorization()
-//
-//        // For use in foreground
-//        self.locationManager.requestWhenInUseAuthorization()
-//
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//            locationManager.startUpdatingLocation()
-//        }
-        
         return true
     }
 
@@ -93,10 +57,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 }
-
-//extension AppDelegate: CLLocationManagerDelegate {
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-//        print("locations = \(locValue.latitude) \(locValue.longitude)")
-//    }
-//}

@@ -9,7 +9,7 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>i94Ud8</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>19H2</string>
+	<string>19H114</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
 	<string>12C33</string>
 	<key>INIntentDefinitionToolsVersion</key>
@@ -30,7 +30,7 @@
 			<key>INIntentIneligibleForSuggestions</key>
 			<true/>
 			<key>INIntentLastParameterTag</key>
-			<integer>1</integer>
+			<integer>3</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
 				<key>itemToRemember</key>
@@ -38,7 +38,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>This is a summary for shortcuts?</string>
+					<string>Remember next spoken phrase when activated</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>4IEuX8</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
@@ -63,9 +63,11 @@
 						<key>INIntentParameterMetadataCapitalization</key>
 						<string>Sentences</string>
 						<key>INIntentParameterMetadataDefaultValue</key>
-						<string>Nothing</string>
+						<string></string>
 						<key>INIntentParameterMetadataDefaultValueID</key>
 						<string>Q9HhT0</string>
+						<key>INIntentParameterMetadataMultiline</key>
+						<true/>
 					</dict>
 					<key>INIntentParameterName</key>
 					<string>itemToRemember</string>
@@ -74,6 +76,10 @@
 						<dict>
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>""</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>L0e0TI</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Configuration</string>
 						</dict>
@@ -81,7 +87,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>What should I Remember?</string>
+							<string>Here is my Prompt</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>Jrjazr</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -91,7 +97,7 @@
 					<key>INIntentParameterSupportsResolution</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>1</integer>
+					<integer>3</integer>
 					<key>INIntentParameterType</key>
 					<string>String</string>
 				</dict>

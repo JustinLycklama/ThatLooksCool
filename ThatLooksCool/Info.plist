@@ -20,6 +20,11 @@
 	<string>1</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9795717139224841~5361159859</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlechromes</string>
+		<string>comgooglemaps</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -28,11 +33,6 @@
 	<string>Description</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Description</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>googlechromes</string>
-        <string>comgooglemaps</string>
-    </array>    
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>RememberLocationIntent</string>

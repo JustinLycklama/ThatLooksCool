@@ -16,61 +16,26 @@ protocol CategorySelectionDelegate: AnyObject {
     func selectCategory(_ category: ItemCategory)
 }
 
-class CategoriesViewController: UIViewController {
+class CategoriesTableController: AddableSectionTableController {
 
     struct Constants {
         static let categoryCell = "CategoryCell"
-        static let addCell = "AddCell"
     }
     
     weak var delegate: CategorySelectionDelegate?
         
-    private let tableView = UITableView()
     private let disposeBag = DisposeBag()
     
     fileprivate var categories = [ItemCategory]()
     
-    var canAddCategories = false {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
     override func viewDidLoad() {
         super .viewDidLoad()
         
-        self.view.clipsToBounds = false
-        self.view.layer.cornerRadius = TLCStyle.cornerRadius
-        self.view.backgroundColor = .clear
-        
-        let maskingView = UIView()
-        maskingView.clipsToBounds = true
-                
-        self.view.addSubview(maskingView)
-        self.view.constrainSubviewToBounds(maskingView, withInset: UIEdgeInsets(top: -TLCStyle.interiorMargin,
-                                                                                left: -TLCStyle.interiorMargin,
-                                                                                bottom: -TLCStyle.interiorMargin,
-                                                                                right: -TLCStyle.interiorMargin))
-        
-        maskingView.addSubview(tableView)
-        maskingView.constrainSubviewToBounds(tableView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                                left: TLCStyle.interiorMargin,
-                                                                                bottom: TLCStyle.interiorMargin,
-                                                                                right: TLCStyle.interiorMargin))
-        
-        // Table
-        tableView.register(AddCell.self, forCellReuseIdentifier: Constants.addCell)
         tableView.register(CategoryCell.self, forCellReuseIdentifier: Constants.categoryCell)
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.bounces = false
-        tableView.clipsToBounds = false
 
-        tableView.tableFooterView = UIView()
         
         RealmSubjects.shared.resolvedItemCategoriesSubject
             .subscribe(onNext: { [weak self] (categories: [ItemCategory]) in
@@ -86,22 +51,14 @@ class CategoriesViewController: UIViewController {
     }
 }
 
-extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    private func isAddCategorySection(_ section: Int) -> Bool {
-        return section == 1
-    }
-    
-    private func isAddCategoryIndex(_ indexPath: IndexPath) -> Bool {
-        return canAddCategories && isAddCategorySection(indexPath.section)
-    }
-    
+extension CategoriesTableController: UITableViewDataSource, UITableViewDelegate {
+        
     func numberOfSections(in tableView: UITableView) -> Int {
-        return canAddCategories ? 2 : 1
+        return canAddNewItem ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if canAddCategories && isAddCategorySection(section) {
+        if canAddNewItem && isAddItemSection(section) {
             return 1
         }
         
@@ -111,8 +68,8 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell!
         
-        if isAddCategoryIndex(indexPath) {
-            cell = tableView.dequeueReusableCell(withIdentifier: Constants.addCell, for: indexPath)
+        if isAddItemIndex(indexPath) {
+            cell = tableView.dequeueReusableCell(withIdentifier: AddableSectionConstants.AddCell, for: indexPath)
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath)
             (cell as? CategoryCell)?.displayCategory(displayable: categories[indexPath.row])
@@ -122,17 +79,15 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if canAddCategories && section == 0 {
-            let footer = UIView()
-//            footer.addBorder(edges: .top, color: .lightGray, thickness: 1.0)
-            return footer
+        if canAddNewItem && section == 0 {
+            return UIView()
         }
         
         return nil
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if canAddCategories && section == 0 {
+        if canAddNewItem && section == 0 {
             return TLCStyle.topLevelPadding
         }
         
@@ -140,7 +95,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return !isAddCategoryIndex(indexPath)
+        return !isAddItemIndex(indexPath)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -177,7 +132,7 @@ extension CategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-        if isAddCategoryIndex(indexPath) {
+        if isAddItemIndex(indexPath) {
             self.delegate?.editCategory(nil)
         } else {
             delegate?.selectCategory(categories[indexPath.row])

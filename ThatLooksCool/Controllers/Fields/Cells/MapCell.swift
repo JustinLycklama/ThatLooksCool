@@ -118,6 +118,7 @@ class MapCell: UITableViewCell {
         mapView.settings.scrollGestures = false
         mapView.settings.tiltGestures = false
         mapView.settings.zoomGestures = false
+        mapView.settings.consumesGesturesInView = false
         
         self.mapView = mapView
         self.mapViewArea.addSubview(mapView)

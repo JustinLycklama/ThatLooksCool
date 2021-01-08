@@ -26,7 +26,7 @@ class HomeViewController: AdViewController {
             
     let disposeBag = DisposeBag()
     
-    fileprivate let categoriesController = CategoriesViewController()
+    fileprivate let categoriesController = CategoriesTableController()
     fileprivate let zAxisView = TrippleItemZAzisView()
 
     override func viewDidLoad() {
@@ -52,7 +52,7 @@ class HomeViewController: AdViewController {
         
         // Pending Items
         let pendingAndSetupLabel = UILabel()
-        pendingAndSetupLabel.text = "New Items"
+        pendingAndSetupLabel.text = "Create With Siri"
         pendingAndSetupLabel.style(.heading)
         
         let pendingItemsView = createPendingItemsView()
@@ -63,7 +63,7 @@ class HomeViewController: AdViewController {
         // Categories
 
         let categoriesLabel = UILabel()
-        categoriesLabel.text = "View by Category"
+        categoriesLabel.text = "Categories"
         categoriesLabel.style(.heading)
         
         let categoriesView = createCategoryView()
@@ -161,7 +161,7 @@ class HomeViewController: AdViewController {
     private func createCategoryView() -> UIView {
         // View By Category
         categoriesController.title = "View Items By Category"
-        categoriesController.canAddCategories = true
+        categoriesController.canAddNewItem = true
         categoriesController.delegate = self
     
         self.addChild(categoriesController)
@@ -196,7 +196,7 @@ class HomeViewController: AdViewController {
     
     @objc
     func presentUnresolvedItems() {
-        let unresolvedItems = CategorizePendingItemsViewController()
+        let unresolvedItems = CategorizeItemsViewController()
         let navc = UINavigationController(rootViewController: unresolvedItems)
         
         navc.modalPresentationStyle = .fullScreen
@@ -233,7 +233,7 @@ extension HomeViewController: CategorySelectionDelegate {
     }
     
     func selectCategory(_ category: ItemCategory) {
-        let itemsVc = ViewCategoryItemsViewController(category: category)
+        let itemsVc = DisplayItemsTableController(category: category)
         itemsVc.delegate = self
         
         let navController = UINavigationController(rootViewController: itemsVc)

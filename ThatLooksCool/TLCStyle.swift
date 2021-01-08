@@ -79,7 +79,8 @@ class ImagesResources {
     lazy var deleteIcon = renderIcon("delete", withColor: TLCStyle.destructiveIconColor)
     lazy var undoIcon = renderIcon("undo", withColor: TLCStyle.modificationIconColor)
     lazy var nextIcon = renderIcon("next", withColor: TLCStyle.progressIconColor)
-
+    lazy var listIcon = renderIcon("list", withColor: TLCStyle.accentColor)
+    
     private func renderIcon(_ name: String, withColor color: UIColor) -> UIImage {
         return UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
             ctx.cgContext.setFillColor(color.cgColor)

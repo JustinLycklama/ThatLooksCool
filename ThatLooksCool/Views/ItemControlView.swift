@@ -9,53 +9,53 @@
 import UIKit
 
 protocol ItemIterationDelegate: AnyObject {
-    func didPressDelete()
-    func didPressNext()
-    func didPressUndo()
+    func didPressFirst()
+    func didPressThird()
+    func didPressSecond()
 }
 
 class ItemControlView: ShadowView {
 
-    private let deleteButton = UIButton()
-    private let nextButton = UIButton()
-    private let undoButton = UIButton()
+    enum ButtonType {
+        case one, two, three
+    }
     
-    var canDelete: Bool = false {
+    private let firstButton = UIButton()
+    private let thirdButton = UIButton()
+    private let secondButton = UIButton()
+    
+    private let buttonMap: [ButtonType : UIButton]
+    
+    var firstButtonEnabled: Bool = false {
         didSet {
-            deleteButton.isEnabled = canDelete
+            firstButton.isEnabled = firstButtonEnabled
         }
     }
     
-    var canNext: Bool = false {
+    var thirdButtonEnabled: Bool = false {
         didSet {
-            nextButton.isEnabled = canNext
+            thirdButton.isEnabled = thirdButtonEnabled
         }
     }
     
-    var canUndo: Bool = false {
+    var secondButtonEnabled: Bool = false {
         didSet {
-            undoButton.isEnabled = canUndo
+            secondButton.isEnabled = secondButtonEnabled
         }
     }
     
     weak var delegate: ItemIterationDelegate?
     
-    override init() {
-        super.init(frame: .zero)
-        
-        setupViews()
+    convenience override init() {
+        self.init(frame: .zero)
     }
     
     override init(frame: CGRect) {
+        buttonMap = [.one : firstButton, .two : secondButton, .three : thirdButton]
+
         super.init(frame: frame)
 
         setupViews()
-//
-//        // Defer to hit didSet
-//        defer {
-//            canUndo = false
-//            canPreviousNext = false
-//        }
     }
     
     required init?(coder: NSCoder) {
@@ -68,46 +68,48 @@ class ItemControlView: ShadowView {
         self.layer.borderWidth = 1
         self.layer.borderColor = TLCStyle.viewBorderColor.cgColor
         
-        let stackView = UIStackView(arrangedSubviews: [deleteButton, undoButton, nextButton])
+        let stackView = UIStackView(arrangedSubviews: [firstButton, secondButton, thirdButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
-
-//        previousButton.setTitle("previous", for: .normal)
+            
+        firstButton.setImage(ImagesResources.shared.deleteIcon, for: .normal)
+        firstButton.addTarget(self, action: #selector(didPressFirst), for: .touchUpInside)
         
+        thirdButton.setImage(ImagesResources.shared.nextIcon, for: .normal)
+        thirdButton.addTarget(self, action: #selector(didPressThird), for: .touchUpInside)
         
-        deleteButton.setImage(ImagesResources.shared.deleteIcon, for: .normal)
-        deleteButton.addTarget(self, action: #selector(didPressDelete), for: .touchUpInside)
+        secondButton.setImage(ImagesResources.shared.listIcon, for: .normal)
+        secondButton.addTarget(self, action: #selector(didPressSecond), for: .touchUpInside)
+        secondButton.addBorder(edges: [.left, .right])
         
-        nextButton.setImage(ImagesResources.shared.nextIcon, for: .normal)
-        nextButton.addTarget(self, action: #selector(didPressNext), for: .touchUpInside)
-        
-        undoButton.setImage(ImagesResources.shared.undoIcon, for: .normal)
-        undoButton.addTarget(self, action: #selector(didPressUndo), for: .touchUpInside)
-        undoButton.addBorder(edges: [.left, .right])
-        
-        for button in [deleteButton, nextButton, undoButton] {
+        for button in [firstButton, thirdButton, secondButton] {
             button.setTitleColor(.black, for: .disabled)
         }
         
         self.addSubview(stackView)
         self.constrainSubviewToBounds(stackView)
                 
-        canUndo = false
-        canNext = false
+        secondButtonEnabled = false
+        thirdButtonEnabled = false
+    }
+    
+    internal func setIcon(icon: UIImage, forButton button: ButtonType) {
+        buttonMap[button]?.setImage(icon, for: .normal)
     }
     
     @objc
-    func didPressDelete() {
-        delegate?.didPressDelete()
+    func didPressFirst() {
+        delegate?.didPressFirst()
     }
 
+    
     @objc
-    func didPressNext() {
-        delegate?.didPressNext()
+    func didPressSecond() {
+        delegate?.didPressSecond()
     }
     
     @objc
-    func didPressUndo() {
-        delegate?.didPressUndo()
+    func didPressThird() {
+        delegate?.didPressThird()
     }
 }

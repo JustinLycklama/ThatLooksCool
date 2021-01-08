@@ -10,12 +10,11 @@ import UIKit
 
 class ShortStringCell: UITableViewCell {
     
-    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var valueTextField: UITextField!
     
     var title: String = "" {
         didSet {
-            titleLabel.text = title
+            valueTextField.placeholder = title
         }
     }
     
@@ -30,7 +29,6 @@ class ShortStringCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        titleLabel.style(.label)
         valueTextField.style(.userText)
         
         valueTextField.layer.cornerRadius = TLCStyle.textCornerRadius

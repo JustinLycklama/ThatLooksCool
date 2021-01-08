@@ -16,28 +16,19 @@ protocol ItemSelectionDelegate: AnyObject {
     func selectItem(_ item: Item)
 }
 
-class ItemsViewController: UIViewController {
+class ItemsTableController: AddableSectionTableController {
 
     struct Constants {
         static let ItemCell = "ItemCell"
-        static let AddCell = "AddCell"
     }
     
     private let category: ItemCategory
-
     private var items = [Item]()
-    private let tableView = UITableView()
         
     weak var delegate: ItemSelectionDelegate?
     
     let disposeBag = DisposeBag()
         
-    var canAddItems = true {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    
     init(category: ItemCategory) {
         self.category = category
         
@@ -52,36 +43,11 @@ class ItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.clipsToBounds = false
-        self.view.layer.cornerRadius = TLCStyle.cornerRadius
-        self.view.backgroundColor = .clear
-        
-        let maskingView = UIView()
-        maskingView.clipsToBounds = true
-                
-        self.view.addSubview(maskingView)
-        self.view.constrainSubviewToBounds(maskingView, withInset: UIEdgeInsets(top: -TLCStyle.interiorMargin,
-                                                                                left: -TLCStyle.interiorMargin,
-                                                                                bottom: -TLCStyle.interiorMargin,
-                                                                                right: -TLCStyle.interiorMargin))
-        
-        maskingView.addSubview(tableView)
-        maskingView.constrainSubviewToBounds(tableView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                                left: TLCStyle.interiorMargin,
-                                                                                bottom: TLCStyle.interiorMargin,
-                                                                                right: TLCStyle.interiorMargin))
-        
         // Table
-        tableView.register(AddCell.self, forCellReuseIdentifier: Constants.AddCell)
         tableView.register(ItemCell.self, forCellReuseIdentifier: Constants.ItemCell)
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
-        
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.bounces = false
-        tableView.clipsToBounds = false
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -101,22 +67,14 @@ class ItemsViewController: UIViewController {
     }
 }
 
-extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    private func isAddItemSection(_ section: Int) -> Bool {
-        return section == 0
-    }
-    
-    private func isAddItemIndex(_ indexPath: IndexPath) -> Bool {
-        return canAddItems && isAddItemSection(indexPath.section)
-    }
-    
+extension ItemsTableController: UITableViewDelegate, UITableViewDataSource {
+        
     func numberOfSections(in tableView: UITableView) -> Int {
-        return canAddItems ? 2 : 1
+        return canAddNewItem ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if canAddItems && isAddItemSection(section) {
+        if canAddNewItem && isAddItemSection(section) {
             return 1
         }
         
@@ -127,7 +85,7 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
         let cell: UITableViewCell!
         
         if isAddItemIndex(indexPath) {
-            cell = tableView.dequeueReusableCell(withIdentifier: Constants.AddCell, for: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: AddableSectionConstants.AddCell, for: indexPath)
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: Constants.ItemCell, for: indexPath)
             (cell as? ItemCell)?.displayItem(displayable: items[indexPath.row])
@@ -169,13 +127,13 @@ extension ItemsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ItemsViewController : CompletableActionDelegate {
+extension ItemsTableController : CompletableActionDelegate {
     func complete() {
         self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension ItemsViewController : ItemSelectionDelegate {
+extension ItemsTableController : ItemSelectionDelegate {
     func ediItem(_ item: Item?) {
         let editView = ItemEditableFieldsViewController(item: item, category: category)
         
