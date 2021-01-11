@@ -61,7 +61,7 @@ class RealmSubjects {
         let categories = realm.objects(ItemCategory.self)
         updateResolvedItemSubjects(for: categories.list())
         
-        let categoriesToken = categories.observe { [weak self] (changes: RealmCollectionChange<Results<ItemCategory>>) in
+        let categoriesToken = categories.observe(on: .main) { [weak self] (changes: RealmCollectionChange<Results<ItemCategory>>) in
             guard let self = self else {
                 fatalError()
             }
@@ -86,7 +86,7 @@ class RealmSubjects {
     private func createPendingItemSubjects() {
         let pendingItems = realm.objects(Item.self).filter("category == nil")
         
-        let pendingToken = pendingItems.observe { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
+        let pendingToken = pendingItems.observe(on: .main) { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
             switch changes {
             case .initial(let results), .update(let results, _, _, _):
                 DispatchQueue.main.async {
@@ -113,7 +113,7 @@ class RealmSubjects {
                 
                 let objectsInCategory = self.realm.objects(Item.self).filter("category == %@", category)
                 
-                let token = objectsInCategory.observe { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
+                let token = objectsInCategory.observe(on: .main) { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
                     guard let self = self else {
                         fatalError()
                     }
@@ -242,6 +242,27 @@ class RealmSubjects {
     }
     
     // MARK: - Category
+    
+    internal func setupCategoriesIfNone() {
+        let categories = realm.objects(ItemCategory.self)
+        
+        if (categories.count == 0) {
+            do {
+                let takeout = MockCategory(category: nil)
+                takeout.title = "Takeout"
+                
+                let bars = MockCategory(category: nil)
+                bars.title = "Bars"
+                
+                try realm.write {
+                    realm.add(ItemCategory(mock: takeout))
+                    realm.add(ItemCategory(mock: bars))
+                }
+            } catch {
+                fatalError()
+            }
+        }
+    }
     
     internal func addCategory(withMock mock: MockCategory) {
         do {

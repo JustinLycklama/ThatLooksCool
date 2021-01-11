@@ -16,6 +16,8 @@
 		7D0474572589B5A50073BA91 /* ShortStringCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D0474552589B5A50073BA91 /* ShortStringCell.xib */; };
 		7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */; };
 		7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A485E257D8B1300912AD1 /* ItemCategory.swift */; };
+		7D0ED11125AB7378004FEA98 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D0ED11025AB7378004FEA98 /* Settings.bundle */; };
+		7D0ED11B25AB922A004FEA98 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0ED11A25AB922A004FEA98 /* WebViewController.swift */; };
 		7D170D0725126598007F151F /* TLCModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D170D0525126598007F151F /* TLCModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D170D0A25126598007F151F /* TLCModel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D170D0325126598007F151F /* TLCModel.framework */; };
 		7D170D0B25126598007F151F /* TLCModel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7D170D0325126598007F151F /* TLCModel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -36,7 +38,7 @@
 		7D59512125917BC100D5B05E /* PhraseIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */; };
 		7D80424825A01C8600EF5BA5 /* AddCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D80424725A01C8600EF5BA5 /* AddCell.swift */; };
 		7D80424E25A01D4600EF5BA5 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D80424D25A01D4600EF5BA5 /* ShadowView.swift */; };
-		7D80425C25A10F9100EF5BA5 /* Acknowledgements in Resources */ = {isa = PBXBuildFile; fileRef = 7D80425B25A10F9100EF5BA5 /* Acknowledgements */; };
+		7D80425C25A10F9100EF5BA5 /* Acknowledgements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */; };
 		7D864F3E257B20C000FBA5D4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */; };
 		7D864F45257B20C000FBA5D4 /* TLCShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7D864F52257B34B400FBA5D4 /* ShareNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F51257B34B400FBA5D4 /* ShareNavController.swift */; };
@@ -150,6 +152,8 @@
 		7D0474552589B5A50073BA91 /* ShortStringCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShortStringCell.xib; sourceTree = "<group>"; };
 		7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupHelpViewController.swift; sourceTree = "<group>"; };
 		7D0A485E257D8B1300912AD1 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
+		7D0ED11025AB7378004FEA98 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		7D0ED11A25AB922A004FEA98 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		7D170D0325126598007F151F /* TLCModel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TLCModel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D170D0525126598007F151F /* TLCModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TLCModel.h; sourceTree = "<group>"; };
 		7D170D0625126598007F151F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -169,7 +173,7 @@
 		7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TLCIntents.entitlements; sourceTree = "<group>"; };
 		7D80424725A01C8600EF5BA5 /* AddCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCell.swift; sourceTree = "<group>"; };
 		7D80424D25A01D4600EF5BA5 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
-		7D80425B25A10F9100EF5BA5 /* Acknowledgements */ = {isa = PBXFileReference; lastKnownFileType = text; path = Acknowledgements; sourceTree = "<group>"; };
+		7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Acknowledgements.txt; sourceTree = "<group>"; };
 		7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TLCShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		7D864F42257B20C000FBA5D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 				7D8CAE61258C2E01004CF260 /* Protocols.swift */,
 				7DEDAF53251A809200D15306 /* AdViewController.swift */,
 				7D22001525A80201001FDEAD /* AddableSectionTableController.swift */,
+				7D0ED11A25AB922A004FEA98 /* WebViewController.swift */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -438,9 +443,10 @@
 			isa = PBXGroup;
 			children = (
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
-				7D80425B25A10F9100EF5BA5 /* Acknowledgements */,
+				7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */,
 				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D0314022509B45800F9CCBD /* ThatLooksCool.entitlements */,
+				7D0ED11025AB7378004FEA98 /* Settings.bundle */,
 				7DEDAF55251A819A00D15306 /* TLCStyle.swift */,
 				7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */,
 				7D98BBCC25008F8700F0ADC0 /* SceneDelegate.swift */,
@@ -738,10 +744,11 @@
 				7D98BBD425008F8900F0ADC0 /* Assets.xcassets in Resources */,
 				7D278B35258D7DFA00D776EC /* MapCell.xib in Resources */,
 				7D9F378425A57A8C002C1A99 /* ItemCellView.xib in Resources */,
+				7D0ED11125AB7378004FEA98 /* Settings.bundle in Resources */,
 				7D98BBE32500912B00F0ADC0 /* Podfile in Resources */,
 				7D8994DA258AF95F0006EE23 /* ColorCell.xib in Resources */,
 				7D196A99258EAC500000BE9C /* CategoryCellView.xib in Resources */,
-				7D80425C25A10F9100EF5BA5 /* Acknowledgements in Resources */,
+				7D80425C25A10F9100EF5BA5 /* Acknowledgements.txt in Resources */,
 				7D98BBD225008F8700F0ADC0 /* Main.storyboard in Resources */,
 				7D0474572589B5A50073BA91 /* ShortStringCell.xib in Resources */,
 				7D196A8B258EA85D0000BE9C /* LongStringCell.xib in Resources */,
@@ -917,6 +924,7 @@
 				7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */,
 				7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */,
 				7D196A76258D9ED50000BE9C /* Extensions+UIView.swift in Sources */,
+				7D0ED11B25AB922A004FEA98 /* WebViewController.swift in Sources */,
 				7D0474562589B5A50073BA91 /* ShortStringCell.swift in Sources */,
 				7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */,
 				7D4CD04D257D812A006F1CD7 /* CategoriesTableController.swift in Sources */,

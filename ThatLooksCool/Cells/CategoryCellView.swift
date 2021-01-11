@@ -9,15 +9,34 @@
 import UIKit
 import TLCModel
 
+@IBDesignable
 class CategoryCellView: ShadowView {
 
-    @IBOutlet weak var titleLabel: UILabel!
+//    @IBOutlet weak var titleLabel: UILabel!
+    
+    let titleLabel = UILabel()
+    
+    @IBInspectable var test: CGFloat {
+        get {
+            4
+        }
+    }
+    
+    override init() {
+        super.init()
+        setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        titleLabel.style(.userText)
-        
+        setup()
+    }
+    
+    private func setup() {
         self.clipsToBounds = false
         self.layer.cornerRadius = TLCStyle.cornerRadius
         
@@ -28,6 +47,10 @@ class CategoryCellView: ShadowView {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black
+        titleLabel.style(.userText)
+        
+        addSubview(titleLabel)
+        constrainSubviewToBounds(titleLabel, withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
     }
 
     func displayCategory(displayable: CategoryDisplayable) {

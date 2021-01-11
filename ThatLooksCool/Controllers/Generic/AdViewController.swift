@@ -13,10 +13,18 @@ import GoogleMobileAds
 
 class AdViewController: UIViewController {
 
+    enum BuildMode {
+        case debug
+        case display
+        case prod
+    }
+    
     private static let Test_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
 
     public let contentView = UIView()
     private let bannerView = UIView()
+    
+    private let buildMode: BuildMode = .display
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +55,14 @@ class AdViewController: UIViewController {
         contentView.backgroundColor = .clear
                 
         self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right], withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
-        self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
-
-        self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
+        
+        switch buildMode {
+        case .display:
+            self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
+        case .debug, .prod:
+            self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
+            
+            self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
+        }
     }
 }

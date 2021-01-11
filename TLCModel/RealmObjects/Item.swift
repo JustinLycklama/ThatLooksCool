@@ -15,6 +15,8 @@ public protocol ItemDisplayable: AnyObject {
 }
 
 public class Item: Object, ItemDisplayable {
+    
+    @objc public dynamic var id: String
     @objc public dynamic var title: String?
     @objc public dynamic var info: String?
     @objc public dynamic var coordinate: Coordinate?
@@ -23,11 +25,14 @@ public class Item: Object, ItemDisplayable {
     @objc public dynamic let timestamp: Date?
     
     public init(title: String) {
+        self.id = UUID().uuidString
         self.title = title
+        
         timestamp = Date()
     }
     
     public init(coordinate: Coordinate) {
+        self.id = UUID().uuidString
         self.title = ""
         self.coordinate = coordinate
         
@@ -35,6 +40,7 @@ public class Item: Object, ItemDisplayable {
     }
     
     public init(mock: MockItem, category: ItemCategory?) {
+        self.id = UUID().uuidString
         self.title = mock.title
         self.info = mock.info
         self.coordinate = mock.coordinate
@@ -44,6 +50,7 @@ public class Item: Object, ItemDisplayable {
     }
     
     required override init() {
+        self.id = UUID().uuidString
         self.title = "<Undefined>"
         coordinate = nil
         timestamp = Date()
@@ -57,6 +64,22 @@ public class Item: Object, ItemDisplayable {
     
     public func updateCategory(_ category: ItemCategory?) {
         self.category = category
+    }
+    
+    open override func isEqual(_ object: Any?) -> Bool {
+        if self.isInvalidated || (object as? Object)?.isInvalidated ?? false {
+            return false
+        }
+        
+        if let otherItem = object as? Item {
+            return self == otherItem
+        }
+
+        return false
+    }
+
+    static func ==(lhs: Item, rhs: Item) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

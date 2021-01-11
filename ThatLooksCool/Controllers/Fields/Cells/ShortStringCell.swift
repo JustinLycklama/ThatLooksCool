@@ -14,7 +14,10 @@ class ShortStringCell: UITableViewCell {
     
     var title: String = "" {
         didSet {
-            valueTextField.placeholder = title
+            valueTextField.attributedPlaceholder =
+                NSAttributedString(string: title,
+                                   attributes: [NSAttributedString.Key.font : TLCStyle.placeholderFont ?? UIFont.systemFont(ofSize: 14),
+                                                NSAttributedString.Key.foregroundColor : TLCStyle.placeholderTextColor])
         }
     }
     

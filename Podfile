@@ -8,13 +8,13 @@ def required_pods
 
   pod 'RxSwift'
   pod 'RealmSwift'
-#  pod 'RxRealm'
 end
 
 def app_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'LicensePlist'
   pod 'EasyNotificationBadge'
   
   pod 'GoogleMaps',     '3.10.0'

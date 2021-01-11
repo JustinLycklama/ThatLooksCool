@@ -113,6 +113,7 @@ class CategorizeItemsViewController: AdViewController {
         contentView.constrainSubviewToBounds(stackView, onEdges: [.top, .left, .right],
                                              withInset: UIEdgeInsets(top: TLCStyle.topLevelMargin, left: 0, bottom: 0, right: 0))
         
+        addBackgroundImage()
         
         // Reactive
         RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (pendingItems: [Item]) in
@@ -124,6 +125,10 @@ class CategorizeItemsViewController: AdViewController {
         }) {
 
         }.disposed(by: disposeBag)
+    }
+     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
         #if targetEnvironment(simulator)
         RealmSubjects.shared.removeAllPendingItems()
@@ -132,7 +137,7 @@ class CategorizeItemsViewController: AdViewController {
         RealmSubjects.shared.addPendingItem()
         #endif
     }
-        
+    
     @objc func close() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -170,7 +175,7 @@ class CategorizeItemsViewController: AdViewController {
     private func updateItemDisplay() {
         let duration: TimeInterval = 0.33
                 
-        guard currentItem != currentDisplayItemAndView?.displayItem else {
+        guard currentDisplayItemAndView?.displayItem.isInvalidated ?? true || currentItem != currentDisplayItemAndView?.displayItem else {
             return
         }
         
@@ -253,8 +258,16 @@ extension CategorizeItemsViewController: CompletableWithCategoryDelegate {
     func complete(withCategory category: ItemCategory?) {
         self.dismiss(animated: true, completion: { [weak self] in
             if let currentEditItemController = self?.currentDisplayItemAndView?.displayController {
+                // Save selected item
                 let item = currentEditItemController.saveItem()
+                
+                // Switch to next item
+                self?.didPressThird()
+                
+                // Categorize old item
                 RealmSubjects.shared.categorizeItem(item, toCategory: category)
+                
+                // Save old item for undo
                 self?.lastResolvedItem = item
             }
         })
@@ -265,6 +278,9 @@ extension CategorizeItemsViewController: ItemIterationDelegate {
     func didPressFirst() {
         if let currentEditItemController = currentDisplayItemAndView?.displayController {
             lastDeletedItemMock = currentEditItemController.deleteItem()
+            
+            // Switch to next item
+            self.didPressThird()
         }
     }
     
@@ -275,6 +291,7 @@ extension CategorizeItemsViewController: ItemIterationDelegate {
         self.present(categoriesViewController, animated: true, completion: nil)
     }
     
+    // Next
     func didPressThird() {
         guard let currentIndex = currentItemIndex else {
             return

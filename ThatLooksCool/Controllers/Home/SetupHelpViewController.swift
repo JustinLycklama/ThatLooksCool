@@ -85,13 +85,23 @@ class SetupHelpViewController: UIViewController {
         ack.textAlignment = .right
         ack.style(.systemInfoLink)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openAcknowledgements))
+        ack.addGestureRecognizer(tapGesture)
+        ack.isUserInteractionEnabled = true
+        
         stack.addArrangedSubview(ack)
         
-        view.addSubview(stack)
-        view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
+        let scrollView = UIScrollView()
+        scrollView.addSubview(stack)
+        scrollView.constrainSubviewToBounds(stack)
+        
+        scrollView.addConstraint(.init(item: stack, attribute: .width, relatedBy: .equal, toItem: scrollView, attribute: .width, multiplier: 1, constant: 0))
+        
+        view.addSubview(scrollView)
+        view.constrainSubviewToBounds(scrollView,
                                       withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin,
                                                                    left: TLCStyle.topLevelMargin,
-                                                                   bottom: 0,
+                                                                   bottom: TLCStyle.topLevelMargin,
                                                                    right: TLCStyle.topLevelMargin))
     }
     
@@ -99,19 +109,13 @@ class SetupHelpViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // Present the Add Shortcut view controller after the
-    // user taps the "Add to Siri" button.
-//    @objc
-//    func addToSiri(_ sender: Any) {
-//        let intent = NewItemIntent()
-//
-//        if let shortcut = INShortcut(intent: intent) {
-//            let viewController = INUIAddVoiceShortcutViewController(shortcut: shortcut)
-//            viewController.modalPresentationStyle = .formSheet
-//            viewController.delegate = self // Object conforming to `INUIAddVoiceShortcutViewControllerDelegate`.
-//            present(viewController, animated: true, completion: nil)
-//        }
-//    }
+    @objc func openAcknowledgements() {
+        let webView1 = WebViewController()
+        
+        self.present(webView1, animated: true, completion: nil)
+    }
+    
+    
 }
 
 extension SetupHelpViewController: INUIAddVoiceShortcutButtonDelegate {

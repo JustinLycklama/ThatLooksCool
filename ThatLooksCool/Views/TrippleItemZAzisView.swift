@@ -29,7 +29,7 @@ class TrippleItemZAzisView: UIView {
         let borderWidth: CGFloat = 0
         
         let itemMargin = TLCStyle.interiorMargin
-        let itemSeperation = TLCStyle.topLevelPadding
+        let itemSeperation: CGFloat = 12
         
 //        let itemsMargin = itemSeperation * 3
         
@@ -100,13 +100,17 @@ class TrippleItemZAzisView: UIView {
         
         self.addSubview(badgePositioner)
         self.constrainSubviewToBounds(badgePositioner, onEdges: [.right, .top],
-                                      withInset: UIEdgeInsets(top: -20,
+                                      withInset: UIEdgeInsets(top: -15,
                                                               left: 0,
                                                               bottom: 0,
                                                               right: 10))
     }
     
-    func setBadge(_ value: Int) {
-        badgePositioner.badge(text: String(value), appearance: badgeAppearance)
+    func setBadge(_ value: Int) {        
+        if (value == 0) {
+            badgePositioner.badge(text: nil)
+        } else {
+            badgePositioner.badge(text: String(value), appearance: badgeAppearance)
+        }
     }
 }

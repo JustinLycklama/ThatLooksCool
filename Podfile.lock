@@ -39,6 +39,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.1.1)"
   - GoogleUtilities/Reachability (7.1.1):
     - GoogleUtilities/Logger
+  - LicensePlist (3.0.5)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
   - Moya-ObjectMapper (2.9):
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.65)
   - GoogleMaps (= 3.10.0)
   - GooglePlaces (= 3.10.0)
+  - LicensePlist
   - RealmSwift
   - RxSwift
 
@@ -82,6 +84,7 @@ SPEC REPOS:
     - GooglePlaces
     - GoogleUserMessagingPlatform
     - GoogleUtilities
+    - LicensePlist
     - Moya
     - Moya-ObjectMapper
     - nanopb
@@ -106,6 +109,7 @@ SPEC CHECKSUMS:
   GooglePlaces: 9a6f5f3a0c88da2aa1bf7426a65d3e004f5e69a1
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
+  LicensePlist: 11c638fa9dc22ddb5771cdf910242ae1ba2684da
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   Moya-ObjectMapper: 967a99d9ea3aa9c93ddbe112aeca3667f53bfe93
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
@@ -116,6 +120,6 @@ SPEC CHECKSUMS:
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 00a096e926df04897f0a3bbb6e113aaf8675aea9
+PODFILE CHECKSUM: ff62e5f1712b885304990ccfa58e7d7da62711c7
 
 COCOAPODS: 1.10.0

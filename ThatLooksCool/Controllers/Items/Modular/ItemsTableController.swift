@@ -100,7 +100,7 @@ extension ItemsTableController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
                     
-        let remove = UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+        let remove = UIContextualAction(style: .destructive, title: "", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
                 completion(false)
                 return

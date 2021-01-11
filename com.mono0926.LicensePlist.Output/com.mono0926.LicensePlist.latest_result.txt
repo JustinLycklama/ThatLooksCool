@@ -1,0 +1,127 @@
+name: Alamofire, nameSpecified: 
+body: Copyright (c) 2014-2…
+version: 5.4.0
+
+name: ClassicClient, nameSpecified: 
+body: Copyright (c) 2020 J…
+version: 0.1.0
+
+name: EasyNotificationBadge, nameSpecified: 
+body: MIT License
+
+Copyrig…
+version: 1.2.3
+
+name: Google-Mobile-Ads-SDK, nameSpecified: 
+body: Copyright 2020 Googl…
+version: 7.68.0
+
+name: GoogleAppMeasurement, nameSpecified: 
+body: Copyright 2020 Googl…
+version: 7.1.0
+
+name: GoogleMaps, nameSpecified: 
+body: Copyright 2020 Googl…
+version: 3.10.0
+
+name: GooglePlaces, nameSpecified: 
+body: Copyright 2020 Googl…
+version: 3.10.0
+
+name: GoogleUserMessagingPlatform, nameSpecified: 
+body: Copyright 2020 Googl…
+version: 1.4.0
+
+name: GoogleUtilities, nameSpecified: 
+body: 
+                   …
+version: 7.1.1
+
+name: LicensePlist, nameSpecified: 
+body: MIT License
+
+Copyrig…
+version: 3.0.5
+
+name: Moya, nameSpecified: 
+body: The MIT License (MIT…
+version: 14.0.0
+
+name: Moya-ObjectMapper, nameSpecified: 
+body: The MIT License (MIT…
+version: 2.9
+
+name: nanopb, nameSpecified: 
+body: Copyright (c) 2011 P…
+version: 2.30906.0
+
+name: ObjectMapper, nameSpecified: 
+body: The MIT License (MIT…
+version: 4.2.0
+
+name: PromisesObjC, nameSpecified: 
+body: 
+                   …
+version: 1.2.11
+
+name: Realm, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: Realm, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: Realm, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: RealmSwift, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: RealmSwift, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: RealmSwift, nameSpecified: 
+body: TABLE OF CONTENTS
+
+1…
+version: 10.1.4
+
+name: Result, nameSpecified: 
+body: The MIT License (MIT…
+version: 5.0.0
+
+name: RxSwift, nameSpecified: 
+body: **The MIT License**
+…
+version: 5.1.1
+
+name: RxSwift, nameSpecified: 
+body: **The MIT License**
+…
+version: 5.1.1
+
+name: RxSwift, nameSpecified: 
+body: **The MIT License**
+…
+version: 5.1.1
+
+name: Image Acknowledgements, nameSpecified: , version: M61
+body:  <a href="https://pi…
+
+add-version-numbers: false
+
+LicensePlist Version: 3.0.5

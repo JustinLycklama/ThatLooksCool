@@ -52,6 +52,8 @@ class DisplayCategoriesTableController: UIViewController {
         
         self.view.addSubview(contentView)
         self.view.constrainSubviewToBounds(contentView, withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
+        
+        addBackgroundImage()
     }
     
     @objc func close() {

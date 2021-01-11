@@ -34,15 +34,6 @@ class HomeViewController: AdViewController {
 
 
         self.title = "That Looks Cool"
-//        self.navigationController?.view.backgroundColor = TLCStyle.navBarBackgroundColor
-//        UINavigationBar.appearance().tintColor = TLCStyle.navBarBackgroundColor
-
-
-
-
-        
-//        edgesForExtendedLayout = []
-//        self.navigationController?.navigationBar.isHidden = true
         
         // Layout
         let stack = UIStackView()
@@ -52,7 +43,7 @@ class HomeViewController: AdViewController {
         
         // Pending Items
         let pendingAndSetupLabel = UILabel()
-        pendingAndSetupLabel.text = "Create With Siri"
+        pendingAndSetupLabel.text = "Categorize New Entries"
         pendingAndSetupLabel.style(.heading)
         
         let pendingItemsView = createPendingItemsView()
@@ -63,7 +54,7 @@ class HomeViewController: AdViewController {
         // Categories
 
         let categoriesLabel = UILabel()
-        categoriesLabel.text = "Categories"
+        categoriesLabel.text = "Browse Categories"
         categoriesLabel.style(.heading)
         
         let categoriesView = createCategoryView()
@@ -71,19 +62,10 @@ class HomeViewController: AdViewController {
         stack.addArrangedSubview(categoriesLabel)
         stack.addArrangedSubview(categoriesView)
 
-        // MapView: Future Feature
-        
-        /*let mapLabel = UILabel()
-        mapLabel.text = "View by Map"
-        mapLabel.style(.heading)
-        
-        let mapView = createMapView()
-        
-        stack.addArrangedSubview(mapLabel)
-        stack.addArrangedSubview(mapView)*/
-
         contentView.addSubview(stack)
         contentView.constrainSubviewToBounds(stack)
+        
+        addBackgroundImage()
     }
     
     // MARK: - View Creation
@@ -102,13 +84,23 @@ class HomeViewController: AdViewController {
         
         // Categorize Action
         let categorizeView = ShadowView()
-        
+                
         categorizeView.addSubview(zAxisView)
-        categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.topLevelPadding,
+        categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
                                                                                    left: TLCStyle.topLevelPadding,
                                                                                    bottom: TLCStyle.interiorMargin,
                                                                                    right: TLCStyle.topLevelPadding))
 
+        let itemControl = ItemControlView()
+        categorizeView.addSubview(itemControl)
+        categorizeView.constrainSubviewToBounds(itemControl, onEdges: [.bottom, .left, .right],
+                                                withInset: UIEdgeInsets(top: 0,
+                                                                        left: TLCStyle.topLevelPadding,
+                                                                        bottom: -TLCStyle.interiorMargin,
+                                                                        right: TLCStyle.topLevelPadding))
+        itemControl.addConstraint(NSLayoutConstraint.init(item: itemControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
+        
+        
         let tapG = UITapGestureRecognizer.init(target: self, action: #selector(presentUnresolvedItems))
         categorizeView.addGestureRecognizer(tapG)
 
@@ -156,6 +148,12 @@ class HomeViewController: AdViewController {
         }.disposed(by: disposeBag)
         
         return pendingItemContainer
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        RealmSubjects.shared.setupCategoriesIfNone()
     }
     
     private func createCategoryView() -> UIView {

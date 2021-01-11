@@ -15,6 +15,7 @@ public protocol CategoryDisplayable {
 
 public class ItemCategory: Object, CategoryDisplayable {
 
+    @objc public dynamic var id: String
     @objc public dynamic var title: String
     @objc public dynamic var colorHex: String
     
@@ -28,11 +29,13 @@ public class ItemCategory: Object, CategoryDisplayable {
     }
     
     public init(mock: MockCategory) {
+        id = UUID().uuidString
         self.title = mock.title
         self.colorHex = mock.color.toHex() ?? "FFFFFF"
     }
     
     required override init() {
+        id = UUID().uuidString
         self.title = "<Undefined>"
         self.colorHex = "e81ade"
     }
@@ -40,6 +43,10 @@ public class ItemCategory: Object, CategoryDisplayable {
     public func update(usingMock mock: MockCategory) {
         self.title = mock.title
         self.color = mock.color
+    }
+    
+    static func ==(lhs: ItemCategory, rhs: ItemCategory) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 

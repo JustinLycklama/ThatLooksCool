@@ -24,24 +24,15 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
-            <key>NSExtensionActivationRule</key>
-            <string>TRUEPREDICATE</string>
-            
-<!--			<key>NSExtensionActivationRule</key>-->
-<!--            <dict>-->
-<!--                <key>NSExtensionActivationSupportsWebPageWithMaxCount</key>-->
-<!--                <integer>1</integer>-->
-<!--                <key>NSExtensionActivationSupportsWebURLWithMaxCount</key>-->
-<!--                <integer>1</integer>-->
-<!--            </dict>-->
-            
-            <key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-            <integer>1</integer>
-            <key>NSExtensionActivationSupportsText</key>
-            <true/>
+			<key>NSExtensionActivationRule</key>
+			<string>FALSEPREDICATE</string>
+			<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
+			<integer>1</integer>
+			<key>NSExtensionActivationSupportsText</key>
+			<true/>
 		</dict>
-        <key>NSExtensionPrincipalClass</key>
-        <string>ShareNavController</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>ShareNavController</string>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.share-services</string>
 	</dict>

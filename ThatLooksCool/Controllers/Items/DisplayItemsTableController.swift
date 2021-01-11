@@ -57,6 +57,8 @@ class DisplayItemsTableController: AdViewController {
         
         contentView.addSubview(stack)
         contentView.constrainSubviewToBounds(stack)
+        
+        addBackgroundImage()
     }
     
     @objc func close() {

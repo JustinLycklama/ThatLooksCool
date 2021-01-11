@@ -100,7 +100,7 @@ extension CategoriesTableController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
                     
-        let remove = UIContextualAction(style: .destructive, title: "Remove", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+        let remove = UIContextualAction(style: .destructive, title: "", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
                 completion(false)
                 return
@@ -113,7 +113,7 @@ extension CategoriesTableController: UITableViewDataSource, UITableViewDelegate 
         remove.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         remove.image = ImagesResources.shared.deleteIcon
         
-        let edit = UIContextualAction(style: .destructive, title: "Edit", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
+        let edit = UIContextualAction(style: .destructive, title: "", handler: { [weak self] (action, view, completion: @escaping (Bool) -> Void) in
             guard let self = self else {
                 completion(false)
                 return

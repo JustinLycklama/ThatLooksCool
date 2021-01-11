@@ -28,7 +28,7 @@ class CategoryCell: UITableViewCell {
         
         self.contentView.clipsToBounds = false
         
-        let cellDisplay = UIView.instanceFromNib("CategoryCellView", inBundle: Bundle.main) as! CategoryCellView
+        let cellDisplay = CategoryCellView()
         cellDisplayView = cellDisplay
         
 

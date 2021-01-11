@@ -13,11 +13,11 @@ public struct TLCStyle {
     
     // MARK: - Metrics
     
-    public static let topLevelMargin: CGFloat = 32
+    public static let topLevelMargin: CGFloat = 24
     public static  let topLevelPadding: CGFloat = 16
     
     public static let interiorMargin: CGFloat = 8
-    public static let interiorPadding: CGFloat = 8
+    public static let interiorPadding: CGFloat = 4
     
     public static let cornerRadius: CGFloat = 10
     public static let textCornerRadius: CGFloat = 5
@@ -38,7 +38,7 @@ public struct TLCStyle {
         
         // 1
         static let turquoise = UIColor(rgb: 0x34D1BF)
-        static let lightCyan = UIColor(rgb: 0xE5FCF5)
+        static let lightCyan = UIColor(rgb: 0xE5FCF5) //#E0BE7C
         
         // 2
         static let mediumBlue = UIColor(rgb: 0x048BA8)
@@ -52,12 +52,18 @@ public struct TLCStyle {
     public static let textBorderColor = ColorPallet.mediumGrey
     public static let viewBorderColor = ColorPallet.darkGrey
     
+    public static let placeholderTextColor = ColorPallet.mediumGrey
+
+    
     public static let primaryBackgroundColor = ColorPallet.lightGrey
     public static let secondaryBackgroundColor = ColorPallet.offWhite
 
     public static let progressIconColor = ColorPallet.turquoise
     public static let modificationIconColor = ColorPallet.yellow
     public static let destructiveIconColor = ColorPallet.red
+    
+    public static let placeholderFont = UIFont(name: LabelType.label.fontName, size: LabelType.label.size)
+
     
     // Nav Bar
     public static let navBarBackgroundColor = ColorPallet.lightCyan
@@ -121,6 +127,19 @@ extension UIView {
     }
 }
 
+extension UIViewController {
+    func addBackgroundImage() {
+//        let backgroundImage = UIImageView()
+//        backgroundImage.image = UIImage(named: "city-side-bg")
+//        backgroundImage.contentMode = .scaleAspectFill
+//
+//        self.view.addSubview(backgroundImage)
+//        self.view.constrainSubviewToBounds(backgroundImage)
+//
+//        self.view.sendSubviewToBack(backgroundImage)
+    }
+}
+
 enum LabelType {
     case navBar
     case barButton
@@ -133,15 +152,15 @@ enum LabelType {
     var fontName: String {
         switch self {
         case .navBar:
-            return "AvenirNext-Medium"
+            return "KohinoorTelugu-Medium"
         case .barButton:
             return "AvenirNext-Regular"
         case .heading, .instructions:
-            return "AvenirNext-Regular"
+            return "Noteworthy-Bold"
         case .label:
             return "AvenirNext-Regular"
         case .userText:
-            return "Avenir-Book"
+            return "KohinoorTelugu-Regular"
         case .systemInfoLink:
             return "AvenirNextCondensed-Medium"
         }
@@ -168,7 +187,7 @@ enum LabelType {
         case .navBar:
             return 22
         case .barButton:
-            return 18
+            return 16
         case .heading:
             return 24
         case .instructions:
@@ -176,7 +195,7 @@ enum LabelType {
         case .label:
             return 16
         case .userText:
-            return 16
+            return 20
         case .systemInfoLink:
             return 16
         }
