@@ -19,12 +19,13 @@ class AdViewController: UIViewController {
         case prod
     }
     
+    private static let Prod_Ad_Unit_Id = "ca-app-pub-9795717139224841~5361159859"
     private static let Test_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
 
     public let contentView = UIView()
     private let bannerView = UIView()
     
-    private let buildMode: BuildMode = .display
+    private let buildMode: BuildMode = .prod
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +39,14 @@ class AdViewController: UIViewController {
         let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
 
         
-        adBanner.adUnitID = AdViewController.Test_Ad_Unit_Id
+        switch buildMode {
+        case .debug, .display:
+            adBanner.adUnitID = AdViewController.Test_Ad_Unit_Id
+
+        case .prod:
+            adBanner.adUnitID = AdViewController.Prod_Ad_Unit_Id
+        }
+                
         adBanner.rootViewController = self
         adBanner.load(GADRequest())
         

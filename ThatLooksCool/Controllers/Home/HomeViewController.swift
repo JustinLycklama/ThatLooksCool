@@ -20,8 +20,6 @@ import RxSwift
 
 import EasyNotificationBadge
 
-// AppId: ca-app-pub-9795717139224841~5361159859
-
 class HomeViewController: AdViewController {
             
     let disposeBag = DisposeBag()
