@@ -17,6 +17,9 @@ def app_pods
   pod 'LicensePlist'
   pod 'EasyNotificationBadge'
   
+  pod 'Firebase/Analytics', '7.1.0'
+  pod 'Firebase/Crashlytics', '7.1.0'
+  
   pod 'GoogleMaps',     '3.10.0'
   pod 'GooglePlaces',   '3.10.0'
   

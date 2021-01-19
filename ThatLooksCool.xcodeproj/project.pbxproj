@@ -77,6 +77,7 @@
 		7DEFAE592585563E0026494A /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEFAE572585563E0026494A /* CategoryCell.swift */; };
 		7DEFAE7225856DB50026494A /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEFAE7125856DB50026494A /* CategoryCellView.swift */; };
 		7DEFAE972588574C0026494A /* EditableFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEFAE962588574C0026494A /* EditableFieldsViewController.swift */; };
+		7DF2145525B685ED0003030A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DF2145425B685ED0003030A /* GoogleService-Info.plist */; };
 		E39D3C6021DD63A23A4D7E58 /* Pods_TLCIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F53CC24DCE951550C59D6C91 /* Pods_TLCIntents.framework */; };
 		F3A67862E6EB8168750C3821 /* Pods_ThatLooksCool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */; };
 /* End PBXBuildFile section */
@@ -218,6 +219,7 @@
 		7DEFAE572585563E0026494A /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		7DEFAE7125856DB50026494A /* CategoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
 		7DEFAE962588574C0026494A /* EditableFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableFieldsViewController.swift; sourceTree = "<group>"; };
+		7DF2145425B685ED0003030A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThatLooksCool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39DF70E8E1F6A2FBF731CA /* Pods-ThatLooksCool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThatLooksCool.release.xcconfig"; path = "Target Support Files/Pods-ThatLooksCool/Pods-ThatLooksCool.release.xcconfig"; sourceTree = "<group>"; };
 		BF4B409C3CD0D1B93E436B74 /* Pods-TLCModel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLCModel.release.xcconfig"; path = "Target Support Files/Pods-TLCModel/Pods-TLCModel.release.xcconfig"; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
+				7DF2145425B685ED0003030A /* GoogleService-Info.plist */,
 				7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */,
 				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D0314022509B45800F9CCBD /* ThatLooksCool.entitlements */,
@@ -633,6 +636,7 @@
 				F131E707037D0F92E6E3BE60 /* [CP] Copy Pods Resources */,
 				7D98BBFB25092F1800F0ADC0 /* Embed App Extensions */,
 				7D170D0C25126598007F151F /* Embed Frameworks */,
+				7DF2149F25B689B50003030A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -747,6 +751,7 @@
 				7D0ED11125AB7378004FEA98 /* Settings.bundle in Resources */,
 				7D98BBE32500912B00F0ADC0 /* Podfile in Resources */,
 				7D8994DA258AF95F0006EE23 /* ColorCell.xib in Resources */,
+				7DF2145525B685ED0003030A /* GoogleService-Info.plist in Resources */,
 				7D196A99258EAC500000BE9C /* CategoryCellView.xib in Resources */,
 				7D80425C25A10F9100EF5BA5 /* Acknowledgements.txt in Resources */,
 				7D98BBD225008F8700F0ADC0 /* Main.storyboard in Resources */,
@@ -781,6 +786,25 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ThatLooksCool/Pods-ThatLooksCool-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7DF2149F25B689B50003030A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n";
 		};
 		A43F121E7C022DB32674CDE5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1280,6 +1304,7 @@
 				CODE_SIGN_ENTITLEMENTS = ThatLooksCool/ThatLooksCool.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
 				INFOPLIST_FILE = ThatLooksCool/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
@@ -1304,6 +1329,7 @@
 				CODE_SIGN_ENTITLEMENTS = ThatLooksCool/ThatLooksCool.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
 				INFOPLIST_FILE = ThatLooksCool/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;

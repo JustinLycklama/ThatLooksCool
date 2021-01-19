@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+import Firebase
 import GoogleMaps
 import GoogleMobileAds
 
@@ -19,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
         GMSServices.provideAPIKey(GOOGLE_API)
 //        GMSPlacesClient.provideAPIKey(GOOGLE_API) // Too expensive
         GADMobileAds.sharedInstance().start(completionHandler: nil)
