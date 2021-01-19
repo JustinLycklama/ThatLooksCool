@@ -15,14 +15,13 @@ import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
-    let GOOGLE_API = "AIzaSyDpgypd8RVgbUFwHqgp80mNzhjGu8Pr2j8"
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        GMSServices.provideAPIKey(GOOGLE_API)
-//        GMSPlacesClient.provideAPIKey(GOOGLE_API) // Too expensive
+        
+        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
+//        GMSPlacesClient.provideAPIKey(TLCConfig.apiKey(.maps)) // Too expensive
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in

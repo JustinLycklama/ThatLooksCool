@@ -78,6 +78,7 @@
 		7DEFAE7225856DB50026494A /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEFAE7125856DB50026494A /* CategoryCellView.swift */; };
 		7DEFAE972588574C0026494A /* EditableFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEFAE962588574C0026494A /* EditableFieldsViewController.swift */; };
 		7DF2145525B685ED0003030A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DF2145425B685ED0003030A /* GoogleService-Info.plist */; };
+		7DF214B725B692C00003030A /* secretKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DF214B625B692C00003030A /* secretKeys.plist */; };
 		E39D3C6021DD63A23A4D7E58 /* Pods_TLCIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F53CC24DCE951550C59D6C91 /* Pods_TLCIntents.framework */; };
 		F3A67862E6EB8168750C3821 /* Pods_ThatLooksCool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */; };
 /* End PBXBuildFile section */
@@ -220,6 +221,7 @@
 		7DEFAE7125856DB50026494A /* CategoryCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
 		7DEFAE962588574C0026494A /* EditableFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableFieldsViewController.swift; sourceTree = "<group>"; };
 		7DF2145425B685ED0003030A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		7DF214B625B692C00003030A /* secretKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = secretKeys.plist; sourceTree = "<group>"; };
 		B89D66428114931AF59555A3 /* Pods_ThatLooksCool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ThatLooksCool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA39DF70E8E1F6A2FBF731CA /* Pods-ThatLooksCool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThatLooksCool.release.xcconfig"; path = "Target Support Files/Pods-ThatLooksCool/Pods-ThatLooksCool.release.xcconfig"; sourceTree = "<group>"; };
 		BF4B409C3CD0D1B93E436B74 /* Pods-TLCModel.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TLCModel.release.xcconfig"; path = "Target Support Files/Pods-TLCModel/Pods-TLCModel.release.xcconfig"; sourceTree = "<group>"; };
@@ -444,12 +446,13 @@
 		7D98BBC925008F8700F0ADC0 /* ThatLooksCool */ = {
 			isa = PBXGroup;
 			children = (
+				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
 				7DF2145425B685ED0003030A /* GoogleService-Info.plist */,
 				7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */,
-				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D0314022509B45800F9CCBD /* ThatLooksCool.entitlements */,
 				7D0ED11025AB7378004FEA98 /* Settings.bundle */,
+				7DF214B625B692C00003030A /* secretKeys.plist */,
 				7DEDAF55251A819A00D15306 /* TLCStyle.swift */,
 				7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */,
 				7D98BBCC25008F8700F0ADC0 /* SceneDelegate.swift */,
@@ -754,6 +757,7 @@
 				7DF2145525B685ED0003030A /* GoogleService-Info.plist in Resources */,
 				7D196A99258EAC500000BE9C /* CategoryCellView.xib in Resources */,
 				7D80425C25A10F9100EF5BA5 /* Acknowledgements.txt in Resources */,
+				7DF214B725B692C00003030A /* secretKeys.plist in Resources */,
 				7D98BBD225008F8700F0ADC0 /* Main.storyboard in Resources */,
 				7D0474572589B5A50073BA91 /* ShortStringCell.xib in Resources */,
 				7D196A8B258EA85D0000BE9C /* LongStringCell.xib in Resources */,

@@ -9,6 +9,24 @@
 import UIKit
 import ClassicClient
 
+public struct TLCConfig {
+    
+    public enum KeyType: String {
+        case maps = "maps"
+        case adMob = "ad_mob_unit_id"
+        case adMobTest = "ad_mob_unit_id_test"
+    }
+    
+    public static func apiKey(_ type: KeyType) -> String {
+        if let path = Bundle.main.path(forResource: "secretKeys", ofType: "plist") {
+            let keys = NSDictionary(contentsOfFile: path)
+            return keys?[type.rawValue] as? String ?? ""
+        }
+        
+        return ""
+    }
+}
+
 public struct TLCStyle {
     
     // MARK: - Metrics

@@ -13,19 +13,10 @@ import GoogleMobileAds
 
 class AdViewController: UIViewController {
 
-    enum BuildMode {
-        case debug
-        case display
-        case prod
-    }
-    
-    private static let Prod_Ad_Unit_Id = "ca-app-pub-9795717139224841~5361159859"
-    private static let Test_Ad_Unit_Id = "ca-app-pub-3940256099942544/2934735716"
-
     public let contentView = UIView()
     private let bannerView = UIView()
     
-    private let buildMode: BuildMode = .prod
+    private let ENABLE_ADS = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,16 +28,13 @@ class AdViewController: UIViewController {
         
         // Setup Ad Banner
         let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
-
+     
+        #if DEBUG
+        adBanner.adUnitID = TLCConfig.apiKey(.adMobTest)
+        #else
+        adBanner.adUnitID = TLCConfig.apiKey(.adMob)
+        #endif
         
-        switch buildMode {
-        case .debug, .display:
-            adBanner.adUnitID = AdViewController.Test_Ad_Unit_Id
-
-        case .prod:
-            adBanner.adUnitID = AdViewController.Prod_Ad_Unit_Id
-        }
-                
         adBanner.rootViewController = self
         adBanner.load(GADRequest())
         
@@ -64,10 +52,9 @@ class AdViewController: UIViewController {
                 
         self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right], withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
         
-        switch buildMode {
-        case .display:
+        if !ENABLE_ADS {
             self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
-        case .debug, .prod:
+        } else {
             self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
             
             self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
