@@ -9,9 +9,9 @@
 import UIKit
 import EasyNotificationBadge
 
-class TrippleItemZAzisView: UIView {
+class TripleItemZAzisView: UIView {
     
-    public let itemDisplayArea = ShadowView()
+    public let itemDisplayArea = UIView()
     
     let badgePositioner = UIView()
     var badgeAppearance = BadgeAppearance()

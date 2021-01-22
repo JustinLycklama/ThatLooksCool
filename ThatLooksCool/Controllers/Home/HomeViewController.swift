@@ -25,7 +25,7 @@ class HomeViewController: AdViewController {
     let disposeBag = DisposeBag()
     
     fileprivate let categoriesController = CategoriesTableController()
-    fileprivate let zAxisView = TrippleItemZAzisView()
+    fileprivate let zAxisView = TripleItemZAzisView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +90,10 @@ class HomeViewController: AdViewController {
                                                                                    right: TLCStyle.topLevelPadding))
 
         let itemControl = ItemControlView()
+        itemControl.firstButtonEnabled = false
+        itemControl.secondButtonEnabled = false
+        itemControl.thirdButtonEnabled = false
+        
         categorizeView.addSubview(itemControl)
         categorizeView.constrainSubviewToBounds(itemControl, onEdges: [.bottom, .left, .right],
                                                 withInset: UIEdgeInsets(top: 0,

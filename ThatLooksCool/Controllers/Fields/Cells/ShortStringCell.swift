@@ -10,7 +10,7 @@ import UIKit
 
 class ShortStringCell: UITableViewCell {
     
-    @IBOutlet var valueTextField: UITextField!
+    let valueTextField = UITextField()
     
     var title: String = "" {
         didSet {
@@ -29,9 +29,9 @@ class ShortStringCell: UITableViewCell {
     
     var onUpdate: ((String) -> Void)?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
         valueTextField.style(.userText)
         
         valueTextField.layer.cornerRadius = TLCStyle.textCornerRadius
@@ -40,6 +40,13 @@ class ShortStringCell: UITableViewCell {
         
         selectionStyle = .none
         valueTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+        self.contentView.addSubview(valueTextField)
+        self.contentView.constrainSubviewToBounds(valueTextField, withInset: UIEdgeInsets(TLCStyle.interiorMargin))
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

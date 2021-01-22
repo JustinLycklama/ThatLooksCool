@@ -39,6 +39,7 @@ class AdViewController: UIViewController {
         adBanner.load(GADRequest())
         
         bannerView.backgroundColor = .white
+        bannerView.layer.cornerRadius = TLCStyle.cornerRadius
         
         bannerView.addSubview(adBanner)
 

@@ -41,16 +41,6 @@ class EditCategoryViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = TLCStyle.topLevelPadding
         
-        // Preview
-        let previewLabel = UILabel()
-        previewLabel.text = "Category Preview"
-        previewLabel.style(.heading)
-        
-        let previewView = createPreviewView()
-        
-        stack.addArrangedSubview(previewLabel)
-        stack.addArrangedSubview(previewView)
-        
         // Edit View
         let editLabel = UILabel()
         editLabel.text = "Edit"
@@ -60,6 +50,16 @@ class EditCategoryViewController: UIViewController {
         
         stack.addArrangedSubview(editLabel)
         stack.addArrangedSubview(editView)
+        
+        // Preview
+        let previewLabel = UILabel()
+        previewLabel.text = "Category Preview"
+        previewLabel.style(.heading)
+        
+        let previewView = createPreviewView()
+        
+        stack.addArrangedSubview(previewLabel)
+        stack.addArrangedSubview(previewView)
         
         view.addSubview(stack)
         view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
@@ -140,6 +140,8 @@ class EditCategoryViewController: UIViewController {
                 self?.previewCellView?.displayCategory(displayable: mockObject)
             }
         }))
+        
+        editableFieldsController.completeModifyingFields()
         
         titleContentView.contentView.addSubview(editableFieldsController.view)
         titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)

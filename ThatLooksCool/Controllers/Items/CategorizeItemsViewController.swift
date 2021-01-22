@@ -20,7 +20,9 @@ struct DisplayItemAndView {
 
 class CategorizeItemsViewController: AdViewController {
 
-    private let trippleItemDisplayView = TrippleItemZAzisView()
+    private let animationSizeDuration: TimeInterval = 0.25
+    
+    private let trippleItemDisplayView = TripleItemZAzisView()
     
     private let itemControlView = ItemControlView()
     private var currentDisplayItemAndView: DisplayItemAndView? = nil
@@ -115,6 +117,9 @@ class CategorizeItemsViewController: AdViewController {
         
         addBackgroundImage()
         
+
+        self.view.layoutIfNeeded()
+        
         // Reactive
         RealmSubjects.shared.pendingItemsSubject.subscribe(onNext: { [weak self] (pendingItems: [Item]) in
                 self?.items = pendingItems
@@ -180,9 +185,13 @@ class CategorizeItemsViewController: AdViewController {
         }
         
         let createItemBlock = { [weak self] in
-                        
-            if let currentItem = self?.currentItem {
+            guard let self = self else {
+                return
+            }
+            
+            if let currentItem = self.currentItem {
                 let newDisplayController = ItemEditableFieldsViewController(item: currentItem, category: nil)
+                
                 let newDisplayView = newDisplayController.view!
                 
                 newDisplayView.alpha = 0
@@ -191,20 +200,26 @@ class CategorizeItemsViewController: AdViewController {
                 newDisplayView.clipsToBounds = true
                 newDisplayView.layer.cornerRadius = 10
                 newDisplayView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-                                
-                newDisplayView.addConstraint(NSLayoutConstraint.init(item: newDisplayView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 350))
+                newDisplayView.setContentCompressionResistancePriority(.required, for: .vertical)
+                
+                newDisplayController.editableFieldsController.sizeSubscriber = { requestedSize in
+                    let heightConstraint = NSLayoutConstraint.init(item: newDisplayView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: requestedSize.height)
+                    
+                    heightConstraint.priority = .defaultHigh
+                    newDisplayView.addConstraint(heightConstraint)
+                }
                 
 //                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
                 
-                self?.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)
+                self.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)
                 
-                self?.addChild(newDisplayController)
-                self?.trippleItemDisplayView.itemDisplayArea.addSubview(newDisplayView)
-                self?.trippleItemDisplayView.itemDisplayArea.constrainSubviewToBounds(newDisplayView)
+                self.addChild(newDisplayController)
+                self.trippleItemDisplayView.itemDisplayArea.addSubview(newDisplayView)
+                self.trippleItemDisplayView.itemDisplayArea.constrainSubviewToBounds(newDisplayView)
                 
                 // Grow view to fit constraints
-                UIView.animate(withDuration: 0.15) {
-                    self?.view.layoutIfNeeded()
+                UIView.animate(withDuration: self.animationSizeDuration) {
+                    self.view.layoutIfNeeded()
                 } completion: { _ in
                     // Then make view visible
                     UIView.animate(withDuration: duration) {
@@ -214,7 +229,7 @@ class CategorizeItemsViewController: AdViewController {
 
             } else {
                 // Grow to fit no view
-                UIView.animate(withDuration: 0.15) { [weak self] in
+                UIView.animate(withDuration: self.animationSizeDuration) { [weak self] in
                     self?.view.layoutIfNeeded()
                 }
             }

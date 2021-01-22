@@ -24,10 +24,17 @@ class ItemEditableFieldsViewController: UIViewController {
     
     private let databaseObject: Item?
     private let mockObject: MockItem
-            
-    let scrollView = UIScrollView()
-    
+                
     weak var completeDelegate: CompletableActionDelegate?
+    
+    let editableFieldsController = EditableFieldsViewController()
+    
+    override var preferredContentSize: CGSize {
+        get {
+            return editableFieldsController.preferredContentSize
+        }
+        set {}
+    }
     
     init(item: Item?, category: ItemCategory?) {
         mockObject = MockItem(item: item)
@@ -44,7 +51,7 @@ class ItemEditableFieldsViewController: UIViewController {
         super.viewDidLoad()
 
         // Editable Fields
-        let editableFieldsController = EditableFieldsViewController()
+
         self.addChild(editableFieldsController)
         
         editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -65,6 +72,8 @@ class ItemEditableFieldsViewController: UIViewController {
                 mockObject.info = newVal
             }
         }))
+        
+        editableFieldsController.completeModifyingFields()
 
         self.view.addSubview(editableFieldsController.view)
         self.view.constrainSubviewToBounds(editableFieldsController.view)

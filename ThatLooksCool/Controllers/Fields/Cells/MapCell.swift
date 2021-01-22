@@ -13,9 +13,15 @@ import GoogleMaps
 
 class MapCell: UITableViewCell {
 
-    @IBOutlet var mapViewArea: UIView!
+    private let mapZoom: Float = 17
+    
+    private let mapViewArea = UIView()
     
     var mapView: GMSMapView?
+    
+    private let mapStyleJSON = "[\r\n    {\r\n      \"featureType\": \"poi\",\r\n      \"stylers\": [\r\n        { \"visibility\": \"off\" }\r\n      ]\r\n    }\r\n  ]"
+    
+    private var mapStyle: GMSMapStyle? = nil
     
     var coordinate: Coordinate? {
         didSet {
@@ -84,19 +90,45 @@ class MapCell: UITableViewCell {
 //        }
 //    }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
 
+        mapStyle = try? GMSMapStyle(jsonString: mapStyleJSON)
+        
         mapViewArea.layer.borderWidth = 1
         mapViewArea.layer.borderColor = TLCStyle.textBorderColor.cgColor
         mapViewArea.layer.cornerRadius = TLCStyle.textCornerRadius
         
-        addMapToView(frame: CGRect(origin: .zero, size: CGSize(width: 150, height: 150)))
-        layoutPin()
-    }
+        let mapActionLabel = UILabel()
+        mapActionLabel.style(.instructions)
+        mapActionLabel.text = "Click to Explore & Identify\nSee help for More"
+        mapActionLabel.numberOfLines = 2
+        mapActionLabel.textAlignment = .center
+        mapActionLabel.alpha = 0.85
         
+        mapViewArea.addSubview(mapActionLabel)
+        mapViewArea.constrainSubviewToBounds(mapActionLabel,
+                                             onEdges: [.left, .right, .bottom],
+                                             withInset: UIEdgeInsets(top: 0,
+                                                                     left: TLCStyle.interiorMargin,
+                                                                     bottom: TLCStyle.interiorMargin,
+                                                                     right: TLCStyle.interiorMargin))
+        
+        addMapToView(frame: CGRect(origin: .zero, size: mapViewArea.frame.size))
+        layoutPin()
+        
+        self.contentView.addSubview(mapViewArea)
+        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(TLCStyle.interiorMargin))
+        
+        mapViewArea.addConstraint(.init(item: mapViewArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160))
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -119,9 +151,14 @@ class MapCell: UITableViewCell {
         mapView.settings.tiltGestures = false
         mapView.settings.zoomGestures = false
         mapView.settings.consumesGesturesInView = false
+
+        if let style = mapStyle {
+            mapView.mapStyle = style
+        }
         
         self.mapView = mapView
         self.mapViewArea.addSubview(mapView)
+        self.mapViewArea.sendSubviewToBack(mapView)
     }
     
     private func layoutPin() {
@@ -132,7 +169,7 @@ class MapCell: UITableViewCell {
             marker.title = "Enter marker title here"
             marker.map = self.mapView
             
-            self.mapView?.camera = GMSCameraPosition(target: coordinate, zoom: 16, bearing: 0, viewingAngle: 0)
+            self.mapView?.camera = GMSCameraPosition(target: coordinate, zoom: mapZoom, bearing: 0, viewingAngle: 0)
         }
     }
 }

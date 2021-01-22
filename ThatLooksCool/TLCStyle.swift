@@ -238,5 +238,11 @@ extension UITextField {
     func style(_ type: LabelType) {
         self.font = UIFont(name: type.fontName, size: type.size)
         self.textColor = type.textColor
+        
+        self.leftViewMode = .always
+        self.leftView = UIView(frame: CGRect(x: bounds.origin.x + TLCStyle.interiorPadding,
+                                             y: bounds.origin.y,
+                                             width: bounds.size.width - TLCStyle.interiorPadding,
+                                             height: bounds.size.height))
     }
 }

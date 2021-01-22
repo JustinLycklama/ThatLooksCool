@@ -28,6 +28,12 @@ class EditableFieldsViewController: UIViewController {
         
     private let editItemsTable = UITableView()
     
+    public var sizeSubscriber: ((CGSize) -> Void)? {
+        didSet {
+            completeModifyingFields()
+        }
+    }
+    
     var fields: [Field] = []
     
     override func viewDidLoad() {
@@ -35,25 +41,24 @@ class EditableFieldsViewController: UIViewController {
 
         view.backgroundColor = .white
         
-        editItemsTable.register(UINib(nibName: "ShortStringCell", bundle: nil), forCellReuseIdentifier: Constants.ShortTextCell)
-        editItemsTable.register(UINib(nibName: "LongStringCell", bundle: nil), forCellReuseIdentifier: Constants.LongTextCell)
+        editItemsTable.register(ShortStringCell.self, forCellReuseIdentifier: Constants.ShortTextCell)
+        editItemsTable.register(LongStringCell.self, forCellReuseIdentifier: Constants.LongTextCell)
         editItemsTable.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: Constants.ColorCell)
-        editItemsTable.register(UINib(nibName: "MapCell", bundle: nil), forCellReuseIdentifier: Constants.MapCell)
+        editItemsTable.register(MapCell.self, forCellReuseIdentifier: Constants.MapCell)
         
         editItemsTable.delegate = self
         editItemsTable.dataSource = self
         
-        editItemsTable.tableFooterView = UIView()
+        editItemsTable.tableFooterView = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 0, height: TLCStyle.topLevelPadding)))
         editItemsTable.separatorStyle = .none
         editItemsTable.isScrollEnabled = true
         editItemsTable.bounces = false
         editItemsTable.showsVerticalScrollIndicator = true
+        editItemsTable.sectionHeaderHeight = TLCStyle.interiorMargin
         editItemsTable.backgroundColor = .clear
         
-        
-
         self.view.addSubview(editItemsTable)
-        self.view.constrainSubviewToBounds(editItemsTable, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin, left: 0, bottom: 0, right: 0))
+        self.view.constrainSubviewToBounds(editItemsTable)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,6 +75,13 @@ class EditableFieldsViewController: UIViewController {
     func removeAllFields() {
         fields.removeAll()
         editItemsTable.reloadData()
+    }
+    
+    func completeModifyingFields() {
+        if let subscriber = sizeSubscriber {
+            self.view.layoutIfNeeded()
+            subscriber(editItemsTable.contentSize)
+        }
     }
 }
 
@@ -115,5 +127,9 @@ extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelega
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()
     }
 }

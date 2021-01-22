@@ -11,8 +11,8 @@ import UIKit
 class LongStringCell: UITableViewCell {
 
 //    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var textView: UITextView!
-    @IBOutlet var borderView: UIView!
+    let textView = UITextView()
+    let borderView = UIView()
     
     let placeholderLabel = UILabel()
     
@@ -31,9 +31,9 @@ class LongStringCell: UITableViewCell {
     
     var onUpdate: ((String) -> Void)?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         selectionStyle = .none
 
         textView.style(.userText)
@@ -52,6 +52,18 @@ class LongStringCell: UITableViewCell {
         borderView.layer.cornerRadius = TLCStyle.textCornerRadius
         borderView.layer.borderWidth = 1
         borderView.layer.borderColor = TLCStyle.textBorderColor.cgColor
+        
+        borderView.addSubview(textView)
+        borderView.constrainSubviewToBounds(textView, withInset: UIEdgeInsets(1))
+        
+        self.contentView.addSubview(borderView)
+        self.contentView.constrainSubviewToBounds(borderView, withInset: UIEdgeInsets(TLCStyle.interiorMargin))
+        
+        borderView.addConstraint(.init(item: borderView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 128))
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
