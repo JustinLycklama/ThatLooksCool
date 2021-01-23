@@ -16,27 +16,24 @@
 
 import UIKit
 
-import TLCModel
-
-class ItemEditableFieldsViewController: UIViewController {
+public class ItemEditableFieldsViewController: UIViewController {
 
     private let associatedCategory: ItemCategory?
     
     private let databaseObject: Item?
     private let mockObject: MockItem
                 
-    weak var completeDelegate: CompletableActionDelegate?
+    public weak var completeDelegate: CompletableActionDelegate?
     
     let editableFieldsController = EditableFieldsViewController()
     
-    override var preferredContentSize: CGSize {
-        get {
-            return editableFieldsController.preferredContentSize
+    public var sizeSubscriber: ((CGSize) -> Void)? {
+        didSet {
+            editableFieldsController.sizeSubscriber = sizeSubscriber
         }
-        set {}
     }
     
-    init(item: Item?, category: ItemCategory?) {
+    public init(item: Item?, category: ItemCategory?) {
         mockObject = MockItem(item: item)
         databaseObject = item
         associatedCategory = category
@@ -47,7 +44,7 @@ class ItemEditableFieldsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         // Editable Fields
@@ -73,14 +70,27 @@ class ItemEditableFieldsViewController: UIViewController {
             }
         }))
         
-        editableFieldsController.completeModifyingFields()
+//        editableFieldsController.addField(.list(title: "Categories", values: ["1as ", "2sd as d"]))
+        
+        editableFieldsController.completeFieldSetup()
 
         self.view.addSubview(editableFieldsController.view)
         self.view.constrainSubviewToBounds(editableFieldsController.view)
+        
+        editableFieldsController.sizeSubscriber = { [weak self] requestedSize in
+            guard let view = self?.editableFieldsController.view else {
+                return
+            }
+            
+            let heightConstraint = NSLayoutConstraint.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: requestedSize.height)
+            
+            heightConstraint.priority = .defaultHigh
+            view.addConstraint(heightConstraint)
+        }
     }
     
     @objc @discardableResult
-    func saveItem() -> Item {
+    public func saveItem() -> Item {
         let savedItem: Item!
         
         if let item = databaseObject {
@@ -95,7 +105,7 @@ class ItemEditableFieldsViewController: UIViewController {
     }
     
     @discardableResult
-    func deleteItem() -> MockItem? {
+    public func deleteItem() -> MockItem? {
         var deletedItem: MockItem? = nil
         
         if let item = databaseObject {
@@ -108,7 +118,7 @@ class ItemEditableFieldsViewController: UIViewController {
     }
         
     @objc
-    func complete() {
+    public func complete() {
         completeDelegate?.complete()
     }
 }

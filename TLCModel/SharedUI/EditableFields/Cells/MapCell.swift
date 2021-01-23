@@ -8,7 +8,6 @@
 
 import UIKit
 
-import TLCModel
 import GoogleMaps
 
 class MapCell: UITableViewCell {

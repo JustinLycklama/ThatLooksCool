@@ -10,7 +10,7 @@ import UIKit
 import TLCModel
 
 @IBDesignable
-class CategoryCellView: ShadowView {
+public class CategoryCellView: ShadowView {
 
 //    @IBOutlet weak var titleLabel: UILabel!
     
@@ -22,7 +22,7 @@ class CategoryCellView: ShadowView {
         }
     }
     
-    override init() {
+    public override init() {
         super.init()
         setup()
     }
@@ -31,7 +31,7 @@ class CategoryCellView: ShadowView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
         setup()
     }

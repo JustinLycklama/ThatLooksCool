@@ -60,8 +60,6 @@ PODS:
   - GoogleMaps/Base (3.10.0)
   - GoogleMaps/Maps (3.10.0):
     - GoogleMaps/Base
-  - GooglePlaces (3.10.0):
-    - GoogleMaps/Base (= 3.10.0)
   - GoogleUserMessagingPlatform (1.4.0)
   - GoogleUtilities/AppDelegateSwizzler (7.1.1):
     - GoogleUtilities/Environment
@@ -98,6 +96,7 @@ PODS:
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
   - ObjectMapper (4.2.0)
+  - Onboard (2.3.3)
   - PromisesObjC (1.2.11)
   - Realm (10.1.4):
     - Realm/Headers (= 10.1.4)
@@ -114,8 +113,8 @@ DEPENDENCIES:
   - Firebase/Crashlytics (= 7.1.0)
   - Google-Mobile-Ads-SDK (~> 7.65)
   - GoogleMaps (= 3.10.0)
-  - GooglePlaces (= 3.10.0)
   - LicensePlist
+  - Onboard
   - RealmSwift
   - RxSwift
 
@@ -133,7 +132,6 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMaps
-    - GooglePlaces
     - GoogleUserMessagingPlatform
     - GoogleUtilities
     - LicensePlist
@@ -141,6 +139,7 @@ SPEC REPOS:
     - Moya-ObjectMapper
     - nanopb
     - ObjectMapper
+    - Onboard
     - PromisesObjC
     - Realm
     - RealmSwift
@@ -165,7 +164,6 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 89e1a64593f968713b0506ba1b53b38a154bf9a5
   GoogleDataTransport: e4085e6762f36a6141738f46b0153473ce57fb18
   GoogleMaps: 8c080862ff2748ece9929471b30feb56a6c5079d
-  GooglePlaces: 9a6f5f3a0c88da2aa1bf7426a65d3e004f5e69a1
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: 3dc4ff0d5e4840e2fa8eef0889620e8c33d4218c
   LicensePlist: 11c638fa9dc22ddb5771cdf910242ae1ba2684da
@@ -173,12 +171,13 @@ SPEC CHECKSUMS:
   Moya-ObjectMapper: 967a99d9ea3aa9c93ddbe112aeca3667f53bfe93
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
+  Onboard: 4d6e943e20bdd6bc229df967a347dd7514bc2a6f
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   Realm: 80f4fb2971ccb9adc27a47d0955ae8e533a7030b
   RealmSwift: 0e566ca714edb377bba8ea0811eafcea0b93734e
   Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   RxSwift: 81470a2074fa8780320ea5fe4102807cb7118178
 
-PODFILE CHECKSUM: 6f8afd11472165f4c9f0abd97e85ce6807b3ccfa
+PODFILE CHECKSUM: 42836da3598550828203a0bfbfcb00ac172b6029
 
 COCOAPODS: 1.10.0

@@ -141,7 +141,7 @@ class EditCategoryViewController: UIViewController {
             }
         }))
         
-        editableFieldsController.completeModifyingFields()
+        editableFieldsController.completeFieldSetup()
         
         titleContentView.contentView.addSubview(editableFieldsController.view)
         titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import TLCModel
 
 class AddCellView: UIView {
 

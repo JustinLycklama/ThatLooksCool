@@ -9,6 +9,8 @@
 import UIKit
 import IntentsUI
 
+import TLCModel
+
 class SetupHelpViewController: UIViewController {
 
     weak var delegate: CompletableActionDelegate?

@@ -8,35 +8,35 @@
 
 import UIKit
 
-import TLCModel
-
-enum Field {
+public enum Field {
     case shortText(title: String, initialValue: String?, onUpdate: ((String) -> Void))
     case longText(title: String, initialValue: String?, onUpdate: ((String) -> Void))
     case color(onUpdate: ((UIColor) -> Void))
     case map(coordinate: Coordinate)
+    case list(title: String, values: [String])
 }
 
-class EditableFieldsViewController: UIViewController {
+public class EditableFieldsViewController: UIViewController {
 
     struct Constants {
         static let ShortTextCell = "ShortTextCell"
         static let LongTextCell = "LongTextCell"
         static let ColorCell = "ColorCell"
         static let MapCell = "MapCell"
+        static let ListCell = "ListCell"
     }
         
     private let editItemsTable = UITableView()
     
     public var sizeSubscriber: ((CGSize) -> Void)? {
         didSet {
-            completeModifyingFields()
+            completeFieldSetup()
         }
     }
     
     var fields: [Field] = []
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
@@ -45,6 +45,7 @@ class EditableFieldsViewController: UIViewController {
         editItemsTable.register(LongStringCell.self, forCellReuseIdentifier: Constants.LongTextCell)
         editItemsTable.register(UINib(nibName: "ColorCell", bundle: nil), forCellReuseIdentifier: Constants.ColorCell)
         editItemsTable.register(MapCell.self, forCellReuseIdentifier: Constants.MapCell)
+        editItemsTable.register(ListCell.self, forCellReuseIdentifier: Constants.ListCell)
         
         editItemsTable.delegate = self
         editItemsTable.dataSource = self
@@ -61,23 +62,23 @@ class EditableFieldsViewController: UIViewController {
         self.view.constrainSubviewToBounds(editItemsTable)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         editItemsTable.flashScrollIndicators()
     }
     
-    func addField(_ field: Field) {
+    public func addField(_ field: Field) {
         fields.append(field)
         editItemsTable.reloadData()
     }
     
-    func removeAllFields() {
+    public func removeAllFields() {
         fields.removeAll()
         editItemsTable.reloadData()
     }
     
-    func completeModifyingFields() {
+    public func completeFieldSetup() {
         if let subscriber = sizeSubscriber {
             self.view.layoutIfNeeded()
             subscriber(editItemsTable.contentSize)
@@ -87,11 +88,11 @@ class EditableFieldsViewController: UIViewController {
 
 extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fields.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell!
         let field = fields[indexPath.row]
         
@@ -124,12 +125,20 @@ extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelega
             mapCell.coordinate = coordinate
             
             cell = mapCell
+        case .list(let title, let values):
+            let listCell = tableView.dequeueReusableCell(withIdentifier: Constants.ListCell, for: indexPath) as! ListCell
+
+            listCell.title = title
+            listCell.items = values
+            
+            cell = listCell
+            
         }
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView()
     }
 }

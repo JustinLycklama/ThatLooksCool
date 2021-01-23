@@ -9,7 +9,7 @@
 import UIKit
 import ClassicClient
 
-class TitleContentView: UIView {
+public class TitleContentView: UIView {
         
     public let titleLabel = UILabel()
     private let titleStackView = UIStackView()
@@ -28,13 +28,13 @@ class TitleContentView: UIView {
         }
     }
     
-    override var bounds: CGRect {
+    public override var bounds: CGRect {
         didSet {
             addContactShadow()
         }
     }
     
-    init() {
+    public init() {
         super.init(frame: .zero)
         
         initialize()

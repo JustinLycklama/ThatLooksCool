@@ -13,12 +13,9 @@ import TLCIntents
 import TLCModel
 
 import RealmSwift
-
-import GoogleMobileAds
-
 import RxSwift
 
-import EasyNotificationBadge
+import Onboard
 
 class HomeViewController: AdViewController {
             
@@ -30,7 +27,22 @@ class HomeViewController: AdViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let firstPage = OnboardingContentViewController(title: "Page Title", body: "Page body goes here.", image: UIImage(named: "icon"), buttonText: "Text For Button") { () -> Void in
+            // do something here when users press the button, like ask for location services permissions, register for push notifications, connect to social media, or finish the onboarding process
+            }
+        
+        // Image
+        let onboardingVC = OnboardingViewController(backgroundImage: UIImage(named: "background"), contents: [firstPage])
 
+        // Video
+//        let bundle = Bundle.main.mainBundle()
+//        let moviePath = bundle.pathForResource("yourVid", ofType: "mp4")
+//        let movieURL = NSURL(fileURLWithPath: moviePath!)
+
+//        let onboardingVC = OnboardingViewController(contents: [firstPage, secondPage, thirdPage])
+        
+        self.present(onboardingVC!, animated: true, completion: nil)
+        
         self.title = "That Looks Cool"
         
         // Layout

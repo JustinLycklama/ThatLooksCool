@@ -13,6 +13,8 @@ import Firebase
 import GoogleMaps
 import GoogleMobileAds
 
+import TLCModel
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
         

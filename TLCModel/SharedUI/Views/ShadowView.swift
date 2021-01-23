@@ -8,37 +8,37 @@
 
 import UIKit
 
-enum ShadowType {
+public enum ShadowType {
     case none
     case border(radius: CGFloat, offset: CGSize)
     case contact(distance: CGFloat)
 }
 
-class ShadowView: UIView {
+open class ShadowView: UIView {
 
-    var shadowType = ShadowType.border(radius: 5, offset: .zero) {
+    public var shadowType = ShadowType.border(radius: 5, offset: .zero) {
         didSet {
             modifyShadow()
         }
     }
     
-    override var bounds: CGRect {
+    open override var bounds: CGRect {
         didSet {
             modifyShadow()
         }
     }
     
-    init() {
+    public init() {
         super.init(frame: .zero)
         setup()
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
     }

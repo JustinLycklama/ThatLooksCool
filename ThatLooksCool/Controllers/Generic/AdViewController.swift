@@ -7,7 +7,9 @@
 //
 
 import UIKit
-import ClassicClient
+
+import TLCModel
+//import ClassicClient
 
 import GoogleMobileAds
 

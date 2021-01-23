@@ -6,6 +6,6 @@
 //  Copyright © 2020 Justin Lycklama. All rights reserved.
 //
 
-protocol CompletableActionDelegate: AnyObject {
+public protocol CompletableActionDelegate: AnyObject {
     func complete()
 }

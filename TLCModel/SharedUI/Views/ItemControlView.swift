@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol ItemIterationDelegate: AnyObject {
+public protocol ItemIterationDelegate: AnyObject {
     func didPressFirst()
     func didPressThird()
     func didPressSecond()
 }
 
-class ItemControlView: ShadowView {
+public class ItemControlView: ShadowView {
 
     enum ButtonType {
         case one, two, three
@@ -26,31 +26,31 @@ class ItemControlView: ShadowView {
     
     private let buttonMap: [ButtonType : UIButton]
     
-    var firstButtonEnabled: Bool = false {
+    public var firstButtonEnabled: Bool = false {
         didSet {
             firstButton.isEnabled = firstButtonEnabled
         }
     }
     
-    var thirdButtonEnabled: Bool = false {
+    public var thirdButtonEnabled: Bool = false {
         didSet {
             thirdButton.isEnabled = thirdButtonEnabled
         }
     }
     
-    var secondButtonEnabled: Bool = false {
+    public var secondButtonEnabled: Bool = false {
         didSet {
             secondButton.isEnabled = secondButtonEnabled
         }
     }
     
-    weak var delegate: ItemIterationDelegate?
+    public weak var delegate: ItemIterationDelegate?
     
-    convenience override init() {
+    public convenience override init() {
         self.init(frame: .zero)
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         buttonMap = [.one : firstButton, .two : secondButton, .three : thirdButton]
 
         super.init(frame: frame)

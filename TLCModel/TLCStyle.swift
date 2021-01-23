@@ -34,8 +34,8 @@ public struct TLCStyle {
     public static let topLevelMargin: CGFloat = 24
     public static  let topLevelPadding: CGFloat = 16
     
-    public static let interiorMargin: CGFloat = 8
-    public static let interiorPadding: CGFloat = 4
+    public static let interiorMargin: CGFloat = 12
+    public static let interiorPadding: CGFloat = 8
     
     public static let cornerRadius: CGFloat = 10
     public static let textCornerRadius: CGFloat = 5
@@ -96,14 +96,14 @@ public struct TLCStyle {
     public static let barButtonTextColor = barButtonLabelType.textColor
 }
 
-class ImagesResources {
-    static let shared = ImagesResources()
+public class ImagesResources {
+    public static let shared = ImagesResources()
     
-    lazy var editIcon = renderIcon("edit", withColor: TLCStyle.modificationIconColor)
-    lazy var deleteIcon = renderIcon("delete", withColor: TLCStyle.destructiveIconColor)
-    lazy var undoIcon = renderIcon("undo", withColor: TLCStyle.modificationIconColor)
-    lazy var nextIcon = renderIcon("next", withColor: TLCStyle.progressIconColor)
-    lazy var listIcon = renderIcon("list", withColor: TLCStyle.accentColor)
+    public lazy var editIcon = renderIcon("edit", withColor: TLCStyle.modificationIconColor)
+    public lazy var deleteIcon = renderIcon("delete", withColor: TLCStyle.destructiveIconColor)
+    public lazy var undoIcon = renderIcon("undo", withColor: TLCStyle.modificationIconColor)
+    public lazy var nextIcon = renderIcon("next", withColor: TLCStyle.progressIconColor)
+    public lazy var listIcon = renderIcon("list", withColor: TLCStyle.accentColor)
     
     private func renderIcon(_ name: String, withColor color: UIColor) -> UIImage {
         return UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { ctx in
@@ -114,13 +114,13 @@ class ImagesResources {
 }
 
 extension UIEdgeInsets {
-    init(_ value: CGFloat) {
+    public init(_ value: CGFloat) {
         self.init(top: value, left: value, bottom: value, right: value)
     }
 }
 
 extension UIView {
-    func removeShadow() {
+    public func removeShadow() {
         self.layer.shadowPath = nil
         self.layer.shadowRadius = 0
         self.layer.shadowOffset = .zero
@@ -128,7 +128,7 @@ extension UIView {
         self.layer.shadowColor = TLCStyle.shadowColor.cgColor
     }
     
-    func addBorderShadow(radius: CGFloat = 5, offset: CGSize = .zero) {
+    public func addBorderShadow(radius: CGFloat = 5, offset: CGSize = .zero) {
         self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: self.layer.cornerRadius).cgPath
         self.layer.shadowRadius = radius
         self.layer.shadowOffset = offset
@@ -136,7 +136,7 @@ extension UIView {
         self.layer.shadowColor = TLCStyle.shadowColor.cgColor
     }
     
-    func addContactShadow(shadowDistance: CGFloat = 0) {
+    public func addContactShadow(shadowDistance: CGFloat = 0) {
         let shadowSize: CGFloat = 20
         let contactRect = CGRect(x: -shadowSize, y: self.bounds.size.height - (shadowSize * 0.4) + shadowDistance, width: self.bounds.size.width + shadowSize * 2, height: shadowSize)
         self.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
@@ -146,7 +146,7 @@ extension UIView {
 }
 
 extension UIViewController {
-    func addBackgroundImage() {
+    public func addBackgroundImage() {
 //        let backgroundImage = UIImageView()
 //        backgroundImage.image = UIImage(named: "city-side-bg")
 //        backgroundImage.contentMode = .scaleAspectFill
@@ -158,7 +158,7 @@ extension UIViewController {
     }
 }
 
-enum LabelType {
+public enum LabelType {
     case navBar
     case barButton
     case heading
@@ -221,21 +221,21 @@ enum LabelType {
 }
 
 extension UILabel {
-    func style(_ type: LabelType) {
+    public func style(_ type: LabelType) {
         self.font = UIFont(name: type.fontName, size: type.size)
         self.textColor = type.textColor
     }
 }
 
 extension UITextView {
-    func style(_ type: LabelType) {
+    public func style(_ type: LabelType) {
         self.font = UIFont(name: type.fontName, size: type.size)
         self.textColor = type.textColor
     }
 }
 
 extension UITextField {
-    func style(_ type: LabelType) {
+    public func style(_ type: LabelType) {
         self.font = UIFont(name: type.fontName, size: type.size)
         self.textColor = type.textColor
         

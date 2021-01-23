@@ -61,7 +61,7 @@ class EditItemViewController: UIViewController {
         
         let editView = createEditView()
         
-        stack.addArrangedSubview(editLabel)
+//        stack.addArrangedSubview(editLabel)
         stack.addArrangedSubview(editView)
         
         view.addSubview(stack)
@@ -95,6 +95,8 @@ class EditItemViewController: UIViewController {
 //        return previewCell
 //    }
     
+    private var contentHeightConstraint: NSLayoutConstraint?
+    
     private func createEditView() -> UIView {
         
         let titleContentView = TitleContentView()
@@ -118,9 +120,7 @@ class EditItemViewController: UIViewController {
         titleContentView.layer.cornerRadius = TLCStyle.cornerRadius
         titleContentView.layer.borderWidth = 1
         titleContentView.layer.borderColor = TLCStyle.viewBorderColor.cgColor
-                
-        titleContentView.addConstraint(NSLayoutConstraint.init(item: titleContentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 600))
-
+        
         // Editable Fields
         self.addChild(editableFieldsController)
         

@@ -8,34 +8,39 @@ def required_pods
 
   pod 'RxSwift'
   pod 'RealmSwift'
+  
 end
 
+def ui_pods
+  pod 'EasyNotificationBadge'
+
+  pod 'GoogleMaps',     '3.10.0'
+  
+  pod 'ClassicClient',    :path => '../ClassicClientiOS/'
+end
+  
 def app_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'Onboard'
   pod 'LicensePlist'
-  pod 'EasyNotificationBadge'
   
   pod 'Firebase/Analytics', '7.1.0'
   pod 'Firebase/Crashlytics', '7.1.0'
   
-  pod 'GoogleMaps',     '3.10.0'
-  pod 'GooglePlaces',   '3.10.0'
-  
   pod 'Google-Mobile-Ads-SDK', '~> 7.65'
-  
-  pod 'ClassicClient',    :path => '../ClassicClientiOS/'
-
 end
 
 target 'ThatLooksCool' do
     required_pods
     app_pods
+    ui_pods
 end
 
 target 'TLCModel' do
     required_pods
+    ui_pods
 end
 
 target 'TLCIntents' do

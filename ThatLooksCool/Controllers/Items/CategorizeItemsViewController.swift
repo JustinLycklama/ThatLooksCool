@@ -201,14 +201,7 @@ class CategorizeItemsViewController: AdViewController {
                 newDisplayView.layer.cornerRadius = 10
                 newDisplayView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 newDisplayView.setContentCompressionResistancePriority(.required, for: .vertical)
-                
-                newDisplayController.editableFieldsController.sizeSubscriber = { requestedSize in
-                    let heightConstraint = NSLayoutConstraint.init(item: newDisplayView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: requestedSize.height)
-                    
-                    heightConstraint.priority = .defaultHigh
-                    newDisplayView.addConstraint(heightConstraint)
-                }
-                
+                                
 //                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
                 
                 self.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)

@@ -9,14 +9,14 @@
 import UIKit
 import EasyNotificationBadge
 
-class TripleItemZAzisView: UIView {
+public class TripleItemZAzisView: UIView {
     
     public let itemDisplayArea = UIView()
     
     let badgePositioner = UIView()
     var badgeAppearance = BadgeAppearance()
     
-    init() {
+    public init() {
         super.init(frame: .zero)
         setup()
     }
@@ -106,7 +106,7 @@ class TripleItemZAzisView: UIView {
                                                               right: 10))
     }
     
-    func setBadge(_ value: Int) {        
+    public func setBadge(_ value: Int) {        
         if (value == 0) {
             badgePositioner.badge(text: nil)
         } else {

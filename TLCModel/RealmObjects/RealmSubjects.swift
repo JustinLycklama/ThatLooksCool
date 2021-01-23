@@ -8,14 +8,13 @@
 
 import Foundation
 
-import TLCModel
 import RealmSwift
 import RxSwift
 
 //TODO: Remove
 import CoreLocation
 
-class RealmSubjects {
+public class RealmSubjects {
     public static let shared = RealmSubjects()
     
     // A behavior subject will give any subscriber the most recent element and everything that is emitted by that sequence after the subscription happened.
@@ -152,7 +151,7 @@ class RealmSubjects {
     // MARK: - Item
     
     // TODO remove
-    internal func addPendingItem(title: String) {
+    public func addPendingItem(title: String) {
         let newItem = Item(title: title)
 
         realm.beginWrite()
@@ -166,7 +165,7 @@ class RealmSubjects {
     }
     
     // TODO remove
-    internal func addPendingItem() {        
+    public func addPendingItem() {
         let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(43.6331596), longitude: CLLocationDegrees(-79.4141207)))
         let newItem = Item(coordinate: coordinate)
 
@@ -181,7 +180,7 @@ class RealmSubjects {
     }
     
     @discardableResult
-    internal func createItem(withMock mock: MockItem, toCategory category: ItemCategory?) -> Item {
+    public func createItem(withMock mock: MockItem, toCategory category: ItemCategory?) -> Item {
         do {
             let item = Item(mock: mock, category: category)
             
@@ -195,7 +194,7 @@ class RealmSubjects {
         }
     }
     
-    internal func updateItem(item: Item, usingMock mock: MockItem) {
+    public func updateItem(item: Item, usingMock mock: MockItem) {
         do {
             try realm.write {
                 item.update(usingMock: mock)
@@ -205,7 +204,7 @@ class RealmSubjects {
         }
     }
     
-    internal func categorizeItem(_ item: Item, toCategory category: ItemCategory?) {
+    public func categorizeItem(_ item: Item, toCategory category: ItemCategory?) {
         do {
             try realm.write {
                 item.updateCategory(category)
@@ -215,7 +214,7 @@ class RealmSubjects {
         }
     }
     
-    internal func removeItem(_ item: Item) {
+    public func removeItem(_ item: Item) {
         realm.beginWrite()
         
         realm.delete(item)
@@ -227,7 +226,7 @@ class RealmSubjects {
         }
     }
     
-    internal func removeAllPendingItems() {
+    public func removeAllPendingItems() {
         
         let pendingItems = realm.objects(Item.self)
         
@@ -243,7 +242,7 @@ class RealmSubjects {
     
     // MARK: - Category
     
-    internal func setupCategoriesIfNone() {
+    public func setupCategoriesIfNone() {
         let categories = realm.objects(ItemCategory.self)
         
         if (categories.count == 0) {
@@ -264,7 +263,7 @@ class RealmSubjects {
         }
     }
     
-    internal func addCategory(withMock mock: MockCategory) {
+    public func addCategory(withMock mock: MockCategory) {
         do {
             try realm.write {
                 realm.add(ItemCategory(mock: mock))
@@ -274,7 +273,7 @@ class RealmSubjects {
         }        
     }
     
-    internal func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
+    public func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
         do {
             try realm.write {
                 category.update(usingMock: mock)
@@ -284,7 +283,7 @@ class RealmSubjects {
         }
     }
     
-    internal func removeCategory(_ category: ItemCategory) {
+    public func removeCategory(_ category: ItemCategory) {
         realm.beginWrite()
         
         realm.delete(category)
