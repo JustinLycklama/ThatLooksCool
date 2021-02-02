@@ -16,6 +16,10 @@ public enum Field {
     case list(title: String, values: [String])
 }
 
+protocol ExternalApplicationRequestDelegate: AnyObject {
+    func requestMapApplication(forCoordinate coordinate: Coordinate)
+}
+
 public class EditableFieldsViewController: UIViewController {
 
     struct Constants {
@@ -35,6 +39,8 @@ public class EditableFieldsViewController: UIViewController {
     }
     
     var fields: [Field] = []
+    
+    internal weak var delegate: ExternalApplicationRequestDelegate?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +129,7 @@ extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelega
             let mapCell = tableView.dequeueReusableCell(withIdentifier: Constants.MapCell, for: indexPath) as! MapCell
 
             mapCell.coordinate = coordinate
+            mapCell.delegate = self
             
             cell = mapCell
         case .list(let title, let values):
@@ -140,5 +147,11 @@ extension EditableFieldsViewController: UITableViewDataSource, UITableViewDelega
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return UIView()
+    }
+}
+
+extension EditableFieldsViewController: ExternalApplicationRequestDelegate {
+    func requestMapApplication(forCoordinate coordinate: Coordinate) {
+        self.delegate?.requestMapApplication(forCoordinate: coordinate)
     }
 }

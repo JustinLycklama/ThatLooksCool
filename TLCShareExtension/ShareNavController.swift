@@ -8,14 +8,21 @@
 
 import UIKit
 
+import TLCModel
+import GoogleMaps
+
 @objc(ShareNavController)
 class ShareNavController: UINavigationController {
 
+    let destinationChoiceController = ItemDestinationViewController()
+    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-        // 2: set the ViewControllers
-        self.setViewControllers([ShareViewController()], animated: false)
+        // Configure for Maps use
+        // TLCConfig.configure()
+        
+        self.setViewControllers([destinationChoiceController], animated: false)
     }
 
     @available(*, unavailable)

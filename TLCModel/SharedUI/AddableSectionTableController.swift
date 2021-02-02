@@ -7,23 +7,22 @@
 //
 
 import UIKit
-import TLCModel
 
-class AddableSectionTableController: UIViewController {
+open class AddableSectionTableController: UIViewController {
 
-    struct AddableSectionConstants {
-        static let AddCell = "AddCell"
+    public struct AddableSectionConstants {
+        public static let AddCell = "AddCell"
     }
         
-    internal let tableView = UITableView()
+    public let tableView = UITableView()
     
-    var canAddNewItem = false {
+    public var canAddNewItem = false {
         didSet {
             tableView.reloadData()
         }
     }
     
-    override func viewDidLoad() {
+    open override func viewDidLoad() {
         super .viewDidLoad()
         
         self.view.clipsToBounds = false
@@ -56,11 +55,11 @@ class AddableSectionTableController: UIViewController {
         tableView.tableFooterView = UIView()
     }
     
-    internal func isAddItemSection(_ section: Int) -> Bool {
+    public func isAddItemSection(_ section: Int) -> Bool {
         return section == 1 && canAddNewItem
     }
     
-    internal func isAddItemIndex(_ indexPath: IndexPath) -> Bool {
+    public func isAddItemIndex(_ indexPath: IndexPath) -> Bool {
         return canAddNewItem && isAddItemSection(indexPath.section)
     }
     

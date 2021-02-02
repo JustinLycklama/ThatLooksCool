@@ -25,7 +25,8 @@ public class ItemEditableFieldsViewController: UIViewController {
                 
     public weak var completeDelegate: CompletableActionDelegate?
     
-    let editableFieldsController = EditableFieldsViewController()
+    private let editableFieldsController = EditableFieldsViewController()
+    private let displaysMap: Bool
     
     public var sizeSubscriber: ((CGSize) -> Void)? {
         didSet {
@@ -33,10 +34,19 @@ public class ItemEditableFieldsViewController: UIViewController {
         }
     }
     
-    public init(item: Item?, category: ItemCategory?) {
+    public init(item: Item?, category: ItemCategory?, displaysMap: Bool = true) {
         mockObject = MockItem(item: item)
         databaseObject = item
         associatedCategory = category
+        self.displaysMap = displaysMap
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public init(item: Item?, mockItem: MockItem, category: ItemCategory?, displaysMap: Bool = false) {
+        mockObject = mockItem
+        databaseObject = item
+        associatedCategory = category
+        self.displaysMap = displaysMap
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -49,6 +59,7 @@ public class ItemEditableFieldsViewController: UIViewController {
 
         // Editable Fields
 
+        editableFieldsController.delegate = self
         self.addChild(editableFieldsController)
         
         editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
@@ -60,7 +71,7 @@ public class ItemEditableFieldsViewController: UIViewController {
             }
         }))
         
-        if let coord = mockObject.coordinate {
+        if displaysMap, let coord = mockObject.coordinate {
             editableFieldsController.addField(.map(coordinate: coord))
         }
         
@@ -123,4 +134,25 @@ public class ItemEditableFieldsViewController: UIViewController {
     }
 }
 
+extension ItemEditableFieldsViewController: ExternalApplicationRequestDelegate {
+    func requestMapApplication(forCoordinate coordinate: Coordinate) {
+        
+        if let item = databaseObject {
+            RealmSubjects.shared.setOutItem(item: item)
+        }
+        
+        let lat = coordinate.coreLocationCoordinate.latitude
+        let lon = coordinate.coreLocationCoordinate.longitude
+        
+        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
+            UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(lat),\(lon)&zoom=14&views=traffic&q=\(lat),\(lon)")!, options: [:], completionHandler: nil)
+        } else {
+            print("Cannot open maps")
+            
+            if let urlDestination = URL.init(string: "https://www.google.com/maps/?center=\(lat),\(lon)&zoom=14&views=traffic&q=\(lat),\(lon)"){
+                UIApplication.shared.open(urlDestination, options: [:], completionHandler: nil)
+            }
+        }
+    }
+}
 

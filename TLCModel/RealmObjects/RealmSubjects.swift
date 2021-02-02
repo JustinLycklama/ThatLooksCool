@@ -150,6 +150,23 @@ public class RealmSubjects {
     
     // MARK: - Item
     
+    
+    // Item to be filled in from external share extent. Should only be one active at a time
+    public func setOutItem(item: Item) {
+        
+        do {
+            try realm.write {
+                realm.objects(Item.self).filter("isSelectedOutItem == true").forEach { (oldSelection: Item) in
+                    oldSelection.isSelectedOutItem = false
+                }
+                
+                item.isSelectedOutItem = true
+            }
+        } catch {
+            fatalError()
+        }
+    }
+    
     // TODO remove
     public func addPendingItem(title: String) {
         let newItem = Item(title: title)
@@ -298,7 +315,7 @@ public class RealmSubjects {
 
 // .list function must be called from the thread we are planning to use it
 // If we create the list on a background thread and then wait until the main thread to use it, the objects in the list could be invalidated
-extension Results {
+public extension Results {
     func list() -> [Element] {
         return Array(self)
     }

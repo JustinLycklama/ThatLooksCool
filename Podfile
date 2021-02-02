@@ -10,14 +10,6 @@ def required_pods
   pod 'RealmSwift'
   
 end
-
-def ui_pods
-  pod 'EasyNotificationBadge'
-
-  pod 'GoogleMaps',     '3.10.0'
-  
-  pod 'ClassicClient',    :path => '../ClassicClientiOS/'
-end
   
 def app_pods
   use_frameworks!
@@ -32,6 +24,17 @@ def app_pods
   pod 'Google-Mobile-Ads-SDK', '~> 7.65'
 end
 
+def ui_pods
+  pod 'ClassicClient',    :path => '../ClassicClientiOS/'
+end
+
+def model_pods
+  pod 'GoogleMaps',     '3.10.0'
+  pod 'EasyNotificationBadge'
+end
+
+## Targets
+
 target 'ThatLooksCool' do
     required_pods
     app_pods
@@ -40,6 +43,7 @@ end
 
 target 'TLCModel' do
     required_pods
+    model_pods
     ui_pods
 end
 
@@ -47,6 +51,9 @@ target 'TLCIntents' do
     required_pods
 end
 
+target 'TLCShareExtension' do
+    required_pods
+end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

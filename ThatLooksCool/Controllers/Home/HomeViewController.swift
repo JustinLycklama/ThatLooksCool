@@ -27,6 +27,20 @@ class HomeViewController: AdViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
+        
+//        TestRequest.init().request { (result: Result<GooglePlace>) in
+//
+//        }
+  
+        let url = URL(string: "https://goo.gl/maps/WD3ZsR5zqGVgahcq8")!
+        
+//        url.requestHTTPStatus { (test: Int?) in
+//            
+//        }
+//        
+        
+        ////
         let firstPage = OnboardingContentViewController(title: "Page Title", body: "Page body goes here.", image: UIImage(named: "icon"), buttonText: "Text For Button") { () -> Void in
             // do something here when users press the button, like ask for location services permissions, register for push notifications, connect to social media, or finish the onboarding process
             }
@@ -41,7 +55,7 @@ class HomeViewController: AdViewController {
 
 //        let onboardingVC = OnboardingViewController(contents: [firstPage, secondPage, thirdPage])
         
-        self.present(onboardingVC!, animated: true, completion: nil)
+//        self.present(onboardingVC!, animated: true, completion: nil)
         
         self.title = "That Looks Cool"
         

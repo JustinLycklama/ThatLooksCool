@@ -22,6 +22,8 @@ public class Item: Object, ItemDisplayable {
     @objc public dynamic var coordinate: Coordinate?
     @objc public dynamic var category: ItemCategory?
     
+    @objc public dynamic var isSelectedOutItem: Bool = false
+    
     @objc public dynamic let timestamp: Date?
     
     public init(title: String) {

@@ -22,6 +22,8 @@ class MapCell: UITableViewCell {
     
     private var mapStyle: GMSMapStyle? = nil
     
+    internal weak var delegate: ExternalApplicationRequestDelegate?
+    
     var coordinate: Coordinate? {
         didSet {
 
@@ -176,21 +178,10 @@ class MapCell: UITableViewCell {
 extension MapCell: GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
         
-        guard let coordinate = self.coordinate?.coreLocationCoordinate else {
+        guard let coordinate = self.coordinate else {
             return
         }
         
-        let lat = coordinate.latitude
-        let lon = coordinate.longitude
-        
-        if (UIApplication.shared.canOpenURL(URL(string:"comgooglemaps://")!)) {
-            UIApplication.shared.open(URL(string:"comgooglemaps://?center=\(lat),\(lon)&zoom=14&views=traffic&q=\(lat),\(lon)")!, options: [:], completionHandler: nil)
-        } else {
-            print("Cannot open maps")
-            
-            if let urlDestination = URL.init(string: "https://www.google.com/maps/?center=\(lat),\(lon)&zoom=14&views=traffic&q=\(lat),\(lon)"){
-                UIApplication.shared.open(urlDestination, options: [:], completionHandler: nil)
-            }
-        }
+        delegate?.requestMapApplication(forCoordinate: coordinate)
     }
 }

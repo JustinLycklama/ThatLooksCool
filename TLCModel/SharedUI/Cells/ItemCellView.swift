@@ -7,14 +7,13 @@
 //
 
 import UIKit
-import TLCModel
 
-class ItemCellView: ShadowView {
+public class ItemCellView: ShadowView {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         super.awakeFromNib()
 
         titleLabel.style(.userText)
@@ -32,7 +31,7 @@ class ItemCellView: ShadowView {
         titleLabel.textColor = .black
     }
 
-    func displayItem(displayable: ItemDisplayable) {
+    public func displayItem(displayable: ItemDisplayable) {
         titleLabel.text = displayable.title
         detailLabel.text = displayable.info
     }

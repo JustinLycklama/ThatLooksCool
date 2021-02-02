@@ -8,18 +8,16 @@
 
 import UIKit
 
-import TLCModel
-
-class ItemCell: UITableViewCell {
+public class ItemCell: UITableViewCell {
 
     private var cellDisplayView: ItemCellView?
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -29,7 +27,7 @@ class ItemCell: UITableViewCell {
         
         self.contentView.clipsToBounds = false
         
-        let cellDisplay = UIView.instanceFromNib("ItemCellView", inBundle: Bundle.main) as! ItemCellView
+        let cellDisplay = UIView.instanceFromNib("ItemCellView", inBundle: Bundle(for: ItemCellView.self)) as! ItemCellView
         cellDisplayView = cellDisplay
 
         self.contentView.addSubview(cellDisplay)
@@ -39,7 +37,7 @@ class ItemCell: UITableViewCell {
                                                                                        right: 0))
     }
     
-    func displayItem(displayable: ItemDisplayable) {
+    public func displayItem(displayable: ItemDisplayable) {
         cellDisplayView?.displayItem(displayable: displayable)
     }
 }

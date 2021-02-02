@@ -10,7 +10,6 @@ import UIKit
 import MapKit
 
 import Firebase
-import GoogleMaps
 import GoogleMobileAds
 
 import TLCModel
@@ -22,9 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
-        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
-//        GMSPlacesClient.provideAPIKey(TLCConfig.apiKey(.maps)) // Too expensive
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        TLCConfig.configure()
+//        ShareExtensionConfig.configure()
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in
             if success {
