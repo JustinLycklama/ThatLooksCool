@@ -9,6 +9,7 @@
 import UIKit
 import ClassicClient
 
+
 public struct TLCStyle {
     
     // MARK: - Metrics
@@ -62,18 +63,18 @@ public struct TLCStyle {
     public static let modificationIconColor = ColorPallet.yellow
     public static let destructiveIconColor = ColorPallet.red
     
-    public static let placeholderFont = UIFont(name: LabelType.label.fontName, size: LabelType.label.size)
+    public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
 
     
     // Nav Bar
     public static let navBarBackgroundColor = ColorPallet.lightCyan
 
-    private static let navBarLabelType = LabelType.navBar
+    private static let navBarLabelType = TextStyle.navBar
     public static let navBarFont = UIFont(name: navBarLabelType.fontName, size: navBarLabelType.size)
     public static let navBarTextColor = navBarLabelType.textColor
     
     // Bar Button Item
-    private static let barButtonLabelType = LabelType.barButton
+    private static let barButtonLabelType = TextStyle.barButton
     public static let barButtonFont = UIFont(name: barButtonLabelType.fontName, size: barButtonLabelType.size)
     public static let barButtonTextColor = barButtonLabelType.textColor
 }
@@ -92,12 +93,6 @@ public class ImagesResources {
             ctx.cgContext.setFillColor(color.cgColor)
             UIImage(named: name)?.withRenderingMode(.alwaysTemplate).draw(in: CGRect(x: 0, y: 0, width: 30, height: 30))
         }
-    }
-}
-
-extension UIEdgeInsets {
-    public init(_ value: CGFloat) {
-        self.init(top: value, left: value, bottom: value, right: value)
     }
 }
 
@@ -140,7 +135,8 @@ extension UIViewController {
     }
 }
 
-public enum LabelType {
+
+public enum TextStyle: TextStylable {
     case navBar
     case barButton
     case heading
@@ -149,7 +145,7 @@ public enum LabelType {
     case userText
     case systemInfoLink
     
-    var fontName: String {
+    public var fontName: String {
         switch self {
         case .navBar:
             return "KohinoorTelugu-Medium"
@@ -166,7 +162,7 @@ public enum LabelType {
         }
     }
     
-    var textColor: UIColor {
+    public var textColor: UIColor {
         
         switch self {
         case .navBar, .barButton:
@@ -182,7 +178,7 @@ public enum LabelType {
         }
     }
     
-    var size: CGFloat {
+    public var size: CGFloat {
         switch self {
         case .navBar:
             return 22
@@ -199,32 +195,5 @@ public enum LabelType {
         case .systemInfoLink:
             return 16
         }
-    }
-}
-
-extension UILabel {
-    public func style(_ type: LabelType) {
-        self.font = UIFont(name: type.fontName, size: type.size)
-        self.textColor = type.textColor
-    }
-}
-
-extension UITextView {
-    public func style(_ type: LabelType) {
-        self.font = UIFont(name: type.fontName, size: type.size)
-        self.textColor = type.textColor
-    }
-}
-
-extension UITextField {
-    public func style(_ type: LabelType) {
-        self.font = UIFont(name: type.fontName, size: type.size)
-        self.textColor = type.textColor
-        
-        self.leftViewMode = .always
-        self.leftView = UIView(frame: CGRect(x: bounds.origin.x + TLCStyle.interiorPadding,
-                                             y: bounds.origin.y,
-                                             width: bounds.size.width - TLCStyle.interiorPadding,
-                                             height: bounds.size.height))
     }
 }

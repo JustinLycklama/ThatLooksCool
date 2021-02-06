@@ -7,8 +7,10 @@
 //
 
 import UIKit
-
 import GoogleMaps
+
+import TLCModel
+import ClassicClient
 
 class MapCell: UITableViewCell {
 
@@ -22,7 +24,7 @@ class MapCell: UITableViewCell {
     
     private var mapStyle: GMSMapStyle? = nil
     
-    internal weak var delegate: ExternalApplicationRequestDelegate?
+//    internal weak var delegate: ExternalApplicationRequestDelegate?
     
     var coordinate: Coordinate? {
         didSet {
@@ -99,11 +101,11 @@ class MapCell: UITableViewCell {
         mapStyle = try? GMSMapStyle(jsonString: mapStyleJSON)
         
         mapViewArea.layer.borderWidth = 1
-        mapViewArea.layer.borderColor = TLCStyle.textBorderColor.cgColor
-        mapViewArea.layer.cornerRadius = TLCStyle.textCornerRadius
+        mapViewArea.layer.borderColor = App.style.textAreaBorderColor.cgColor
+        mapViewArea.layer.cornerRadius = App.style.textAreaCornerRadius
         
         let mapActionLabel = UILabel()
-        mapActionLabel.style(.instructions)
+        mapActionLabel.style(TextStyle.instructions)
         mapActionLabel.text = "Click to Explore & Identify\nSee help for More"
         mapActionLabel.numberOfLines = 2
         mapActionLabel.textAlignment = .center
@@ -113,15 +115,15 @@ class MapCell: UITableViewCell {
         mapViewArea.constrainSubviewToBounds(mapActionLabel,
                                              onEdges: [.left, .right, .bottom],
                                              withInset: UIEdgeInsets(top: 0,
-                                                                     left: TLCStyle.interiorMargin,
-                                                                     bottom: TLCStyle.interiorMargin,
-                                                                     right: TLCStyle.interiorMargin))
+                                                                     left: App.style.interiorMargin,
+                                                                     bottom: App.style.interiorMargin,
+                                                                     right: App.style.interiorMargin))
         
         addMapToView(frame: CGRect(origin: .zero, size: mapViewArea.frame.size))
         layoutPin()
         
         self.contentView.addSubview(mapViewArea)
-        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(TLCStyle.interiorMargin))
+        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(App.style.interiorMargin))
         
         mapViewArea.addConstraint(.init(item: mapViewArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160))
     }
@@ -182,6 +184,6 @@ extension MapCell: GMSMapViewDelegate {
             return
         }
         
-        delegate?.requestMapApplication(forCoordinate: coordinate)
+//        delegate?.requestMapApplication(forCoordinate: coordinate)
     }
 }

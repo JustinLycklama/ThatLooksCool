@@ -9,8 +9,6 @@
 import UIKit
 
 import TLCModel
-//import ClassicClient
-
 import GoogleMobileAds
 
 class AdViewController: UIViewController {

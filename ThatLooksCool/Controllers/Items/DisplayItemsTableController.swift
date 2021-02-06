@@ -40,7 +40,7 @@ class DisplayItemsTableController: AdViewController {
         
         let itemsLabel = UILabel()
         itemsLabel.text = "Items"
-        itemsLabel.style(.heading)
+        itemsLabel.style(TextStyle.heading)
 
         stack.addArrangedSubview(itemsLabel)
         stack.addArrangedSubview(itemsView)

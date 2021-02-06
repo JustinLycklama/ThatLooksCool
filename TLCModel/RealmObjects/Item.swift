@@ -7,6 +7,7 @@
 //
 
 import RealmSwift
+import ClassicClient
 
 public protocol ItemDisplayable: AnyObject {
     var title: String? { get }
@@ -85,6 +86,10 @@ public class Item: Object, ItemDisplayable {
     }
 }
 
+public protocol ModifiableFields: AnyObject {
+    func modifiableFields() -> [Field]
+}
+
 public class MockItem: ItemDisplayable {
     public var title: String?
     public var info: String?
@@ -94,5 +99,58 @@ public class MockItem: ItemDisplayable {
         title = item?.title
         info = item?.info
         coordinate = item?.coordinate
+    }
+}
+
+extension MockItem: ModifiableFields {
+    // TODO: Classic client stuff elsewhere?
+    public func modifiableFields() -> [Field] {
+        var fields: [Field] = []
+
+        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
+            guard let self = self else {
+                return
+            }
+            
+            self.title = newVal
+        }))
+        
+        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
+            guard let self = self else {
+                return
+            }
+            
+            self.title = newVal
+        }))
+        
+        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
+            guard let self = self else {
+                return
+            }
+            
+            self.title = newVal
+        }))
+        
+        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
+            guard let self = self else {
+                return
+            }
+            
+            self.title = newVal
+        }))
+        
+//        if displaysMap, let coord = mockObject.coordinate {
+//            fields.append(.map(coordinate: coord))
+//        }
+        
+        fields.append(LongTextField(title: "Notes", initialValue: info, onUpdate: { [weak self] newVal in
+            guard let self = self else {
+                return
+            }
+            
+            self.info = newVal
+        }))
+        
+        return fields
     }
 }

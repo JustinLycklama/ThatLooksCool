@@ -8,17 +8,21 @@
 
 import UIKit
 import TLCModel
+import ClassicClient
 
 class ShareViewController: UIViewController {
     
-    var item: Item?
+//    var item: Item?
     var shareData: NameAndShortLocation
     
-    var editItemController: ItemEditableFieldsViewController?
+//    var formView: FormView?
+    let mockItemCoordinator: MockItemCoordinator
     
     init(overridableItem item: Item?, shareData: NameAndShortLocation) {
-        self.item = item
+//        self.item = item
         self.shareData = shareData
+        
+        self.mockItemCoordinator = MockItemCoordinator(item: item)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -31,7 +35,7 @@ class ShareViewController: UIViewController {
         
         self.view.backgroundColor = .systemGray6
         
-        self.navigationItem.title = item == nil ? "New Item" : "Override Item"
+        self.navigationItem.title = mockItemCoordinator.databaseObject == nil ? "New Item" : "Override Item"
         
         let itemCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelAction))
         self.navigationItem.setLeftBarButton(itemCancel, animated: false)
@@ -49,24 +53,19 @@ class ShareViewController: UIViewController {
         itemViewStack.axis = .vertical
         itemViewStack.spacing = -TLCStyle.interiorPadding
 
-        let mock = MockItem(item: item)
-        mock.title = shareData.name
+//        let mock = MockItem(item: item)
+//        mock.title = shareData.name
         
-        let itemController = ItemEditableFieldsViewController(item: item, mockItem: mock, category: nil)
-        self.addChild(itemController)
+        let itemController = FormView(fields: mockItemCoordinator.modifiableFields())
 
-        itemController.sizeSubscriber = { requestedSize in
-            guard let view = itemController.view else {
-                return
-            }
-            
-            let heightConstraint = NSLayoutConstraint.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: requestedSize.height)
-            
-            heightConstraint.priority = .defaultHigh
-            view.addConstraint(heightConstraint)
-        }
+//        itemController.sizeSubscriber = { requestedSize in
+//            let heightConstraint = NSLayoutConstraint.init(item: itemController, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: requestedSize.height)
+//
+//            heightConstraint.priority = .defaultHigh
+//            itemController.addConstraint(heightConstraint)
+//        }
         
-        editItemController = itemController
+//        editItemController = itemController
         
         // Item Navigation
         let itemControlView = ItemControlView()
@@ -80,7 +79,7 @@ class ShareViewController: UIViewController {
         
         itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
         
-        itemViewStack.addArrangedSubview(itemController.view)
+        itemViewStack.addArrangedSubview(itemController)
         itemViewStack.addArrangedSubview(itemControlView)
         
         return itemViewStack
@@ -112,16 +111,17 @@ extension ShareViewController: ItemIterationDelegate {
 extension ShareViewController: CompletableWithCategoryDelegate {
     func complete(withCategory category: ItemCategory?) {
         self.dismiss(animated: true, completion: { [weak self] in
-            if let itemController = self?.editItemController {
-                                
-                // Categorize item
-                RealmSubjects.shared.categorizeItem(itemController.saveItem(), toCategory: category)
-                
-                // TODO: unpack url (ex. https://goo.gl/maps/WD3ZsR5zqGVgahcq8 ) using extension below and get new coordinates
-                // Update coordinates before completing
-                
-                self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+            guard let self = self else {
+                return
             }
+            
+            // Categorize item
+            RealmSubjects.shared.categorizeItem(self.mockItemCoordinator.saveItem(), toCategory: category)
+            
+            // TODO: unpack url (ex. https://goo.gl/maps/WD3ZsR5zqGVgahcq8 ) using extension below and get new coordinates
+            // Update coordinates before completing
+            
+            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
         })
     }
 }

@@ -13,9 +13,9 @@ import RxSwift
 import TLCModel
 import ClassicClient
 
-struct DisplayItemAndView {
-    let displayItem: Item
-    let displayController: ItemEditableFieldsViewController
+struct ItemAndForm {
+    let itemCoordinator: MockItemCoordinator
+    let formView: FormView
 }
 
 class CategorizeItemsViewController: AdViewController {
@@ -25,7 +25,7 @@ class CategorizeItemsViewController: AdViewController {
     private let trippleItemDisplayView = TripleItemZAzisView()
     
     private let itemControlView = ItemControlView()
-    private var currentDisplayItemAndView: DisplayItemAndView? = nil
+    private var currentItemAndForm: ItemAndForm? = nil
     
     private var disposeBag = DisposeBag()
     
@@ -180,7 +180,7 @@ class CategorizeItemsViewController: AdViewController {
     private func updateItemDisplay() {
         let duration: TimeInterval = 0.33
                 
-        guard currentDisplayItemAndView?.displayItem.isInvalidated ?? true || currentItem != currentDisplayItemAndView?.displayItem else {
+        guard currentItemAndForm?.itemCoordinator.databaseObject?.isInvalidated ?? true || currentItem != currentItemAndForm?.itemCoordinator.databaseObject else {
             return
         }
         
@@ -190,25 +190,25 @@ class CategorizeItemsViewController: AdViewController {
             }
             
             if let currentItem = self.currentItem {
-                let newDisplayController = ItemEditableFieldsViewController(item: currentItem, category: nil)
                 
-                let newDisplayView = newDisplayController.view!
+                let coordinator = MockItemCoordinator(item: currentItem)
+                let newForm = FormView(fields: coordinator.modifiableFields())
+                                
+                newForm.alpha = 0
+                newForm.setContentHuggingPriority(.required, for: .vertical)
                 
-                newDisplayView.alpha = 0
-                newDisplayView.setContentHuggingPriority(.required, for: .vertical)
-                
-                newDisplayView.clipsToBounds = true
-                newDisplayView.layer.cornerRadius = 10
-                newDisplayView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-                newDisplayView.setContentCompressionResistancePriority(.required, for: .vertical)
+                newForm.clipsToBounds = true
+                newForm.layer.cornerRadius = 10
+                newForm.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+                newForm.setContentCompressionResistancePriority(.required, for: .vertical)
                                 
 //                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
                 
-                self.currentDisplayItemAndView = DisplayItemAndView(displayItem: currentItem, displayController: newDisplayController)
+                self.currentItemAndForm = ItemAndForm(itemCoordinator: coordinator, formView: newForm)
                 
-                self.addChild(newDisplayController)
-                self.trippleItemDisplayView.itemDisplayArea.addSubview(newDisplayView)
-                self.trippleItemDisplayView.itemDisplayArea.constrainSubviewToBounds(newDisplayView)
+//                self.addChild(newDisplayController)
+                self.trippleItemDisplayView.itemDisplayArea.addSubview(newForm)
+                self.trippleItemDisplayView.itemDisplayArea.constrainSubviewToBounds(newForm)
                 
                 // Grow view to fit constraints
                 UIView.animate(withDuration: self.animationSizeDuration) {
@@ -216,7 +216,7 @@ class CategorizeItemsViewController: AdViewController {
                 } completion: { _ in
                     // Then make view visible
                     UIView.animate(withDuration: duration) {
-                        newDisplayView.alpha = 1
+                        newForm.alpha = 1
                     }
                 }
 
@@ -228,20 +228,19 @@ class CategorizeItemsViewController: AdViewController {
             }
         }
 
-        if let oldDisplayItemAndView = currentDisplayItemAndView {
+        if let oldItemAndForm = currentItemAndForm {
 
             if !isAnimatingOut {
                 isAnimatingOut = true
                 
                 UIView.animate(withDuration: 0.20, animations: {
-                    oldDisplayItemAndView.displayController.view.alpha = 0
+                    oldItemAndForm.formView.alpha = 0
                     
                 }, completion: { [weak self] _ in
-                    oldDisplayItemAndView.displayController.removeFromParent()
-                    oldDisplayItemAndView.displayController.view.removeFromSuperview()
+                    oldItemAndForm.formView.removeFromSuperview()
 
                     self?.isAnimatingOut = false
-                    self?.currentDisplayItemAndView = nil
+                    self?.currentItemAndForm = nil
                     
                     createItemBlock()
                 })
@@ -265,9 +264,9 @@ class CategorizeItemsViewController: AdViewController {
 extension CategorizeItemsViewController: CompletableWithCategoryDelegate {
     func complete(withCategory category: ItemCategory?) {
         self.dismiss(animated: true, completion: { [weak self] in
-            if let currentEditItemController = self?.currentDisplayItemAndView?.displayController {
+            if let currentCoordinator = self?.currentItemAndForm?.itemCoordinator {
                 // Save selected item
-                let item = currentEditItemController.saveItem()
+                let item = currentCoordinator.saveItem()
                 
                 // Switch to next item
                 self?.didPressThird()
@@ -284,8 +283,8 @@ extension CategorizeItemsViewController: CompletableWithCategoryDelegate {
 
 extension CategorizeItemsViewController: ItemIterationDelegate {
     func didPressFirst() {
-        if let currentEditItemController = currentDisplayItemAndView?.displayController {
-            lastDeletedItemMock = currentEditItemController.deleteItem()
+        if let currentCoordinator = currentItemAndForm?.itemCoordinator {
+            lastDeletedItemMock = currentCoordinator.deleteItem()
             
             // Switch to next item
             self.didPressThird()

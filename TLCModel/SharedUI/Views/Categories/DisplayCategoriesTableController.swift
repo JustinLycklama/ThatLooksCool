@@ -41,7 +41,7 @@ public class DisplayCategoriesTableController: UIViewController {
         
         let itemsLabel = UILabel()
         itemsLabel.text = "Category"
-        itemsLabel.style(.heading)
+        itemsLabel.style(TextStyle.heading)
 
         stack.addArrangedSubview(itemsLabel)
         stack.addArrangedSubview(itemsView)

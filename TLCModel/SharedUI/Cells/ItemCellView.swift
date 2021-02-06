@@ -16,8 +16,8 @@ public class ItemCellView: ShadowView {
     public override func awakeFromNib() {
         super.awakeFromNib()
 
-        titleLabel.style(.userText)
-        detailLabel.style(.userText)
+        titleLabel.style(TextStyle.userText)
+        detailLabel.style(TextStyle.userText)
         
         self.clipsToBounds = false
         self.layer.cornerRadius = TLCStyle.cornerRadius

@@ -25,10 +25,14 @@ def app_pods
 end
 
 def ui_pods
+  use_frameworks!
+  
   pod 'ClassicClient',    :path => '../ClassicClientiOS/'
 end
 
 def model_pods
+  use_frameworks!
+  
   pod 'GoogleMaps',     '3.10.0'
   pod 'EasyNotificationBadge'
 end

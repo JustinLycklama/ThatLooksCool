@@ -8,23 +8,20 @@
 
 import UIKit
 import TLCModel
+import ClassicClient
 
 class EditItemViewController: UIViewController {
-
-//    private let databaseObject: Item?
-//    private let mockObject: MockItem
         
     private var previewCellView: ItemCellView?
     
-    let editableFieldsController: ItemEditableFieldsViewController
+    let formView: FormView
+    let itemMockCoordinator: MockItemCoordinator
     
     weak var delegate: CompletableActionDelegate?
     
     init(item: Item?, category: ItemCategory) {
-//        mockObject = MockItem(item: item)
-//        databaseObject = item
-        
-        editableFieldsController = ItemEditableFieldsViewController(item: item, category: category)
+        itemMockCoordinator = MockItemCoordinator(item: item, category: category)
+        formView = FormView(fields: itemMockCoordinator.modifiableFields())
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,7 +54,7 @@ class EditItemViewController: UIViewController {
         // Edit View
         let editLabel = UILabel()
         editLabel.text = "Edit"
-        editLabel.style(.heading)
+        editLabel.style(TextStyle.heading)
         
         let editView = createEditView()
         
@@ -122,17 +119,17 @@ class EditItemViewController: UIViewController {
         titleContentView.layer.borderColor = TLCStyle.viewBorderColor.cgColor
         
         // Editable Fields
-        self.addChild(editableFieldsController)
+//        self.addChild(editableFieldsController)
         
-        titleContentView.contentView.addSubview(editableFieldsController.view)
-        titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
+        titleContentView.contentView.addSubview(formView)
+        titleContentView.contentView.constrainSubviewToBounds(formView)
         
         return titleContentView
     }
     
     @objc
     func saveItem() {
-        editableFieldsController.saveItem()
+        itemMockCoordinator.saveItem()
         
 //        if let itemCategory = databaseObject {
 //            RealmSubjects.shared.updateCategory(category: itemCategory, usingMock: mockObject)

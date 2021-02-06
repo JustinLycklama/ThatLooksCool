@@ -34,7 +34,6 @@
 		7D864F3E257B20C000FBA5D4 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */; };
 		7D864F45257B20C000FBA5D4 /* TLCShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7D864F3B257B20C000FBA5D4 /* TLCShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7D864F52257B34B400FBA5D4 /* ShareNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D864F51257B34B400FBA5D4 /* ShareNavController.swift */; };
-		7D8CAE6C258C2F66004CF260 /* Extensions+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CAE6B258C2F66004CF260 /* Extensions+UIColor.swift */; };
 		7D8CAE76258C2F81004CF260 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CAE75258C2F81004CF260 /* Item.swift */; };
 		7D8CAE7C258C3002004CF260 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8CAE7B258C3002004CF260 /* Constants.swift */; };
 		7D98BBCB25008F8700F0ADC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBCA25008F8700F0ADC0 /* AppDelegate.swift */; };
@@ -46,18 +45,10 @@
 		7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D98BBE4250136DA00F0ADC0 /* HomeViewController.swift */; };
 		7D9F378F25A691E2002C1A99 /* DisplayItemsTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9F378E25A691E2002C1A99 /* DisplayItemsTableController.swift */; };
 		7DA16E2E250941DB00536F58 /* TLCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA16E2D250941DB00536F58 /* TLCTests.swift */; };
-		7DA734DA25BBD82E00CE9607 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734CB25BBD79600CE9607 /* ListCell.swift */; };
-		7DA734DB25BBD82E00CE9607 /* LongStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734CC25BBD79700CE9607 /* LongStringCell.swift */; };
-		7DA734DC25BBD82E00CE9607 /* EditableFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734C625BBD79600CE9607 /* EditableFieldsViewController.swift */; };
-		7DA734DD25BBD82E00CE9607 /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734CD25BBD79700CE9607 /* ColorCell.swift */; };
-		7DA734DE25BBD82E00CE9607 /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734C925BBD79600CE9607 /* MapCell.swift */; };
-		7DA734DF25BBD82E00CE9607 /* ShortStringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734C825BBD79600CE9607 /* ShortStringCell.swift */; };
-		7DA734E025BBD82E00CE9607 /* ColorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DA734CA25BBD79600CE9607 /* ColorCell.xib */; };
-		7DA734E125BBD82E00CE9607 /* ItemEditableFieldsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734D525BBD7FD00CE9607 /* ItemEditableFieldsViewController.swift */; };
+		7DA734E125BBD82E00CE9607 /* ModifiableFieldsFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA734D525BBD7FD00CE9607 /* ModifiableFieldsFormView.swift */; };
 		7DA7350825BBD8DB00CE9607 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7350725BBD8D500CE9607 /* Protocols.swift */; };
 		7DA7350E25BBD93E00CE9607 /* TLCStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7350D25BBD93E00CE9607 /* TLCStyle.swift */; };
 		7DA7353925BBDA3C00CE9607 /* RealmSubjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7353825BBDA3C00CE9607 /* RealmSubjects.swift */; };
-		7DA7354325BBDAB400CE9607 /* HSBColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7354225BBDAB400CE9607 /* HSBColorPicker.swift */; };
 		7DA7354D25BBDBAE00CE9607 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7354C25BBDBAE00CE9607 /* ShadowView.swift */; };
 		7DA7355A25BBDBD300CE9607 /* TripleItemZAzisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7355825BBDBD300CE9607 /* TripleItemZAzisView.swift */; };
 		7DA7355B25BBDBD300CE9607 /* TitleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DA7355925BBDBD300CE9607 /* TitleContentView.swift */; };
@@ -75,8 +66,10 @@
 		7DB0757025C8FA0700A1C716 /* CategoryCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0756825C8FA0700A1C716 /* CategoryCellView.swift */; };
 		7DB0757125C8FA0700A1C716 /* AddCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0756925C8FA0700A1C716 /* AddCellView.swift */; };
 		7DB0757225C8FA0700A1C716 /* ItemCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0756A25C8FA0700A1C716 /* ItemCellView.swift */; };
+		7DBB541125CE358C00C652C8 /* MockCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBB541025CE358C00C652C8 /* MockCoordinator.swift */; };
 		7DCA594D259189B5004FB7E9 /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA594C259189B5004FB7E9 /* RealmObjects.swift */; };
 		7DCA5A8E25A6A332000B7C9B /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */; };
+		7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAA8D25CA52090075804C /* MapCell.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */; };
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
 		7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */; };
@@ -193,7 +186,6 @@
 		7D864F3D257B20C000FBA5D4 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		7D864F42257B20C000FBA5D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D864F51257B34B400FBA5D4 /* ShareNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareNavController.swift; sourceTree = "<group>"; };
-		7D8CAE6B258C2F66004CF260 /* Extensions+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIColor.swift"; sourceTree = "<group>"; };
 		7D8CAE75258C2F81004CF260 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		7D8CAE7B258C3002004CF260 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7D98BBC725008F8700F0ADC0 /* ThatLooksCool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThatLooksCool.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,18 +202,10 @@
 		7DA16E2B250941DB00536F58 /* TLCTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TLCTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA16E2D250941DB00536F58 /* TLCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLCTests.swift; sourceTree = "<group>"; };
 		7DA16E2F250941DB00536F58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7DA734C625BBD79600CE9607 /* EditableFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableFieldsViewController.swift; sourceTree = "<group>"; };
-		7DA734C825BBD79600CE9607 /* ShortStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortStringCell.swift; sourceTree = "<group>"; };
-		7DA734C925BBD79600CE9607 /* MapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
-		7DA734CA25BBD79600CE9607 /* ColorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCell.xib; sourceTree = "<group>"; };
-		7DA734CB25BBD79600CE9607 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
-		7DA734CC25BBD79700CE9607 /* LongStringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongStringCell.swift; sourceTree = "<group>"; };
-		7DA734CD25BBD79700CE9607 /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
-		7DA734D525BBD7FD00CE9607 /* ItemEditableFieldsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemEditableFieldsViewController.swift; sourceTree = "<group>"; };
+		7DA734D525BBD7FD00CE9607 /* ModifiableFieldsFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifiableFieldsFormView.swift; sourceTree = "<group>"; };
 		7DA7350725BBD8D500CE9607 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		7DA7350D25BBD93E00CE9607 /* TLCStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLCStyle.swift; sourceTree = "<group>"; };
 		7DA7353825BBDA3C00CE9607 /* RealmSubjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSubjects.swift; sourceTree = "<group>"; };
-		7DA7354225BBDAB400CE9607 /* HSBColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSBColorPicker.swift; sourceTree = "<group>"; };
 		7DA7354C25BBDBAE00CE9607 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 		7DA7355725BBDBD300CE9607 /* ItemControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemControlView.swift; sourceTree = "<group>"; };
 		7DA7355825BBDBD300CE9607 /* TripleItemZAzisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripleItemZAzisView.swift; sourceTree = "<group>"; };
@@ -239,8 +223,10 @@
 		7DB0756825C8FA0700A1C716 /* CategoryCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCellView.swift; sourceTree = "<group>"; };
 		7DB0756925C8FA0700A1C716 /* AddCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCellView.swift; sourceTree = "<group>"; };
 		7DB0756A25C8FA0700A1C716 /* ItemCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCellView.swift; sourceTree = "<group>"; };
+		7DBB541025CE358C00C652C8 /* MockCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoordinator.swift; sourceTree = "<group>"; };
 		7DCA594C259189B5004FB7E9 /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
+		7DDFAA8D25CA52090075804C /* MapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizeItemsViewController.swift; sourceTree = "<group>"; };
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesModel.swift; sourceTree = "<group>"; };
@@ -351,7 +337,6 @@
 				7D1BFAE825C124AC0032AEC7 /* secretKeys.plist */,
 				7D8CAE7B258C3002004CF260 /* Constants.swift */,
 				7DA7350D25BBD93E00CE9607 /* TLCStyle.swift */,
-				7D8CAE6B258C2F66004CF260 /* Extensions+UIColor.swift */,
 				7D196A83258D9EFA0000BE9C /* RealmObjects */,
 				7DA734C525BBD77A00CE9607 /* SharedUI */,
 			);
@@ -437,6 +422,7 @@
 		7D98BBC925008F8700F0ADC0 /* ThatLooksCool */ = {
 			isa = PBXGroup;
 			children = (
+				7DDFAA8B25CA51D30075804C /* FormController */,
 				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
 				7DF2145425B685ED0003030A /* GoogleService-Info.plist */,
@@ -481,39 +467,16 @@
 				7DB0753225C8F90700A1C716 /* Categories */,
 				7DA7355225BBDBB900CE9607 /* Views */,
 				7DA734D425BBD7F500CE9607 /* Item */,
-				7DA734D325BBD7DF00CE9607 /* EditableFields */,
 				7DB0756225C8FA0700A1C716 /* Cells */,
 			);
 			path = SharedUI;
 			sourceTree = "<group>";
 		};
-		7DA734C725BBD79600CE9607 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				7DA734C825BBD79600CE9607 /* ShortStringCell.swift */,
-				7DA734CC25BBD79700CE9607 /* LongStringCell.swift */,
-				7DA734CD25BBD79700CE9607 /* ColorCell.swift */,
-				7DA734CA25BBD79600CE9607 /* ColorCell.xib */,
-				7DA7354225BBDAB400CE9607 /* HSBColorPicker.swift */,
-				7DA734C925BBD79600CE9607 /* MapCell.swift */,
-				7DA734CB25BBD79600CE9607 /* ListCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		7DA734D325BBD7DF00CE9607 /* EditableFields */ = {
-			isa = PBXGroup;
-			children = (
-				7DA734C625BBD79600CE9607 /* EditableFieldsViewController.swift */,
-				7DA734C725BBD79600CE9607 /* Cells */,
-			);
-			path = EditableFields;
-			sourceTree = "<group>";
-		};
 		7DA734D425BBD7F500CE9607 /* Item */ = {
 			isa = PBXGroup;
 			children = (
-				7DA734D525BBD7FD00CE9607 /* ItemEditableFieldsViewController.swift */,
+				7DA734D525BBD7FD00CE9607 /* ModifiableFieldsFormView.swift */,
+				7DBB541025CE358C00C652C8 /* MockCoordinator.swift */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -563,6 +526,22 @@
 			name = Cells;
 			path = TLCModel/SharedUI/Cells;
 			sourceTree = SOURCE_ROOT;
+		};
+		7DDFAA8B25CA51D30075804C /* FormController */ = {
+			isa = PBXGroup;
+			children = (
+				7DDFAA8C25CA51FC0075804C /* Cells */,
+			);
+			path = FormController;
+			sourceTree = "<group>";
+		};
+		7DDFAA8C25CA51FC0075804C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7DDFAA8D25CA52090075804C /* MapCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
 		};
 		7DEDAF5A251AEC5000D15306 /* Google Model */ = {
 			isa = PBXGroup;
@@ -782,7 +761,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D1BFAEC25C125AB0032AEC7 /* secretKeys.plist in Resources */,
-				7DA734E025BBD82E00CE9607 /* ColorCell.xib in Resources */,
 				7DB0756B25C8FA0700A1C716 /* CategoryCellView.xib in Resources */,
 				7DB0756D25C8FA0700A1C716 /* ItemCellView.xib in Resources */,
 			);
@@ -997,21 +975,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DB0753925C8F90800A1C716 /* EditCategoryViewController.swift in Sources */,
-				7DA734E125BBD82E00CE9607 /* ItemEditableFieldsViewController.swift in Sources */,
+				7DA734E125BBD82E00CE9607 /* ModifiableFieldsFormView.swift in Sources */,
 				7DB0756E25C8FA0700A1C716 /* ItemCell.swift in Sources */,
 				7D8CAE7C258C3002004CF260 /* Constants.swift in Sources */,
 				7DB0757225C8FA0700A1C716 /* ItemCellView.swift in Sources */,
-				7DA734DC25BBD82E00CE9607 /* EditableFieldsViewController.swift in Sources */,
 				7DB0756F25C8FA0700A1C716 /* AddCell.swift in Sources */,
 				7DA7350E25BBD93E00CE9607 /* TLCStyle.swift in Sources */,
-				7DA734DF25BBD82E00CE9607 /* ShortStringCell.swift in Sources */,
-				7DA734DD25BBD82E00CE9607 /* ColorCell.swift in Sources */,
 				7D8CAE76258C2F81004CF260 /* Item.swift in Sources */,
-				7DA734DE25BBD82E00CE9607 /* MapCell.swift in Sources */,
-				7D8CAE6C258C2F66004CF260 /* Extensions+UIColor.swift in Sources */,
-				7DA7354325BBDAB400CE9607 /* HSBColorPicker.swift in Sources */,
 				7DA7353925BBDA3C00CE9607 /* RealmSubjects.swift in Sources */,
 				7DB0757125C8FA0700A1C716 /* AddCellView.swift in Sources */,
+				7DBB541125CE358C00C652C8 /* MockCoordinator.swift in Sources */,
 				7DB0753725C8F90800A1C716 /* CategoriesTableController.swift in Sources */,
 				7DB0756C25C8FA0700A1C716 /* CategoryCell.swift in Sources */,
 				7DA7355A25BBDBD300CE9607 /* TripleItemZAzisView.swift in Sources */,
@@ -1019,11 +992,9 @@
 				7DA7355B25BBDBD300CE9607 /* TitleContentView.swift in Sources */,
 				7DB0755B25C8F9C700A1C716 /* AddableSectionTableController.swift in Sources */,
 				7DB0757025C8FA0700A1C716 /* CategoryCellView.swift in Sources */,
-				7DA734DA25BBD82E00CE9607 /* ListCell.swift in Sources */,
 				7DA7350825BBD8DB00CE9607 /* Protocols.swift in Sources */,
 				7DA7355C25BBDBD300CE9607 /* ItemControlView.swift in Sources */,
 				7D170D10251265C5007F151F /* Coordinate.swift in Sources */,
-				7DA734DB25BBD82E00CE9607 /* LongStringCell.swift in Sources */,
 				7DA7354D25BBDBAE00CE9607 /* ShadowView.swift in Sources */,
 				7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */,
 				7DB0753825C8F90800A1C716 /* DisplayCategoriesTableController.swift in Sources */,
@@ -1059,6 +1030,7 @@
 				7D1BFB1225C3BB4B0032AEC7 /* TestDataModel.swift in Sources */,
 				7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */,
 				7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */,
+				7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1239,6 +1211,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxSwift\"",
+					"\"${PODS_ROOT}/Realm/core\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ClassicClient\"",
+				);
 				INFOPLIST_FILE = TLCShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1265,6 +1245,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = T6HT7F4HUZ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Realm\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RealmSwift\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RxSwift\"",
+					"\"${PODS_ROOT}/Realm/core\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/ClassicClient\"",
+				);
 				INFOPLIST_FILE = TLCShareExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (

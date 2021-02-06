@@ -133,18 +133,3 @@ extension ItemsTableController : CompletableActionDelegate {
     }
 }
 
-extension ItemsTableController : ItemSelectionDelegate {
-    func ediItem(_ item: Item?) {
-        let editView = ItemEditableFieldsViewController(item: item, category: category)
-        
-        editView.completeDelegate = self
-        
-        self.present(editView, animated: true, completion: nil)
-    }
-    
-    func selectItem(_ item: Item) {
-        ediItem(item)
-    }
-}
-
-

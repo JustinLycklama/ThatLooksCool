@@ -47,7 +47,7 @@ public class CategoryCellView: ShadowView {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black
-        titleLabel.style(.userText)
+        titleLabel.style(TextStyle.userText)
         
         addSubview(titleLabel)
         constrainSubviewToBounds(titleLabel, withInset: UIEdgeInsets(TLCStyle.topLevelMargin))

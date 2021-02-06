@@ -68,7 +68,7 @@ class HomeViewController: AdViewController {
         // Pending Items
         let pendingAndSetupLabel = UILabel()
         pendingAndSetupLabel.text = "Categorize New Entries"
-        pendingAndSetupLabel.style(.heading)
+        pendingAndSetupLabel.style(TextStyle.heading)
         
         let pendingItemsView = createPendingItemsView()
         
@@ -79,7 +79,7 @@ class HomeViewController: AdViewController {
 
         let categoriesLabel = UILabel()
         categoriesLabel.text = "Browse Categories"
-        categoriesLabel.style(.heading)
+        categoriesLabel.style(TextStyle.heading)
         
         let categoriesView = createCategoryView()
         

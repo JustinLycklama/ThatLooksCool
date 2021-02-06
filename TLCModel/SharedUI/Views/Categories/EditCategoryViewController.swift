@@ -42,7 +42,7 @@ public class EditCategoryViewController: UIViewController {
         // Edit View
         let editLabel = UILabel()
         editLabel.text = "Edit"
-        editLabel.style(.heading)
+        editLabel.style(TextStyle.heading)
         
         let editView = createEditView()
         
@@ -52,7 +52,7 @@ public class EditCategoryViewController: UIViewController {
         // Preview
         let previewLabel = UILabel()
         previewLabel.text = "Category Preview"
-        previewLabel.style(.heading)
+        previewLabel.style(TextStyle.heading)
         
         let previewView = createPreviewView()
         
@@ -117,13 +117,9 @@ public class EditCategoryViewController: UIViewController {
         titleContentView.addConstraint(NSLayoutConstraint.init(item: titleContentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
 
         // Editable Fields
-        let editableFieldsController = EditableFieldsViewController()
-        self.addChild(editableFieldsController)
+        var fields: [Field] = []
         
-        editableFieldsController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        editableFieldsController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        editableFieldsController.addField(.shortText(title: "Name", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
+        fields.append(ShortTextField(title: "Name", initialValue: mockObject.title, onUpdate: { [weak self] newVal in
             
             if let mockObject = self?.mockObject {
                 mockObject.title = newVal
@@ -131,18 +127,25 @@ public class EditCategoryViewController: UIViewController {
             }
         }))
         
-        editableFieldsController.addField(.color(onUpdate: { [weak self] newCol in
-            
-            if let mockObject = self?.mockObject {
-                mockObject.color = newCol
-                self?.previewCellView?.displayCategory(displayable: mockObject)
-            }
-        }))
+        // TODO:
+//        editableFieldsController.addField(.color(onUpdate: { [weak self] newCol in
+//
+//            if let mockObject = self?.mockObject {
+//                mockObject.color = newCol
+//                self?.previewCellView?.displayCategory(displayable: mockObject)
+//            }
+//        }))
         
-        editableFieldsController.completeFieldSetup()
+//        editableFieldsController.completeFieldSetup()
         
-        titleContentView.contentView.addSubview(editableFieldsController.view)
-        titleContentView.contentView.constrainSubviewToBounds(editableFieldsController.view)
+        
+        let formView = FormView(fields: fields)
+        
+        formView.setContentCompressionResistancePriority(.required, for: .vertical)
+        formView.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleContentView.contentView.addSubview(formView)
+        titleContentView.contentView.constrainSubviewToBounds(formView)
         
         return titleContentView
     }

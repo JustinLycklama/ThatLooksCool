@@ -40,12 +40,12 @@ class SetupHelpViewController: UIViewController {
         
         let locationTitle = UILabel()
         locationTitle.text = "Remember Location"
-        locationTitle.style(.heading)
+        locationTitle.style(TextStyle.heading)
         
         let locationDetails = UILabel()
         locationDetails.numberOfLines = 0
         locationDetails.text = "This shortcut will be used to remember your location, when given phrase is spoken to siri. \n\nTry \'That Looks Cool'."
-        locationDetails.style(.instructions)
+        locationDetails.style(TextStyle.instructions)
         
         stack.addArrangedSubview(locationTitle)
         stack.addArrangedSubview(locationDetails)
@@ -66,12 +66,12 @@ class SetupHelpViewController: UIViewController {
         
         let rememberTitle = UILabel()
         rememberTitle.text = "Remember Spoken Item"
-        rememberTitle.style(.heading)
+        rememberTitle.style(TextStyle.heading)
         
         let rememberDetails = UILabel()
         rememberDetails.numberOfLines = 0
         rememberDetails.text = "This shortcut will be used to remember the next thing you say to Siri. \n\nTry \'Remember'.\n\nExample: \'Hey Siri. Remember. Check out Game of Thrones\'."
-        rememberDetails.style(.instructions)
+        rememberDetails.style(TextStyle.instructions)
         
         stack.addArrangedSubview(rememberTitle)
         stack.addArrangedSubview(rememberDetails)
@@ -85,7 +85,7 @@ class SetupHelpViewController: UIViewController {
         let ack = UILabel()
         ack.text = "About"
         ack.textAlignment = .right
-        ack.style(.systemInfoLink)
+        ack.style(TextStyle.systemInfoLink)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openAcknowledgements))
         ack.addGestureRecognizer(tapGesture)
