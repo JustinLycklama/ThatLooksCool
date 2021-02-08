@@ -18,12 +18,9 @@ import RxSwift
 import Onboard
 
 class HomeViewController: AdViewController {
-            
-    let disposeBag = DisposeBag()
-    
-    fileprivate let categoriesController = CategoriesTableController()
-    fileprivate let zAxisView = TripleItemZAzisView()
 
+    private let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -63,6 +60,7 @@ class HomeViewController: AdViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = TLCStyle.topLevelPadding
+//        stack.distribution = .fillProportionally
         
         
         // Pending Items
@@ -107,6 +105,7 @@ class HomeViewController: AdViewController {
                                                      attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 72))
         
         // Categorize Action
+        let zAxisView = TripleItemZAzisView()
         let categorizeView = ShadowView()
                 
         categorizeView.addSubview(zAxisView)
@@ -165,8 +164,8 @@ class HomeViewController: AdViewController {
         pendingItemContainer.constrainSubviewToBounds(pendingAndSetupStackView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
         
         RealmSubjects.shared.pendingItemCountSubject
-            .subscribe(onNext: { [weak self] (count: Int) in
-                self?.zAxisView.setBadge(count)
+            .subscribe(onNext: { (count: Int) in
+                zAxisView.setBadge(count)
             }, onError: { (err: Error) in
                 
             }, onCompleted: {
@@ -186,22 +185,62 @@ class HomeViewController: AdViewController {
     
     private func createCategoryView() -> UIView {
         // View By Category
-        categoriesController.title = "View Items By Category"
-        categoriesController.canAddNewItem = true
-        categoriesController.delegate = self
-    
-        self.addChild(categoriesController)
         
-        let categoriesView = categoriesController.view!
-        categoriesView.translatesAutoresizingMaskIntoConstraints = false
+        let categoryCellConfig = CellConfig { (category: ItemCategory, cell: CategoryCell) in
+            cell.displayCategory(displayable: category)
+        } performAction: { [weak self]  (category: ItemCategory) in
+            let itemsVc = DisplayItemsTableController(category: category)
+            itemsVc.delegate = self
+            
+            let navController = UINavigationController(rootViewController: itemsVc)
+            navController.modalPresentationStyle = .fullScreen
+            
+            self?.present(navController, animated: true, completion: nil)
+        } itemEdited: { (category: ItemCategory) in
+            
+        } itemDeleted: { (category: ItemCategory) in
+            
+        }
         
-        let categoriesContrainer = UIView()
-        categoriesContrainer.backgroundColor = .clear
-        
-        categoriesContrainer.addSubview(categoriesView)
-        categoriesContrainer.constrainSubviewToBounds(categoriesView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+        let actionCellConfig = CellConfig<Void, AddCell> { (_) in
+            let editCategoryViewController = EditCategoryViewController(category: nil)
+            editCategoryViewController.delegate = self
+            
+            self.present(editCategoryViewController, animated: true, completion: nil)
+            
+        }
+            
+        let categoriesTable = ActionableTableView(actionConfig: actionCellConfig, itemConfig: categoryCellConfig)
+        categoriesTable.canPerformAction = true
 
-        return categoriesContrainer
+        
+//        categoriesTable.layer.borderWidth = 1
+//        categoriesTable.layer.borderColor = UIColor.red.cgColor
+        
+//        categoriesTable.title = "View Items By Category"
+//        categoriesTable.delegate = self
+    
+//        categoriesTable.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let categoriesView = UIView()
+//        categoriesView.backgroundColor = .clear
+//
+//        categoriesView.addSubview(categoriesTable)
+//        categoriesView.constrainSubviewToBounds(categoriesTable, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+
+        RealmSubjects.shared.resolvedItemCategoriesSubject
+            .subscribe(onNext: { (categories: [ItemCategory]) in
+                categoriesTable.setItems(items: categories)
+            }, onError: { (err: Error) in
+                
+            }, onCompleted: {
+                
+            }) {
+                
+        }.disposed(by: disposeBag)
+
+        
+        return categoriesTable
     }
     
     // MARK: - Actions
@@ -244,27 +283,5 @@ extension HomeViewController: CompletableActionDelegate {
         self.dismiss(animated: true) {
             
         }
-    }
-}
-
-// MARK: - CategorySelectionDelegate
-extension HomeViewController: CategorySelectionDelegate {
-    func editCategory(_ category: ItemCategory?) {
-        let editView = EditCategoryViewController(category: category)
-        
-        editView.delegate = self
-        editView.modalPresentationStyle = .formSheet
-        
-        self.present(editView, animated: true, completion: nil)
-    }
-    
-    func selectCategory(_ category: ItemCategory) {
-        let itemsVc = DisplayItemsTableController(category: category)
-        itemsVc.delegate = self
-        
-        let navController = UINavigationController(rootViewController: itemsVc)
-        navController.modalPresentationStyle = .fullScreen
-        
-        self.present(navController, animated: true, completion: nil)
     }
 }

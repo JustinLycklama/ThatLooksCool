@@ -126,18 +126,14 @@ public class EditCategoryViewController: UIViewController {
                 self?.previewCellView?.displayCategory(displayable: mockObject)
             }
         }))
-        
-        // TODO:
-//        editableFieldsController.addField(.color(onUpdate: { [weak self] newCol in
-//
-//            if let mockObject = self?.mockObject {
-//                mockObject.color = newCol
-//                self?.previewCellView?.displayCategory(displayable: mockObject)
-//            }
-//        }))
-        
-//        editableFieldsController.completeFieldSetup()
-        
+            
+        fields.append(ColorField(title: "Color", initialValue: mockObject.color, onUpdate: { [weak self] newCol in
+            
+            if let mockObject = self?.mockObject {
+                mockObject.color = newCol
+                self?.previewCellView?.displayCategory(displayable: mockObject)
+            }
+        }))
         
         let formView = FormView(fields: fields)
         

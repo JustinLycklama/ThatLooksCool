@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import RxSwift
+
 import TLCModel
+import ClassicClient
 
 class DisplayItemsTableController: AdViewController {
-
+    
+    private let disposeBag = DisposeBag()
+    
     private let category: ItemCategory
     
     weak var delegate: CompletableActionDelegate?
@@ -26,7 +31,7 @@ class DisplayItemsTableController: AdViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = category.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(close))
         
@@ -34,26 +39,26 @@ class DisplayItemsTableController: AdViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = TLCStyle.topLevelPadding
-
+        
         // Items
         let itemsView = createItemsView()
         
         let itemsLabel = UILabel()
         itemsLabel.text = "Items"
         itemsLabel.style(TextStyle.heading)
-
+        
         stack.addArrangedSubview(itemsLabel)
         stack.addArrangedSubview(itemsView)
-
+        
         // MapView: Future Feature
-//        let mapLabel = UILabel()
-//        mapLabel.text = "View by Map"
-//        mapLabel.style(.heading)
-//
-//        let mapView = createMapView()
-//
-//        stack.addArrangedSubview(mapLabel)
-//        stack.addArrangedSubview(mapView)
+        //        let mapLabel = UILabel()
+        //        mapLabel.text = "View by Map"
+        //        mapLabel.style(.heading)
+        //
+        //        let mapView = createMapView()
+        //
+        //        stack.addArrangedSubview(mapLabel)
+        //        stack.addArrangedSubview(mapView)
         
         contentView.addSubview(stack)
         contentView.constrainSubviewToBounds(stack)
@@ -84,38 +89,44 @@ class DisplayItemsTableController: AdViewController {
     
     private func createItemsView() -> UIView {
         
-        let itemsViewController = ItemsTableController(category: category)
+        let categoryCellConfig = CellConfig { (item: Item, cell: ItemCell) in
+            cell.displayItem(displayable: item)
+        } performAction: { [weak self] (item: Item) in
+            
+            let editCategoryViewController = EditCategoryViewController(category: nil)
+            editCategoryViewController.delegate = self
+            
+            self?.present(editCategoryViewController, animated: true, completion: nil)
+        } itemEdited: { (item: Item) in
+            
+            
+        } itemDeleted: { (item: Item) in
+            
+        }
         
-        // View Items
-        itemsViewController.title = "View Items By Category"
-        itemsViewController.canAddNewItem = true
-        itemsViewController.delegate = self
-    
-        self.addChild(itemsViewController)
-        
-        let itemsView = itemsViewController.view!
-        itemsView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let itemsContrainer = UIView()
-        itemsContrainer.backgroundColor = .clear
-        
-        itemsContrainer.addSubview(itemsView)
-        itemsContrainer.constrainSubviewToBounds(itemsView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
-
-        return itemsContrainer
-    }
-}
-
-extension DisplayItemsTableController: ItemSelectionDelegate {
-    func ediItem(_ item: Item?) {
-        let editItemViewController = EditItemViewController(item: item, category: category)
-        editItemViewController.delegate = self
-        
-        self.present(editItemViewController, animated: true, completion: nil)
-    }
-    
-    func selectItem(_ item: Item) {
-        ediItem(item)
+        let actionCellConfig = CellConfig<Void, AddCell> { (_) in
+            let editCategoryViewController = EditCategoryViewController(category: nil)
+            editCategoryViewController.delegate = self
+            
+            self.present(editCategoryViewController, animated: true, completion: nil)
+        }
+            
+        let itemsTable = ActionableTableView(actionConfig: actionCellConfig, itemConfig: categoryCellConfig)
+        itemsTable.canPerformAction = true
+                
+        RealmSubjects.shared.resolvedItemSubjectsByCategory[category]?.subscribe(
+            onNext: { (items: [Item]) in
+                itemsTable.setItems(items: items)
+                
+            }, onError: { (err: Error) in
+                
+            }, onCompleted: {
+                
+            }) {
+            
+        }.disposed(by: disposeBag)
+                
+        return itemsTable
     }
 }
 
