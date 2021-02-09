@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         TLCConfig.configure()
 //        ShareExtensionConfig.configure()
         
+        TLCIconSet.register()
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in
             if success {
                 print("Badge authorized")

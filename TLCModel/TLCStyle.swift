@@ -10,6 +10,53 @@ import UIKit
 import ClassicClient
 
 
+public enum TLCIconSet: String, CaseIterable, Icon {
+    public var id: String {
+        "\(namespace).\(rawValue)"
+    }
+    
+    public static func register() {
+        let appResources = App.resources
+        for icon in TLCIconSet.allCases {
+            icon.registerImage(to: appResources)
+        }
+    }
+    
+    case edit = "edit"
+    case delete = "delete"
+    case undo = "undo"
+    case next = "next"
+    case list = "list"
+    
+    var size: CGSize {
+        CGSize(width: 30, height: 30)
+    }
+    
+    private func create() -> UIImage? {
+        return UIImage(named: rawValue)
+    }
+
+    private func registerImage(to appResources: AppResources) {
+        switch self {
+        case .edit:
+            appResources.register(appResources.render(create(), withColor: TLCStyle.modificationIconColor, andSize: size), for: self)
+        case .delete:
+            appResources.register(appResources.render(create(), withColor: TLCStyle.destructiveIconColor, andSize: size), for: self)
+        case .undo:
+            appResources.register(appResources.render(create(), withColor: TLCStyle.modificationIconColor, andSize: size), for: self)
+        case .next:
+            appResources.register(appResources.render(create(), withColor: TLCStyle.progressIconColor, andSize: size), for: self)
+        case .list:
+            appResources.register(appResources.render(create(), withColor: TLCStyle.accentColor, andSize: size), for: self)
+        }
+    }
+    
+    public func image() -> UIImage? {
+        App.resources.getImage(from: self)
+    }
+}
+
+
 public struct TLCStyle {
     
     // MARK: - Metrics

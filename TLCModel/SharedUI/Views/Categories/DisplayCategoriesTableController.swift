@@ -72,15 +72,27 @@ public class DisplayCategoriesTableController: UIViewController {
             self.present(editCategoryViewController, animated: true, completion: nil)
         }
         
-        let categoryCellConfig = CellConfig { (category: ItemCategory, cell: CategoryCell) in
+        
+        let editSwipeAction = SwipeActionConfig(image: TLCIconSet.edit.image()) { (category: ItemCategory) in
+            editCategory(category: category)
+        }
+        
+        let deleteSwipAction = SwipeActionConfig(image: TLCIconSet.delete.image()) { (category: ItemCategory) in
+            RealmSubjects.shared.removeCategory(category)
+        }
+        
+        let categoryCellConfig = CellConfig(swipeActions: [editSwipeAction, deleteSwipAction]) { (category: ItemCategory, cell: CategoryCell) in
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
             self?.delegate?.complete(withCategory: category)
-        } itemEdited: { (category: ItemCategory) in
-            editCategory(category: category)
-        } itemDeleted: { (category: ItemCategory) in
-            RealmSubjects.shared.removeCategory(category)
         }
+
+        
+//            itemEdited: { (category: ItemCategory) in
+//               editCategory(category: category)
+//           } itemDeleted: { (category: ItemCategory) in
+//               RealmSubjects.shared.removeCategory(category)
+//           }
         
         let actionCellConfig = CellConfig<Void, AddCell> { (_) in
             editCategory(category: nil)

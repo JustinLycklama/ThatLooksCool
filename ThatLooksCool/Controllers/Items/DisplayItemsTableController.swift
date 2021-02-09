@@ -97,11 +97,6 @@ class DisplayItemsTableController: AdViewController {
             editCategoryViewController.delegate = self
             
             self?.present(editCategoryViewController, animated: true, completion: nil)
-        } itemEdited: { (item: Item) in
-            
-            
-        } itemDeleted: { (item: Item) in
-            
         }
         
         let actionCellConfig = CellConfig<Void, AddCell> { (_) in

@@ -196,10 +196,6 @@ class HomeViewController: AdViewController {
             navController.modalPresentationStyle = .fullScreen
             
             self?.present(navController, animated: true, completion: nil)
-        } itemEdited: { (category: ItemCategory) in
-            
-        } itemDeleted: { (category: ItemCategory) in
-            
         }
         
         let actionCellConfig = CellConfig<Void, AddCell> { (_) in
