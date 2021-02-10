@@ -186,7 +186,7 @@ class HomeViewController: AdViewController {
     private func createCategoryView() -> UIView {
         // View By Category
         
-        let categoryCellConfig = CellConfig { (category: ItemCategory, cell: CategoryCell) in
+        let categoryCellConfig = TableCellConfig { (category: ItemCategory, cell: CategoryCell) in
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
             let itemsVc = DisplayItemsTableController(category: category)
@@ -198,7 +198,7 @@ class HomeViewController: AdViewController {
             self?.present(navController, animated: true, completion: nil)
         }
         
-        let actionCellConfig = CellConfig<Void, AddCell> { (_) in
+        let actionCellConfig = TableCellConfig<Void, AddCell> { (_) in
             let editCategoryViewController = EditCategoryViewController(category: nil)
             editCategoryViewController.delegate = self
             

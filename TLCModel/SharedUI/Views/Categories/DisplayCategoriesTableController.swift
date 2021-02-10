@@ -81,7 +81,7 @@ public class DisplayCategoriesTableController: UIViewController {
             RealmSubjects.shared.removeCategory(category)
         }
         
-        let categoryCellConfig = CellConfig(swipeActions: [editSwipeAction, deleteSwipAction]) { (category: ItemCategory, cell: CategoryCell) in
+        let categoryCellConfig = TableCellConfig(swipeActions: [editSwipeAction, deleteSwipAction]) { (category: ItemCategory, cell: CategoryCell) in
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
             self?.delegate?.complete(withCategory: category)
@@ -94,7 +94,7 @@ public class DisplayCategoriesTableController: UIViewController {
 //               RealmSubjects.shared.removeCategory(category)
 //           }
         
-        let actionCellConfig = CellConfig<Void, AddCell> { (_) in
+        let actionCellConfig = TableCellConfig<Void, AddCell> { (_) in
             editCategory(category: nil)
         }
             

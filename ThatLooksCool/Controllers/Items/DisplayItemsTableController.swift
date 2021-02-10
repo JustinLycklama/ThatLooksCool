@@ -89,7 +89,7 @@ class DisplayItemsTableController: AdViewController {
     
     private func createItemsView() -> UIView {
         
-        let categoryCellConfig = CellConfig { (item: Item, cell: ItemCell) in
+        let categoryCellConfig = TableCellConfig { (item: Item, cell: ItemCell) in
             cell.displayItem(displayable: item)
         } performAction: { [weak self] (item: Item) in
             
@@ -99,7 +99,7 @@ class DisplayItemsTableController: AdViewController {
             self?.present(editCategoryViewController, animated: true, completion: nil)
         }
         
-        let actionCellConfig = CellConfig<Void, AddCell> { (_) in
+        let actionCellConfig = TableCellConfig<Void, AddCell> { (_) in
             let editCategoryViewController = EditCategoryViewController(category: nil)
             editCategoryViewController.delegate = self
             

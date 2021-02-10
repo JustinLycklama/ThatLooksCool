@@ -34,7 +34,7 @@ public class ItemCategory: Object, CategoryDisplayable {
         self.colorHex = mock.color.toHex() ?? "FFFFFF"
     }
     
-    required override init() {
+    public required override init() {
         id = UUID().uuidString
         self.title = "<Undefined>"
         self.colorHex = "e81ade"

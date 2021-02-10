@@ -16,7 +16,7 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     }
     
     public static func register() {
-        let appResources = App.resources
+        let appResources = Classic.resources
         for icon in TLCIconSet.allCases {
             icon.registerImage(to: appResources)
         }
@@ -52,8 +52,124 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     }
     
     public func image() -> UIImage? {
-        App.resources.getImage(from: self)
+        Classic.resources.getImage(from: self)
     }
+}
+
+public struct NewStyle {
+    public static let shared = NewStyle()
+    private static var bundle = Bundle(for: RealmSubjects.self)
+    
+    private init() {}
+}
+
+extension NewStyle: MetricsStyle {
+    public var topMargin: CGFloat {
+        24
+    }
+    
+    public var topPadding: CGFloat {
+        16
+    }
+    
+    public var interiorMargin: CGFloat {
+        13
+    }
+    
+    public var interiorPadding: CGFloat {
+        8
+    }
+    
+    public var cornerRadius: CGFloat {
+        10
+    }
+    
+    public var formPadding: CGFloat {
+        8
+    }
+    
+    public var formMargin: CGFloat {
+        10
+    }
+    
+    public var textAreaCornerRadius: CGFloat {
+        10
+    }
+    
+    
+}
+
+extension NewStyle: ColorStyle {
+    public var primaryColor: UIColor {
+        ColorAssets.accent1.color
+    }
+
+    public var secondaryColor: UIColor {
+        ColorAssets.accent2.color
+    }
+
+    public var baseBackgroundColor: UIColor {
+        ColorAssets.whitebase1.color
+    }
+
+    public var acceptButtonBackgroundColor: UIColor {
+        ColorAssets.accent4.color
+    }
+
+    public var accentButtonBackgroundColor: UIColor {
+        ColorAssets.accent5.color
+    }
+
+    public var textAreaBorderColor: UIColor {
+        ColorAssets.base2.color
+    }
+
+    public var titleTextColor: UIColor {
+        ColorAssets.whitebase0.color
+    }
+    
+    public var titleTextAccentColor: UIColor {
+        ColorAssets.accent3.color
+    }
+    
+    private enum ColorAssets: String {
+        case base6 = "Base6"
+        case base5 = "Base5"
+        case base4 = "Base4"
+        case base3 = "Base3"
+        case base2 = "Base2"
+        case base1 = "Base1"
+        case whitebase0 = "WhiteBase0"
+        case whitebase1 = "WhiteBase1"
+        case whitebase2 = "WhiteBase2"
+        case accent1 = "Accent1"
+        case accent2 = "Accent2"
+        case accent3 = "Accent3"
+        case accent4 = "Accent4"
+        case accent5 = "Accent5"
+        case accent6 = "Accent6"
+        case accent7 = "Accent7"
+        case accent8 = "Accent8"
+
+        var color: UIColor {
+            UIColor.init(named: rawValue, in: bundle, compatibleWith: nil) ?? UIColor.systemPink
+        }
+    }
+}
+
+
+
+extension NewStyle: FontStyle {
+    public var placeholderTextAttributes: [NSAttributedString.Key : Any] {
+        attributesForStyle(TextStyle.label)
+    }
+    
+    
+    func attributesForStyle(_ style: TextStylable) -> [NSAttributedString.Key: Any] {
+        return [NSAttributedString.Key.font : UIFont.fromStyle(style: style),
+                NSAttributedString.Key.foregroundColor : style.textColor]
+    }
+    
 }
 
 
@@ -61,11 +177,11 @@ public struct TLCStyle {
     
     // MARK: - Metrics
     
-    public static let topLevelMargin: CGFloat = 24
+    public static let topLevelMargin: CGFloat = 16
     public static  let topLevelPadding: CGFloat = 16
     
     public static let interiorMargin: CGFloat = 12
-    public static let interiorPadding: CGFloat = 8
+    public static let interiorPadding: CGFloat = 6
     
     public static let cornerRadius: CGFloat = 10
     public static let textCornerRadius: CGFloat = 5
@@ -112,6 +228,19 @@ public struct TLCStyle {
     
     public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
 
+    
+    
+    private static var bundle = Bundle(for: RealmSubjects.self)
+
+    // New
+    public static let headingViewColor = UIColor(named: "Base6", in: bundle, compatibleWith: nil)
+    public static let titleTextColor = UIColor(named: "WhiteBase1", in: bundle, compatibleWith: nil)
+    public static let titleTextAccentColor = UIColor(named: "Acent2", in: bundle, compatibleWith: nil)
+    
+    
+    
+    
+    
     
     // Nav Bar
     public static let navBarBackgroundColor = ColorPallet.lightCyan
@@ -191,6 +320,7 @@ public enum TextStyle: TextStylable {
     case label
     case userText
     case systemInfoLink
+    case subtitle
     
     public var fontName: String {
         switch self {
@@ -199,13 +329,15 @@ public enum TextStyle: TextStylable {
         case .barButton:
             return "AvenirNext-Regular"
         case .heading, .instructions:
-            return "Noteworthy-Bold"
+            return "AppleSDGothicNeo-Regular"
         case .label:
-            return "AvenirNext-Regular"
+            return "AppleSDGothicNeo-Light"
         case .userText:
             return "KohinoorTelugu-Regular"
         case .systemInfoLink:
             return "AvenirNextCondensed-Medium"
+        case .subtitle:
+            return "Thonburi-Light"
         }
     }
     
@@ -222,6 +354,8 @@ public enum TextStyle: TextStylable {
             return TLCStyle.ColorPallet.black
         case .systemInfoLink:
             return TLCStyle.ColorPallet.turquoise
+        case .subtitle:
+            return TLCStyle.ColorPallet.black
         }
     }
     
@@ -232,7 +366,7 @@ public enum TextStyle: TextStylable {
         case .barButton:
             return 16
         case .heading:
-            return 24
+            return 32
         case .instructions:
             return 16
         case .label:
@@ -241,6 +375,8 @@ public enum TextStyle: TextStylable {
             return 20
         case .systemInfoLink:
             return 16
+        case .subtitle:
+            return 14
         }
     }
 }

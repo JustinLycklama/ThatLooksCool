@@ -101,8 +101,8 @@ class MapCell: UITableViewCell {
         mapStyle = try? GMSMapStyle(jsonString: mapStyleJSON)
         
         mapViewArea.layer.borderWidth = 1
-        mapViewArea.layer.borderColor = App.style.textAreaBorderColor.cgColor
-        mapViewArea.layer.cornerRadius = App.style.textAreaCornerRadius
+        mapViewArea.layer.borderColor = Classic.style.textAreaBorderColor.cgColor
+        mapViewArea.layer.cornerRadius = Classic.style.textAreaCornerRadius
         
         let mapActionLabel = UILabel()
         mapActionLabel.style(TextStyle.instructions)
@@ -115,15 +115,15 @@ class MapCell: UITableViewCell {
         mapViewArea.constrainSubviewToBounds(mapActionLabel,
                                              onEdges: [.left, .right, .bottom],
                                              withInset: UIEdgeInsets(top: 0,
-                                                                     left: App.style.interiorMargin,
-                                                                     bottom: App.style.interiorMargin,
-                                                                     right: App.style.interiorMargin))
+                                                                     left: Classic.style.interiorMargin,
+                                                                     bottom: Classic.style.interiorMargin,
+                                                                     right: Classic.style.interiorMargin))
         
         addMapToView(frame: CGRect(origin: .zero, size: mapViewArea.frame.size))
         layoutPin()
         
         self.contentView.addSubview(mapViewArea)
-        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(App.style.interiorMargin))
+        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(Classic.style.interiorMargin))
         
         mapViewArea.addConstraint(.init(item: mapViewArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160))
     }

@@ -15,6 +15,9 @@ def app_pods
   use_frameworks!
   inhibit_all_warnings!
 
+  pod 'GoogleMaps',     '3.10.0'
+  pod 'EasyNotificationBadge'
+  
   pod 'Onboard'
   pod 'LicensePlist'
   
@@ -30,13 +33,6 @@ def ui_pods
   pod 'ClassicClient',    :path => '../ClassicClientiOS/'
 end
 
-def model_pods
-  use_frameworks!
-  
-  pod 'GoogleMaps',     '3.10.0'
-  pod 'EasyNotificationBadge'
-end
-
 ## Targets
 
 target 'ThatLooksCool' do
@@ -47,7 +43,6 @@ end
 
 target 'TLCModel' do
     required_pods
-    model_pods
     ui_pods
 end
 

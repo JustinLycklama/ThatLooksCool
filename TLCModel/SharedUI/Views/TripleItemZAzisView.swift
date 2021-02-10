@@ -7,14 +7,14 @@
 //
 
 import UIKit
-import EasyNotificationBadge
+//import EasyNotificationBadge
 
 public class TripleItemZAzisView: UIView {
     
     public let itemDisplayArea = UIView()
     
     let badgePositioner = UIView()
-    var badgeAppearance = BadgeAppearance()
+//    var badgeAppearance = BadgeAppearance()
     
     public init() {
         super.init(frame: .zero)
@@ -92,11 +92,11 @@ public class TripleItemZAzisView: UIView {
         
         self.sendSubviewToBack(fakeItem2)
                 
-        badgeAppearance.duration = 2
-        badgeAppearance.borderWidth = 1
-        badgeAppearance.borderColor = TLCStyle.viewBorderColor
-        badgeAppearance.allowShadow = true
-        badgeAppearance.font = UIFont(name: "Avenir-Book", size: 18)!
+//        badgeAppearance.duration = 2
+//        badgeAppearance.borderWidth = 1
+//        badgeAppearance.borderColor = TLCStyle.viewBorderColor
+//        badgeAppearance.allowShadow = true
+//        badgeAppearance.font = UIFont(name: "Avenir-Book", size: 18)!
         
         self.addSubview(badgePositioner)
         self.constrainSubviewToBounds(badgePositioner, onEdges: [.right, .top],
@@ -107,10 +107,10 @@ public class TripleItemZAzisView: UIView {
     }
     
     public func setBadge(_ value: Int) {        
-        if (value == 0) {
-            badgePositioner.badge(text: nil)
-        } else {
-            badgePositioner.badge(text: String(value), appearance: badgeAppearance)
-        }
+//        if (value == 0) {
+//            badgePositioner.badge(text: nil)
+//        } else {
+//            badgePositioner.badge(text: String(value), appearance: badgeAppearance)
+//        }
     }
 }

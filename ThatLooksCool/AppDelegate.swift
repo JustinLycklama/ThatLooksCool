@@ -13,6 +13,7 @@ import Firebase
 import GoogleMobileAds
 
 import TLCModel
+import ClassicClient
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         TLCConfig.configure()
+//
+        Classic.setAppStyle(NewStyle.shared)
+        
 //        ShareExtensionConfig.configure()
         
         TLCIconSet.register()
@@ -41,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: TLCStyle.navBarFont ?? UIFont.systemFont(ofSize: 24),
                                                             NSAttributedString.Key.foregroundColor: TLCStyle.navBarTextColor]
         UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().isHidden = true
+
         
         UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: TLCStyle.barButtonFont ?? UIFont.systemFont(ofSize: 14),
                                                              NSAttributedString.Key.foregroundColor: TLCStyle.barButtonTextColor], for: .normal)

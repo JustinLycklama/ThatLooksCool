@@ -7,7 +7,9 @@
 //
 
 import RealmSwift
-import GoogleMaps
+//import GoogleMaps
+
+import ClassicClient
 
 public struct TLCConfig {
     
@@ -27,7 +29,8 @@ public struct TLCConfig {
     }
     
     public static func configure() {
-        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
+        Classic.setAppStyle(NewStyle.shared)
+//        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
     }
 }
 

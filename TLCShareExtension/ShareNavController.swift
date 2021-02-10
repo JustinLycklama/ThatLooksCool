@@ -9,7 +9,6 @@
 import UIKit
 
 import TLCModel
-import GoogleMaps
 
 @objc(ShareNavController)
 class ShareNavController: UINavigationController {

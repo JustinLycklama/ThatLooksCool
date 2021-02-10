@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import TLCModel
 
 @IBDesignable
 public class CategoryCellView: ShadowView {

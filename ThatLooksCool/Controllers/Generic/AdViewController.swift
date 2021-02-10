@@ -51,7 +51,7 @@ class AdViewController: UIViewController {
 
         contentView.backgroundColor = .clear
                 
-        self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right], withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
+        self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right])
         
         if !ENABLE_ADS {
             self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))

@@ -55,7 +55,6 @@
 		7DB0753825C8F90800A1C716 /* DisplayCategoriesTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0753425C8F90800A1C716 /* DisplayCategoriesTableController.swift */; };
 		7DB0753925C8F90800A1C716 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0753325C8F90700A1C716 /* EditCategoryViewController.swift */; };
 		7DB0755325C8F9A600A1C716 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0755225C8F9A600A1C716 /* Extensions+UIView.swift */; };
-		7DB0756B25C8FA0700A1C716 /* CategoryCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DB0756325C8FA0700A1C716 /* CategoryCellView.xib */; };
 		7DB0756C25C8FA0700A1C716 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0756425C8FA0700A1C716 /* CategoryCell.swift */; };
 		7DB0756D25C8FA0700A1C716 /* ItemCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DB0756525C8FA0700A1C716 /* ItemCellView.xib */; };
 		7DB0756E25C8FA0700A1C716 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB0756625C8FA0700A1C716 /* ItemCell.swift */; };
@@ -67,6 +66,10 @@
 		7DCA594D259189B5004FB7E9 /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA594C259189B5004FB7E9 /* RealmObjects.swift */; };
 		7DCA5A8E25A6A332000B7C9B /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */; };
 		7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAA8D25CA52090075804C /* MapCell.swift */; };
+		7DEC0F7C25D245570005E822 /* NewHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */; };
+		7DEC0F8125D24C4C0005E822 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DEC0F8025D24C4C0005E822 /* Colors.xcassets */; };
+		7DEC100125D2CFC10005E822 /* CategoryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */; };
+		7DEC104725D33C170005E822 /* CategoryCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */; };
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
 		7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */; };
@@ -209,7 +212,6 @@
 		7DB0753325C8F90700A1C716 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		7DB0753425C8F90800A1C716 /* DisplayCategoriesTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayCategoriesTableController.swift; sourceTree = "<group>"; };
 		7DB0755225C8F9A600A1C716 /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
-		7DB0756325C8FA0700A1C716 /* CategoryCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCellView.xib; sourceTree = "<group>"; };
 		7DB0756425C8FA0700A1C716 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		7DB0756525C8FA0700A1C716 /* ItemCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemCellView.xib; sourceTree = "<group>"; };
 		7DB0756625C8FA0700A1C716 /* ItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
@@ -221,6 +223,10 @@
 		7DCA594C259189B5004FB7E9 /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
 		7DDFAA8D25CA52090075804C /* MapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
+		7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeViewController.swift; sourceTree = "<group>"; };
+		7DEC0F8025D24C4C0005E822 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCell.swift; sourceTree = "<group>"; };
+		7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCellView.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizeItemsViewController.swift; sourceTree = "<group>"; };
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesModel.swift; sourceTree = "<group>"; };
@@ -332,6 +338,7 @@
 				7DA7350D25BBD93E00CE9607 /* TLCStyle.swift */,
 				7D196A83258D9EFA0000BE9C /* RealmObjects */,
 				7DA734C525BBD77A00CE9607 /* SharedUI */,
+				7DEC0F8025D24C4C0005E822 /* Colors.xcassets */,
 			);
 			path = TLCModel;
 			sourceTree = "<group>";
@@ -430,6 +437,7 @@
 			children = (
 				7D98BBE4250136DA00F0ADC0 /* HomeViewController.swift */,
 				7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */,
+				7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -446,6 +454,7 @@
 		7DA734C525BBD77A00CE9607 /* SharedUI */ = {
 			isa = PBXGroup;
 			children = (
+				7DEC0FFF25D2CFA50005E822 /* CollectionCells */,
 				7DA7350725BBD8D500CE9607 /* Protocols.swift */,
 				7DB0755225C8F9A600A1C716 /* Extensions+UIView.swift */,
 				7DB0753225C8F90700A1C716 /* Categories */,
@@ -489,7 +498,6 @@
 		7DB0756225C8FA0700A1C716 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				7DB0756325C8FA0700A1C716 /* CategoryCellView.xib */,
 				7DB0756425C8FA0700A1C716 /* CategoryCell.swift */,
 				7DB0756525C8FA0700A1C716 /* ItemCellView.xib */,
 				7DB0756625C8FA0700A1C716 /* ItemCell.swift */,
@@ -516,6 +524,15 @@
 				7DDFAA8D25CA52090075804C /* MapCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		7DEC0FFF25D2CFA50005E822 /* CollectionCells */ = {
+			isa = PBXGroup;
+			children = (
+				7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */,
+				7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */,
+			);
+			path = CollectionCells;
 			sourceTree = "<group>";
 		};
 		7DEDAF5A251AEC5000D15306 /* Google Model */ = {
@@ -598,7 +615,6 @@
 				7D170CFF25126598007F151F /* Sources */,
 				7D170D0025126598007F151F /* Frameworks */,
 				7D170D0125126598007F151F /* Resources */,
-				CC950830E7BAB62274B3C035 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -736,7 +752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D1BFAEC25C125AB0032AEC7 /* secretKeys.plist in Resources */,
-				7DB0756B25C8FA0700A1C716 /* CategoryCellView.xib in Resources */,
+				7DEC0F8125D24C4C0005E822 /* Colors.xcassets in Resources */,
 				7DB0756D25C8FA0700A1C716 /* ItemCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -896,23 +912,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		CC950830E7BAB62274B3C035 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TLCModel/Pods-TLCModel-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TLCModel/Pods-TLCModel-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TLCModel/Pods-TLCModel-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		F131E707037D0F92E6E3BE60 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -949,6 +948,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DEC104725D33C170005E822 /* CategoryCollectionCellView.swift in Sources */,
 				7DB0753925C8F90800A1C716 /* EditCategoryViewController.swift in Sources */,
 				7DA734E125BBD82E00CE9607 /* ModifiableFieldsFormView.swift in Sources */,
 				7DB0756E25C8FA0700A1C716 /* ItemCell.swift in Sources */,
@@ -970,6 +970,7 @@
 				7D170D10251265C5007F151F /* Coordinate.swift in Sources */,
 				7DA7354D25BBDBAE00CE9607 /* ShadowView.swift in Sources */,
 				7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */,
+				7DEC100125D2CFC10005E822 /* CategoryCollectionCell.swift in Sources */,
 				7DB0753825C8F90800A1C716 /* DisplayCategoriesTableController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1001,6 +1002,7 @@
 				7DCA5A8E25A6A332000B7C9B /* EditItemViewController.swift in Sources */,
 				7D1BFB1225C3BB4B0032AEC7 /* TestDataModel.swift in Sources */,
 				7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */,
+				7DEC0F7C25D245570005E822 /* NewHomeViewController.swift in Sources */,
 				7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */,
 				7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */,
 			);
