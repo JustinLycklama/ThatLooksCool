@@ -61,4 +61,28 @@ open class ShadowView: UIView {
             removeShadow()
         }
     }
+    
+    private func removeShadow() {
+        self.layer.shadowPath = nil
+        self.layer.shadowRadius = 0
+        self.layer.shadowOffset = .zero
+        self.layer.shadowOpacity = 0
+        self.layer.shadowColor = TLCStyle.shadowColor.cgColor
+    }
+    
+    private func addBorderShadow(radius: CGFloat = 5, offset: CGSize = .zero) {
+        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: self.layer.cornerRadius).cgPath
+        self.layer.shadowRadius = radius
+        self.layer.shadowOffset = offset
+        self.layer.shadowOpacity = 1
+        self.layer.shadowColor = TLCStyle.shadowColor.cgColor
+    }
+    
+    private func addContactShadow(shadowDistance: CGFloat = 0) {
+        let shadowSize: CGFloat = 20
+        let contactRect = CGRect(x: -shadowSize, y: self.bounds.size.height - (shadowSize * 0.4) + shadowDistance, width: self.bounds.size.width + shadowSize * 2, height: shadowSize)
+        self.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
+        self.layer.shadowRadius = 10
+        self.layer.shadowOpacity = 0.8
+    }
 }

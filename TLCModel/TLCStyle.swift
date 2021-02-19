@@ -1,5 +1,5 @@
 //
-//  TLCStyle.swift
+//  NewStyle.swift
 //  ThatLooksCool
 //
 //  Created by Justin Lycklama on 2020-09-22.
@@ -56,29 +56,38 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     }
 }
 
-public struct NewStyle {
-    public static let shared = NewStyle()
+public struct TLCStyle {
+    public static let shared = TLCStyle()
     private static var bundle = Bundle(for: RealmSubjects.self)
     
     private init() {}
 }
 
-extension NewStyle: MetricsStyle {
+extension TLCStyle: MetricsStyle {
+    
+    public static let topMargin: CGFloat = 24
     public var topMargin: CGFloat {
-        24
+        TLCStyle.topMargin
     }
     
+    public static let topPadding: CGFloat = 16
     public var topPadding: CGFloat {
-        16
+        TLCStyle.topPadding
     }
     
-    public var interiorMargin: CGFloat {
+    public var collectionMargin: CGFloat {
         13
     }
     
-    public var interiorPadding: CGFloat {
+    public var collectionPadding: CGFloat {
         8
     }
+    
+    public static let elementMargin: CGFloat = 8
+    public var elementMargin: CGFloat { TLCStyle.elementMargin }
+    
+    public static let elementPadding: CGFloat = 8
+    public var elementPadding: CGFloat { TLCStyle.elementPadding }
     
     public var cornerRadius: CGFloat {
         10
@@ -96,10 +105,90 @@ extension NewStyle: MetricsStyle {
         10
     }
     
+    // MARK: - Metrics
+    
+    
+    public static let collectionMargin: CGFloat = 12
+    public static let interiorPadding: CGFloat = 6
+    
+    public static let cornerRadius: CGFloat = 10
+    public static let textCornerRadius: CGFloat = 5
+    
+    // MARK: - Colors
+    
+    fileprivate struct ColorPallet {
+        static let offWhite = UIColor(rgb: 0xFAF9F9)
+        static let lightGrey = UIColor(rgb: 0xEFF0F3)
+        static let mediumGrey = UIColor(rgb: 0x9fa7bb)
+        static let darkGrey = UIColor(rgb: 0x424B54)
+        static let black = UIColor.black
+
+        static let darkBlue = UIColor(rgb: 0x344180)
+        static let red = UIColor(rgb: 0xbb5a68)
+        static let yellow = UIColor(rgb: 0xedca45)
+        
+        
+        // 1
+        static let turquoise = UIColor(rgb: 0x34D1BF)
+        static let lightCyan = UIColor(rgb: 0xE5FCF5) //#E0BE7C
+        
+        // 2
+        static let mediumBlue = UIColor(rgb: 0x048BA8)
+        static let pink = UIColor(rgb: 0xEEC8E0)
+    }
+        
+    
+    public static let accentColor = ColorPallet.yellow
+    public static let shadowColor = ColorPallet.mediumGrey
+    
+    public static let textBorderColor = ColorPallet.mediumGrey
+    public static let viewBorderColor = ColorPallet.darkGrey
+    
+    public static let placeholderTextColor = ColorPallet.mediumGrey
+
+    
+    public static let primaryBackgroundColor = ColorPallet.lightGrey
+    public static let secondaryBackgroundColor = ColorPallet.offWhite
+
+    public static let progressIconColor = ColorPallet.turquoise
+    public static let modificationIconColor = ColorPallet.yellow
+    public static let destructiveIconColor = ColorPallet.red
+    
+    public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
+    
+    
+    
+//    private static var bundle = Bundle(for: RealmSubjects.self)
+    
+    // New
+    public static let bannerViewColor = UIColor(named: "Base6", in: bundle, compatibleWith: nil)
+    public static let titleTextColor = UIColor(named: "WhiteBase1", in: bundle, compatibleWith: nil)
+    public static let titleTextAccentColor = UIColor(named: "Acent2", in: bundle, compatibleWith: nil)
+    
+    public static let itemBackgroundColor = UIColor(named: "Base4", in: bundle, compatibleWith: nil) // UIColor(rgb: 0x3E5E66)
+
+    public static let itemIconColor = UIColor(named: "WhiteBase3", in: bundle, compatibleWith: nil) // UIColor(rgb: 0x3E5E66)
+
+    
+    
+    
+    // Nav Bar
+    public static let navBarBackgroundColor = ColorPallet.lightCyan
+    
+    private static let navBarLabelType = TextStyle.navBar
+    public static let navBarFont = UIFont(name: navBarLabelType.fontName, size: navBarLabelType.size)
+    public static let navBarTextColor = navBarLabelType.textColor
+    
+    // Bar Button Item
+    private static let barButtonLabelType = TextStyle.barButton
+    public static let barButtonFont = UIFont(name: barButtonLabelType.fontName, size: barButtonLabelType.size)
+    public static let barButtonTextColor = barButtonLabelType.textColor
+    
+    
     
 }
 
-extension NewStyle: ColorStyle {
+extension TLCStyle: ColorStyle {
     public var primaryColor: UIColor {
         ColorAssets.accent1.color
     }
@@ -109,7 +198,7 @@ extension NewStyle: ColorStyle {
     }
 
     public var baseBackgroundColor: UIColor {
-        ColorAssets.whitebase1.color
+        ColorAssets.whitebase2.color
     }
 
     public var acceptButtonBackgroundColor: UIColor {
@@ -159,7 +248,7 @@ extension NewStyle: ColorStyle {
 
 
 
-extension NewStyle: FontStyle {
+extension TLCStyle: FontStyle {
     public var placeholderTextAttributes: [NSAttributedString.Key : Any] {
         attributesForStyle(TextStyle.label)
     }
@@ -170,89 +259,6 @@ extension NewStyle: FontStyle {
                 NSAttributedString.Key.foregroundColor : style.textColor]
     }
     
-}
-
-
-public struct TLCStyle {
-    
-    // MARK: - Metrics
-    
-    public static let topLevelMargin: CGFloat = 16
-    public static  let topLevelPadding: CGFloat = 16
-    
-    public static let interiorMargin: CGFloat = 12
-    public static let interiorPadding: CGFloat = 6
-    
-    public static let cornerRadius: CGFloat = 10
-    public static let textCornerRadius: CGFloat = 5
-    
-    // MARK: - Colors
-    
-    fileprivate struct ColorPallet {
-        static let offWhite = UIColor(rgb: 0xFAF9F9)
-        static let lightGrey = UIColor(rgb: 0xEFF0F3)
-        static let mediumGrey = UIColor(rgb: 0x9fa7bb)
-        static let darkGrey = UIColor(rgb: 0x424B54)
-        static let black = UIColor.black
-
-        static let darkBlue = UIColor(rgb: 0x344180)
-        static let red = UIColor(rgb: 0xbb5a68)
-        static let yellow = UIColor(rgb: 0xedca45)
-        
-        
-        // 1
-        static let turquoise = UIColor(rgb: 0x34D1BF)
-        static let lightCyan = UIColor(rgb: 0xE5FCF5) //#E0BE7C
-        
-        // 2
-        static let mediumBlue = UIColor(rgb: 0x048BA8)
-        static let pink = UIColor(rgb: 0xEEC8E0)
-    }
-        
-    
-    public static let accentColor = ColorPallet.yellow
-    public static let shadowColor = ColorPallet.mediumGrey
-    
-    public static let textBorderColor = ColorPallet.mediumGrey
-    public static let viewBorderColor = ColorPallet.darkGrey
-    
-    public static let placeholderTextColor = ColorPallet.mediumGrey
-
-    
-    public static let primaryBackgroundColor = ColorPallet.lightGrey
-    public static let secondaryBackgroundColor = ColorPallet.offWhite
-
-    public static let progressIconColor = ColorPallet.turquoise
-    public static let modificationIconColor = ColorPallet.yellow
-    public static let destructiveIconColor = ColorPallet.red
-    
-    public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
-
-    
-    
-    private static var bundle = Bundle(for: RealmSubjects.self)
-
-    // New
-    public static let headingViewColor = UIColor(named: "Base6", in: bundle, compatibleWith: nil)
-    public static let titleTextColor = UIColor(named: "WhiteBase1", in: bundle, compatibleWith: nil)
-    public static let titleTextAccentColor = UIColor(named: "Acent2", in: bundle, compatibleWith: nil)
-    
-    
-    
-    
-    
-    
-    // Nav Bar
-    public static let navBarBackgroundColor = ColorPallet.lightCyan
-
-    private static let navBarLabelType = TextStyle.navBar
-    public static let navBarFont = UIFont(name: navBarLabelType.fontName, size: navBarLabelType.size)
-    public static let navBarTextColor = navBarLabelType.textColor
-    
-    // Bar Button Item
-    private static let barButtonLabelType = TextStyle.barButton
-    public static let barButtonFont = UIFont(name: barButtonLabelType.fontName, size: barButtonLabelType.size)
-    public static let barButtonTextColor = barButtonLabelType.textColor
 }
 
 public class ImagesResources {
@@ -272,90 +278,67 @@ public class ImagesResources {
     }
 }
 
-extension UIView {
-    public func removeShadow() {
-        self.layer.shadowPath = nil
-        self.layer.shadowRadius = 0
-        self.layer.shadowOffset = .zero
-        self.layer.shadowOpacity = 0
-        self.layer.shadowColor = TLCStyle.shadowColor.cgColor
-    }
-    
-    public func addBorderShadow(radius: CGFloat = 5, offset: CGSize = .zero) {
-        self.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: self.layer.cornerRadius).cgPath
-        self.layer.shadowRadius = radius
-        self.layer.shadowOffset = offset
-        self.layer.shadowOpacity = 1
-        self.layer.shadowColor = TLCStyle.shadowColor.cgColor
-    }
-    
-    public func addContactShadow(shadowDistance: CGFloat = 0) {
-        let shadowSize: CGFloat = 20
-        let contactRect = CGRect(x: -shadowSize, y: self.bounds.size.height - (shadowSize * 0.4) + shadowDistance, width: self.bounds.size.width + shadowSize * 2, height: shadowSize)
-        self.layer.shadowPath = UIBezierPath(ovalIn: contactRect).cgPath
-        self.layer.shadowRadius = 10
-        self.layer.shadowOpacity = 0.8
-    }
-}
-
-extension UIViewController {
-    public func addBackgroundImage() {
-//        let backgroundImage = UIImageView()
-//        backgroundImage.image = UIImage(named: "city-side-bg")
-//        backgroundImage.contentMode = .scaleAspectFill
-//
-//        self.view.addSubview(backgroundImage)
-//        self.view.constrainSubviewToBounds(backgroundImage)
-//
-//        self.view.sendSubviewToBack(backgroundImage)
-    }
-}
 
 
 public enum TextStyle: TextStylable {
+    
+    case title
+    case heading
+    case subtitle
+
+    
     case navBar
     case barButton
-    case heading
     case instructions
     case label
     case userText
     case systemInfoLink
-    case subtitle
     
     public var fontName: String {
         switch self {
+        case .subtitle:
+            return "Avenir-Book"//"Thonburi-Light"
+        case .title, .instructions:
+            return "AppleSDGothicNeo-Regular"
+            
+        case .heading:
+            return "Avenir-Medium"
         case .navBar:
             return "KohinoorTelugu-Medium"
         case .barButton:
             return "AvenirNext-Regular"
-        case .heading, .instructions:
-            return "AppleSDGothicNeo-Regular"
+
         case .label:
             return "AppleSDGothicNeo-Light"
         case .userText:
             return "KohinoorTelugu-Regular"
         case .systemInfoLink:
             return "AvenirNextCondensed-Medium"
-        case .subtitle:
-            return "Thonburi-Light"
         }
     }
     
     public var textColor: UIColor {
         
         switch self {
+        case .title:
+            return TLCStyle.ColorPallet.black
+        case .heading:
+            return TLCStyle.ColorPallet.darkGrey
+        case .instructions:
+            return TLCStyle.ColorPallet.darkGrey
+        case .subtitle:
+            return TLCStyle.ColorPallet.black
+        
         case .navBar, .barButton:
             return TLCStyle.ColorPallet.darkGrey
-        case .heading, .instructions:
-            return TLCStyle.ColorPallet.darkGrey
+
         case .label:
             return TLCStyle.ColorPallet.darkGrey
         case .userText:
             return TLCStyle.ColorPallet.black
         case .systemInfoLink:
             return TLCStyle.ColorPallet.turquoise
-        case .subtitle:
-            return TLCStyle.ColorPallet.black
+
         }
     }
     
@@ -365,8 +348,10 @@ public enum TextStyle: TextStylable {
             return 22
         case .barButton:
             return 16
-        case .heading:
+        case .title:
             return 32
+        case .heading:
+            return 24
         case .instructions:
             return 16
         case .label:
@@ -380,3 +365,4 @@ public enum TextStyle: TextStylable {
         }
     }
 }
+

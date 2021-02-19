@@ -26,9 +26,9 @@ public class AddCell: UITableViewCell {
         let addView = AddCellView()
         
         self.contentView.addSubview(addView)
-        self.contentView.constrainSubviewToBounds(addView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                                      left: TLCStyle.topLevelMargin,
-                                                                                      bottom: TLCStyle.interiorMargin,
-                                                                                      right: TLCStyle.topLevelMargin))
+        self.contentView.constrainSubviewToBounds(addView, withInset: UIEdgeInsets(top: TLCStyle.collectionMargin,
+                                                                                      left: TLCStyle.topMargin,
+                                                                                      bottom: TLCStyle.collectionMargin,
+                                                                                      right: TLCStyle.topMargin))
     }
 }

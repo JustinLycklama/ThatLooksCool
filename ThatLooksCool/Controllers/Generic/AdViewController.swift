@@ -11,22 +11,44 @@ import UIKit
 import TLCModel
 import GoogleMobileAds
 
+import ClassicClient
+
 class AdViewController: UIViewController {
 
-    public let contentView = UIView()
-    private let bannerView = UIView()
+    public let contentArea = UIView()
+//    private let bannerArea = UIView()
     
-    private let ENABLE_ADS = true
+    private lazy var bannerView: UIView = {
+//        let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
+//
+//        #if DEBUG
+//        adBanner.adUnitID = TLCConfig.apiKey(.adMobTest)
+//        #else
+//        adBanner.adUnitID = TLCConfig.apiKey(.adMob)
+//        #endif
+//
+//        adBanner.rootViewController = self
+//        adBanner.load(GADRequest())
+        
+        let container = ShadowView()
+        
+        container.backgroundColor = TLCStyle.bannerViewColor
+        
+        container.layer.cornerRadius = 15
+        container.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        
+        container.addSubview(adBanner)
+        
+        container.addConstraint(NSLayoutConstraint.init(item: adBanner, attribute: .centerX, relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0))
+        container.constrainSubviewToBounds(adBanner, onEdges: [.top], withInset: UIEdgeInsets(0))
+        
+        let window = UIApplication.shared.windows[0]
+        container.constrainSubviewToBounds(adBanner, onEdges: [.bottom], withInset: UIEdgeInsets(window.safeAreaInsets.bottom))
+        
+        return container
+    }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.hideKeyboardWhenTappedAround()
-        
-        edgesForExtendedLayout = []
-        self.view.backgroundColor = TLCStyle.primaryBackgroundColor
-        
-        // Setup Ad Banner
+    private lazy var adBanner: GADBannerView = {
         let adBanner = GADBannerView(adSize: kGADAdSizeBanner)
      
         #if DEBUG
@@ -36,29 +58,60 @@ class AdViewController: UIViewController {
         #endif
         
         adBanner.rootViewController = self
-        adBanner.load(GADRequest())
         
-        bannerView.backgroundColor = .white
-        bannerView.layer.cornerRadius = TLCStyle.cornerRadius
+        return adBanner
+    }()
+    
+    private let ENABLE_ADS = true
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        bannerView.addSubview(adBanner)
-
-        bannerView.addConstraint(NSLayoutConstraint.init(item: adBanner, attribute: .centerX, relatedBy: .equal, toItem: bannerView, attribute: .centerX, multiplier: 1, constant: 0))
-        bannerView.constrainSubviewToBounds(adBanner, onEdges: [.top, .bottom], withInset: UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0))
+        self.hideKeyboardWhenTappedAround()
         
-        self.view.addSubview(contentView)
+        edgesForExtendedLayout = []
+        
+        contentArea.backgroundColor = .clear
+//        bannerArea.backgroundColor = .clear
+        
+        self.view.addSubview(contentArea)
         self.view.addSubview(bannerView)
-
-        contentView.backgroundColor = .clear
                 
-        self.view.constrainSubviewToBounds(contentView, onEdges: [.top, .left, .right])
+        self.view.constrainSubviewToBounds(contentArea, onEdges: [.top, .left, .right])
         
         if !ENABLE_ADS {
-            self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
+            self.view.addConstraint(.init(item: contentArea, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1, constant:0))
         } else {
-            self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
+            // Setup Banner
+//            adBanner.delegate = self
+            adBanner.load(GADRequest())
+            adBanner.addConstraint(.init(item: adBanner, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50))
             
-            self.view.addConstraint(NSLayoutConstraint.init(item: contentView, attribute: .bottom, relatedBy: .equal, toItem: adBanner, attribute: .top, multiplier: 1, constant: -(TLCStyle.topLevelMargin + TLCStyle.topLevelPadding)))
+            self.view.constrainSubviewToBounds(bannerView, onEdges: [.bottom, .left, .right])
+            self.view.addConstraint(.init(item: contentArea, attribute: .bottom, relatedBy: .equal, toItem: bannerView, attribute: .top, multiplier: 1, constant:0))
         }
     }
 }
+
+//extension AdViewController: GADBannerViewDelegate {
+//    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+
+//        bannerArea.addSubview(bannerView)
+//        bannerArea.constrainSubviewToBounds(bannerView)
+//
+//        bannerArea.addConstraint(.init(item: bannerView, attribute: .width, relatedBy: .equal, toItem: bannerArea, attribute: .width, multiplier: 1, constant: 0))
+//        bannerArea.addConstraint(.init(item: bannerView, attribute: .height, relatedBy: .equal, toItem: bannerArea, attribute: .height, multiplier: 1, constant: 0))
+//        bannerArea.addConstraint(.init(item: bannerView, attribute: .centerX, relatedBy: .equal, toItem: bannerArea, attribute: .centerX, multiplier: 1, constant: 0))
+//
+//        let yPosition = NSLayoutConstraint.init(item: bannerView, attribute: .centerY, relatedBy: .equal,
+//                                                toItem: bannerArea, attribute: .centerY, multiplier: 1, constant: 0)
+//        bannerArea.addConstraint(yPosition)
+//
+//        view.layoutIfNeeded()
+//
+//        UIView.animate(withDuration: 1, animations: { [weak self] in
+//            yPosition.constant = 0
+//            self?.view.layoutIfNeeded()
+//        })
+//    }
+//}

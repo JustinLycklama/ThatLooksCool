@@ -59,7 +59,7 @@ class HomeViewController: AdViewController {
         // Layout
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = TLCStyle.topLevelPadding
+        stack.spacing = TLCStyle.topPadding
 //        stack.distribution = .fillProportionally
         
         
@@ -84,10 +84,8 @@ class HomeViewController: AdViewController {
         stack.addArrangedSubview(categoriesLabel)
         stack.addArrangedSubview(categoriesView)
 
-        contentView.addSubview(stack)
-        contentView.constrainSubviewToBounds(stack)
-        
-        addBackgroundImage()
+        contentArea.addSubview(stack)
+        contentArea.constrainSubviewToBounds(stack)        
     }
     
     // MARK: - View Creation
@@ -99,7 +97,7 @@ class HomeViewController: AdViewController {
         pendingAndSetupStackView.alignment = .center
         pendingAndSetupStackView.distribution = .fillProportionally
         pendingAndSetupStackView.translatesAutoresizingMaskIntoConstraints = false
-        pendingAndSetupStackView.spacing = TLCStyle.topLevelPadding
+        pendingAndSetupStackView.spacing = TLCStyle.topPadding
         
         pendingAndSetupStackView.addConstraint(.init(item: pendingAndSetupStackView,
                                                      attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 72))
@@ -109,10 +107,10 @@ class HomeViewController: AdViewController {
         let categorizeView = ShadowView()
                 
         categorizeView.addSubview(zAxisView)
-        categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                                   left: TLCStyle.topLevelPadding,
-                                                                                   bottom: TLCStyle.interiorMargin,
-                                                                                   right: TLCStyle.topLevelPadding))
+        categorizeView.constrainSubviewToBounds(zAxisView, withInset: UIEdgeInsets(top: TLCStyle.collectionMargin,
+                                                                                   left: TLCStyle.topPadding,
+                                                                                   bottom: TLCStyle.collectionMargin,
+                                                                                   right: TLCStyle.topPadding))
 
         let itemControl = ItemControlView()
         itemControl.firstButtonEnabled = false
@@ -122,9 +120,9 @@ class HomeViewController: AdViewController {
         categorizeView.addSubview(itemControl)
         categorizeView.constrainSubviewToBounds(itemControl, onEdges: [.bottom, .left, .right],
                                                 withInset: UIEdgeInsets(top: 0,
-                                                                        left: TLCStyle.topLevelPadding,
-                                                                        bottom: -TLCStyle.interiorMargin,
-                                                                        right: TLCStyle.topLevelPadding))
+                                                                        left: TLCStyle.topPadding,
+                                                                        bottom: -TLCStyle.collectionMargin,
+                                                                        right: TLCStyle.topPadding))
         itemControl.addConstraint(NSLayoutConstraint.init(item: itemControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
         
         
@@ -138,7 +136,7 @@ class HomeViewController: AdViewController {
         
         let settingsImage = UIImageView()
         settingsView.addSubview(settingsImage)
-        settingsView.constrainSubviewToBounds(settingsImage, withInset: UIEdgeInsets(TLCStyle.topLevelPadding))
+        settingsView.constrainSubviewToBounds(settingsImage, withInset: UIEdgeInsets(TLCStyle.topPadding))
         
         settingsImage.image = UIImage(named: "settings")?.withRenderingMode(.alwaysTemplate)
         settingsImage.tintColor = TLCStyle.shadowColor
@@ -161,7 +159,7 @@ class HomeViewController: AdViewController {
         
         let pendingItemContainer = UIView()
         pendingItemContainer.addSubview(pendingAndSetupStackView)
-        pendingItemContainer.constrainSubviewToBounds(pendingAndSetupStackView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+        pendingItemContainer.constrainSubviewToBounds(pendingAndSetupStackView, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topPadding, right: 0))
         
         RealmSubjects.shared.pendingItemCountSubject
             .subscribe(onNext: { (count: Int) in
@@ -222,7 +220,7 @@ class HomeViewController: AdViewController {
 //        categoriesView.backgroundColor = .clear
 //
 //        categoriesView.addSubview(categoriesTable)
-//        categoriesView.constrainSubviewToBounds(categoriesTable, withInset: UIEdgeInsets(top: 0, left: 0, bottom: TLCStyle.topLevelPadding, right: 0))
+//        categoriesView.constrainSubviewToBounds(categoriesTable, withInset: UIEdgeInsets(top: 0, left: 0, bottom: NewStyle.topLevelPadding, right: 0))
 
         RealmSubjects.shared.resolvedItemCategoriesSubject
             .subscribe(onNext: { (categories: [ItemCategory]) in

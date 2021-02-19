@@ -49,7 +49,7 @@ public class CategoryCellView: ShadowView {
         titleLabel.style(TextStyle.userText)
         
         addSubview(titleLabel)
-        constrainSubviewToBounds(titleLabel, withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
+        constrainSubviewToBounds(titleLabel, withInset: UIEdgeInsets(TLCStyle.topMargin))
     }
 
     func displayCategory(displayable: CategoryDisplayable) {

@@ -28,12 +28,6 @@ public class TitleContentView: UIView {
         }
     }
     
-    public override var bounds: CGRect {
-        didSet {
-            addContactShadow()
-        }
-    }
-    
     public init() {
         super.init(frame: .zero)
         
@@ -73,7 +67,7 @@ public class TitleContentView: UIView {
         addSubview(contentView)
         
         let views = ["title" : titleStackView, "content": contentView]
-        let metrics = ["spacing" : TLCStyle.interiorPadding, "margin" : TLCStyle.interiorMargin]
+        let metrics = ["spacing" : TLCStyle.interiorPadding, "margin" : TLCStyle.collectionMargin]
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(margin)-[title]-(spacing)-[content]-(margin)-|", options: .alignAllCenterX, metrics: metrics, views: views))
         

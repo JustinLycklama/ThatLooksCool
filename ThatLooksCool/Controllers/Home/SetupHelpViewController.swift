@@ -27,7 +27,7 @@ class SetupHelpViewController: UIViewController {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .equalSpacing
-        stack.spacing = TLCStyle.topLevelPadding
+        stack.spacing = TLCStyle.topPadding
         
         // Location Intent
         let rememberLocationIntentButton = INUIAddVoiceShortcutButton(style: .blackOutline)
@@ -101,10 +101,10 @@ class SetupHelpViewController: UIViewController {
         
         view.addSubview(scrollView)
         view.constrainSubviewToBounds(scrollView,
-                                      withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin,
-                                                                   left: TLCStyle.topLevelMargin,
-                                                                   bottom: TLCStyle.topLevelMargin,
-                                                                   right: TLCStyle.topLevelMargin))
+                                      withInset: UIEdgeInsets.init(top: TLCStyle.topMargin,
+                                                                   left: TLCStyle.topMargin,
+                                                                   bottom: TLCStyle.topMargin,
+                                                                   right: TLCStyle.topMargin))
     }
     
     @objc func close() {

@@ -1,17 +1,16 @@
 //
-//  CategoryCollectionCellView.swift
+//  CategoryWidget.swift
 //  TLCModel
 //
-//  Created by Justin Lycklama on 2021-02-09.
+//  Created by Justin Lycklama on 2021-02-18.
 //  Copyright © 2021 Justin Lycklama. All rights reserved.
 //
 
 import UIKit
 import ClassicClient
 
-class CategoryCellView: UIView {
-        
-    lazy var iconArea: UIView = {
+class CategoryWidget: UIView {
+    /*lazy var iconArea: UIView = {
         let area = UIView()
 
 //        area.addConstraint(.init(item: area, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
@@ -43,6 +42,16 @@ class CategoryCellView: UIView {
         
         
         return imageView
+    }()*/
+    
+    lazy var icon: UIView = {
+        
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+        let image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        
+        let view = CategoryIcon(image: image)
+        
+        return view
     }()
     
     lazy var titleLabel: UILabel = {
@@ -51,6 +60,7 @@ class CategoryCellView: UIView {
         label.style(TextStyle.subtitle)
         
         label.text = "Test"
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
         
         return label
     }()
@@ -77,7 +87,7 @@ class CategoryCellView: UIView {
         stack.axis = .vertical
         stack.spacing = Classic.style.collectionPadding
         
-        stack.addArrangedSubview(iconArea)
+        stack.addArrangedSubview(icon)
         stack.addArrangedSubview(titleLabel)
         
         addSubview(stack)

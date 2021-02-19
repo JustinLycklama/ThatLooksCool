@@ -28,7 +28,7 @@ public class TripleItemZAzisView: UIView {
     private func setup() {
         let borderWidth: CGFloat = 0
         
-        let itemMargin = TLCStyle.interiorMargin
+        let itemMargin = TLCStyle.collectionMargin
         let itemSeperation: CGFloat = 12
         
 //        let itemsMargin = itemSeperation * 3
@@ -94,7 +94,7 @@ public class TripleItemZAzisView: UIView {
                 
 //        badgeAppearance.duration = 2
 //        badgeAppearance.borderWidth = 1
-//        badgeAppearance.borderColor = TLCStyle.viewBorderColor
+//        badgeAppearance.borderColor = NewStyle.viewBorderColor
 //        badgeAppearance.allowShadow = true
 //        badgeAppearance.font = UIFont(name: "Avenir-Book", size: 18)!
         

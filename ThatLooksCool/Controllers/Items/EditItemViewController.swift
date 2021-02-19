@@ -39,7 +39,7 @@ class EditItemViewController: UIViewController {
         let stack = UIStackView()
         stack.distribution = .equalSpacing
         stack.axis = .vertical
-        stack.spacing = TLCStyle.topLevelPadding
+        stack.spacing = TLCStyle.topPadding
         
         // Preview
 //        let previewLabel = UILabel()
@@ -63,10 +63,10 @@ class EditItemViewController: UIViewController {
         
         view.addSubview(stack)
         view.constrainSubviewToBounds(stack, onEdges: [.top, .left, .right],
-                                      withInset: UIEdgeInsets.init(top: TLCStyle.topLevelMargin + TLCStyle.topLevelPadding,
-                                                                   left: TLCStyle.topLevelMargin,
+                                      withInset: UIEdgeInsets.init(top: TLCStyle.topMargin + TLCStyle.topPadding,
+                                                                   left: TLCStyle.topMargin,
                                                                    bottom: 0,
-                                                                   right: TLCStyle.topLevelMargin))
+                                                                   right: TLCStyle.topMargin))
         
         // Blur Background
         let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.extraLight)

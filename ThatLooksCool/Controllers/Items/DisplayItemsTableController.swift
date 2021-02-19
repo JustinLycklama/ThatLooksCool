@@ -38,7 +38,7 @@ class DisplayItemsTableController: AdViewController {
         // Layout
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = TLCStyle.topLevelPadding
+        stack.spacing = TLCStyle.topPadding
         
         // Items
         let itemsView = createItemsView()
@@ -60,10 +60,8 @@ class DisplayItemsTableController: AdViewController {
         //        stack.addArrangedSubview(mapLabel)
         //        stack.addArrangedSubview(mapView)
         
-        contentView.addSubview(stack)
-        contentView.constrainSubviewToBounds(stack)
-        
-        addBackgroundImage()
+        contentArea.addSubview(stack)
+        contentArea.constrainSubviewToBounds(stack)        
     }
     
     @objc func close() {

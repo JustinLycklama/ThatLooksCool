@@ -104,19 +104,17 @@ class CategorizeItemsViewController: AdViewController {
         // Stack Setup
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = TLCStyle.topLevelPadding + TLCStyle.interiorPadding
+        stackView.spacing = TLCStyle.topPadding + TLCStyle.interiorPadding
                         
         // Item Display
         let itemDisplay = createItemDisplay()
         
         stackView.addArrangedSubview(itemDisplay)
         
-        contentView.addSubview(stackView)
-        contentView.constrainSubviewToBounds(stackView, onEdges: [.top, .left, .right],
-                                             withInset: UIEdgeInsets(top: TLCStyle.topLevelMargin, left: 0, bottom: 0, right: 0))
-        
-        addBackgroundImage()
-        
+        contentArea.addSubview(stackView)
+        contentArea.constrainSubviewToBounds(stackView, onEdges: [.top, .left, .right],
+                                             withInset: UIEdgeInsets(top: TLCStyle.topMargin, left: 0, bottom: 0, right: 0))
+                
 
         self.view.layoutIfNeeded()
         
@@ -155,7 +153,7 @@ class CategorizeItemsViewController: AdViewController {
         itemViewStack.spacing = -TLCStyle.interiorPadding
 
         itemDisplayAndNavigationView.layer.cornerRadius = TLCStyle.cornerRadius
-        itemDisplayAndNavigationView.backgroundColor = .clear //TLCStyle.secondaryBackgroundColor
+        itemDisplayAndNavigationView.backgroundColor = .clear //NewStyle.secondaryBackgroundColor
         itemDisplayAndNavigationView.setContentHuggingPriority(.required, for: .vertical)
         itemDisplayAndNavigationView.setContentHuggingPriority(.defaultLow, for: .horizontal)
                 
@@ -202,7 +200,7 @@ class CategorizeItemsViewController: AdViewController {
                 newForm.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
                 newForm.setContentCompressionResistancePriority(.required, for: .vertical)
                                 
-//                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: TLCStyle.cornerRadius)
+//                newDisplayView.roundCorners(corners: [.topLeft, .topRight], radius: NewStyle.cornerRadius)
                 
                 self.currentItemAndForm = ItemAndForm(itemCoordinator: coordinator, formView: newForm)
                 

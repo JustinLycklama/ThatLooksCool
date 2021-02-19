@@ -115,15 +115,15 @@ class MapCell: UITableViewCell {
         mapViewArea.constrainSubviewToBounds(mapActionLabel,
                                              onEdges: [.left, .right, .bottom],
                                              withInset: UIEdgeInsets(top: 0,
-                                                                     left: Classic.style.interiorMargin,
-                                                                     bottom: Classic.style.interiorMargin,
-                                                                     right: Classic.style.interiorMargin))
+                                                                     left: Classic.style.collectionMargin,
+                                                                     bottom: Classic.style.collectionMargin,
+                                                                     right: Classic.style.collectionMargin))
         
         addMapToView(frame: CGRect(origin: .zero, size: mapViewArea.frame.size))
         layoutPin()
         
         self.contentView.addSubview(mapViewArea)
-        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(Classic.style.interiorMargin))
+        self.contentView.constrainSubviewToBounds(mapViewArea, withInset: UIEdgeInsets(Classic.style.collectionMargin))
         
         mapViewArea.addConstraint(.init(item: mapViewArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160))
     }

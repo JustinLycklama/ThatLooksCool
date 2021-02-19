@@ -27,6 +27,7 @@
 		7D1BFAEC25C125AB0032AEC7 /* secretKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7D1BFAE825C124AC0032AEC7 /* secretKeys.plist */; };
 		7D1BFB1225C3BB4B0032AEC7 /* TestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1BFB1125C3BB4B0032AEC7 /* TestDataModel.swift */; };
 		7D1BFB1725C3C4E00032AEC7 /* ItemDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1BFB1625C3C4E00032AEC7 /* ItemDestinationViewController.swift */; };
+		7D1D0DAD25D4D535008C2D43 /* ItemCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D1D0DAC25D4D535008C2D43 /* ItemCollectionCell.swift */; };
 		7D59511725917BB600D5B05E /* LocationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59511625917BB600D5B05E /* LocationIntentHandler.swift */; };
 		7D59512125917BC100D5B05E /* PhraseIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */; };
 		7D80425C25A10F9100EF5BA5 /* Acknowledgements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7D80425B25A10F9100EF5BA5 /* Acknowledgements.txt */; };
@@ -69,7 +70,9 @@
 		7DEC0F7C25D245570005E822 /* NewHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */; };
 		7DEC0F8125D24C4C0005E822 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DEC0F8025D24C4C0005E822 /* Colors.xcassets */; };
 		7DEC100125D2CFC10005E822 /* CategoryCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */; };
-		7DEC104725D33C170005E822 /* CategoryCollectionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */; };
+		7DECEBB225DF125D00175CC1 /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBB125DF125D00175CC1 /* CategoryIcon.swift */; };
+		7DECEBB725DF131100175CC1 /* CategoryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBB625DF131100175CC1 /* CategoryWidget.swift */; };
+		7DECEBBF25DF238500175CC1 /* ItemWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBBE25DF238500175CC1 /* ItemWidget.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */; };
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
 		7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */; };
@@ -177,6 +180,7 @@
 		7D1BFAE825C124AC0032AEC7 /* secretKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = secretKeys.plist; sourceTree = "<group>"; };
 		7D1BFB1125C3BB4B0032AEC7 /* TestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDataModel.swift; sourceTree = "<group>"; };
 		7D1BFB1625C3C4E00032AEC7 /* ItemDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDestinationViewController.swift; sourceTree = "<group>"; };
+		7D1D0DAC25D4D535008C2D43 /* ItemCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCollectionCell.swift; sourceTree = "<group>"; };
 		7D59511625917BB600D5B05E /* LocationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIntentHandler.swift; sourceTree = "<group>"; };
 		7D59512025917BC100D5B05E /* PhraseIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseIntentHandler.swift; sourceTree = "<group>"; };
 		7D6C2E4725126E17008F9C40 /* TLCIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TLCIntents.entitlements; sourceTree = "<group>"; };
@@ -226,7 +230,9 @@
 		7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeViewController.swift; sourceTree = "<group>"; };
 		7DEC0F8025D24C4C0005E822 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCell.swift; sourceTree = "<group>"; };
-		7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionCellView.swift; sourceTree = "<group>"; };
+		7DECEBB125DF125D00175CC1 /* CategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIcon.swift; sourceTree = "<group>"; };
+		7DECEBB625DF131100175CC1 /* CategoryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWidget.swift; sourceTree = "<group>"; };
+		7DECEBBE25DF238500175CC1 /* ItemWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWidget.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizeItemsViewController.swift; sourceTree = "<group>"; };
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesModel.swift; sourceTree = "<group>"; };
@@ -470,6 +476,7 @@
 			children = (
 				7DA734D525BBD7FD00CE9607 /* ModifiableFieldsFormView.swift */,
 				7DBB541025CE358C00C652C8 /* MockCoordinator.swift */,
+				7DECEBBE25DF238500175CC1 /* ItemWidget.swift */,
 			);
 			path = Item;
 			sourceTree = "<group>";
@@ -490,6 +497,8 @@
 			children = (
 				7DB0753425C8F90800A1C716 /* DisplayCategoriesTableController.swift */,
 				7DB0753325C8F90700A1C716 /* EditCategoryViewController.swift */,
+				7DECEBB125DF125D00175CC1 /* CategoryIcon.swift */,
+				7DECEBB625DF131100175CC1 /* CategoryWidget.swift */,
 			);
 			name = Categories;
 			path = Views/Categories;
@@ -530,7 +539,7 @@
 			isa = PBXGroup;
 			children = (
 				7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */,
-				7DEC104625D33C170005E822 /* CategoryCollectionCellView.swift */,
+				7D1D0DAC25D4D535008C2D43 /* ItemCollectionCell.swift */,
 			);
 			path = CollectionCells;
 			sourceTree = "<group>";
@@ -948,7 +957,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DEC104725D33C170005E822 /* CategoryCollectionCellView.swift in Sources */,
+				7D1D0DAD25D4D535008C2D43 /* ItemCollectionCell.swift in Sources */,
 				7DB0753925C8F90800A1C716 /* EditCategoryViewController.swift in Sources */,
 				7DA734E125BBD82E00CE9607 /* ModifiableFieldsFormView.swift in Sources */,
 				7DB0756E25C8FA0700A1C716 /* ItemCell.swift in Sources */,
@@ -959,14 +968,17 @@
 				7D8CAE76258C2F81004CF260 /* Item.swift in Sources */,
 				7DA7353925BBDA3C00CE9607 /* RealmSubjects.swift in Sources */,
 				7DB0757125C8FA0700A1C716 /* AddCellView.swift in Sources */,
+				7DECEBB225DF125D00175CC1 /* CategoryIcon.swift in Sources */,
 				7DBB541125CE358C00C652C8 /* MockCoordinator.swift in Sources */,
 				7DB0756C25C8FA0700A1C716 /* CategoryCell.swift in Sources */,
 				7DA7355A25BBDBD300CE9607 /* TripleItemZAzisView.swift in Sources */,
 				7DB0755325C8F9A600A1C716 /* Extensions+UIView.swift in Sources */,
+				7DECEBB725DF131100175CC1 /* CategoryWidget.swift in Sources */,
 				7DA7355B25BBDBD300CE9607 /* TitleContentView.swift in Sources */,
 				7DB0757025C8FA0700A1C716 /* CategoryCellView.swift in Sources */,
 				7DA7350825BBD8DB00CE9607 /* Protocols.swift in Sources */,
 				7DA7355C25BBDBD300CE9607 /* ItemControlView.swift in Sources */,
+				7DECEBBF25DF238500175CC1 /* ItemWidget.swift in Sources */,
 				7D170D10251265C5007F151F /* Coordinate.swift in Sources */,
 				7DA7354D25BBDBAE00CE9607 /* ShadowView.swift in Sources */,
 				7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */,

@@ -25,10 +25,10 @@ class AddCellView: UIView {
         imageView.tintColor = TLCStyle.progressIconColor
         
         shadowView.addSubview(imageView)
-        shadowView.constrainSubviewToBounds(imageView, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
-                                                                               left: TLCStyle.interiorMargin,
-                                                                               bottom: TLCStyle.interiorMargin,
-                                                                               right: TLCStyle.interiorMargin))
+        shadowView.constrainSubviewToBounds(imageView, withInset: UIEdgeInsets(top: TLCStyle.collectionMargin,
+                                                                               left: TLCStyle.collectionMargin,
+                                                                               bottom: TLCStyle.collectionMargin,
+                                                                               right: TLCStyle.collectionMargin))
         
         imageView.contentMode = .scaleAspectFit
         

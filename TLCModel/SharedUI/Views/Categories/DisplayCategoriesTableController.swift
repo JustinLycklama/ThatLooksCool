@@ -38,7 +38,7 @@ public class DisplayCategoriesTableController: UIViewController {
         // Layout
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.spacing = TLCStyle.topLevelPadding
+        stack.spacing = TLCStyle.topPadding
 
         // Items
         let itemsView = createCategoriesView()
@@ -54,9 +54,7 @@ public class DisplayCategoriesTableController: UIViewController {
 //        contentView.constrainSubviewToBounds(stack)
         
         self.view.addSubview(stack)
-        self.view.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(TLCStyle.topLevelMargin))
-        
-        addBackgroundImage()
+        self.view.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(TLCStyle.topMargin))        
     }
     
     @objc func close() {

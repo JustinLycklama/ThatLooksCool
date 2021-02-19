@@ -29,7 +29,7 @@ public struct TLCConfig {
     }
     
     public static func configure() {
-        Classic.setAppStyle(NewStyle.shared)
+        Classic.setAppStyle(TLCStyle.shared)
 //        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
     }
 }

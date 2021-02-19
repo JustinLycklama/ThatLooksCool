@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         TLCConfig.configure()
 //
-        Classic.setAppStyle(NewStyle.shared)
+        Classic.setAppStyle(TLCStyle.shared)
         
 //        ShareExtensionConfig.configure()
         

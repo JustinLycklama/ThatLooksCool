@@ -32,9 +32,9 @@ public class CategoryCell: UITableViewCell {
         
 
         self.contentView.addSubview(cellDisplay)
-        self.contentView.constrainSubviewToBounds(cellDisplay, withInset: UIEdgeInsets(top: TLCStyle.interiorMargin,
+        self.contentView.constrainSubviewToBounds(cellDisplay, withInset: UIEdgeInsets(top: TLCStyle.collectionMargin,
                                                                                        left: 0,
-                                                                                       bottom: TLCStyle.interiorMargin,
+                                                                                       bottom: TLCStyle.collectionMargin,
                                                                                        right: 0))
     }
     
