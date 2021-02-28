@@ -13,6 +13,7 @@ public protocol ItemDisplayable: AnyObject {
     var title: String? { get }
     var info: String? { get }
     var coordinate: Coordinate? { get }
+    var timestamp: Date? { get }
 }
 
 public class Item: Object, ItemDisplayable {
@@ -47,9 +48,8 @@ public class Item: Object, ItemDisplayable {
         self.title = mock.title
         self.info = mock.info
         self.coordinate = mock.coordinate
-        self.category = category
-        
-        self.timestamp = Date()
+        self.timestamp = mock.timestamp ??  Date()
+        self.category = category        
     }
     
     required override init() {
@@ -94,11 +94,13 @@ public class MockItem: ItemDisplayable {
     public var title: String?
     public var info: String?
     public var coordinate: Coordinate?
+    public var timestamp: Date?
 
     public init(item: Item?) {
         title = item?.title
         info = item?.info
         coordinate = item?.coordinate
+        timestamp = item?.timestamp
     }
 }
 

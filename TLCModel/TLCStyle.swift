@@ -9,6 +9,33 @@
 import UIKit
 import ClassicClient
 
+public enum TLCCategoryIconSet: String, CaseIterable, Icon {
+    public var id: String {
+        "\(namespace).\(rawValue)"
+    }
+    
+    public static func register() {
+        let appResources = Classic.resources
+        for icon in TLCCategoryIconSet.allCases {
+            appResources.register(icon.create(), for: icon)
+        }
+    }
+    
+    case books = "books.vertical"
+    
+    var size: CGSize {
+        CGSize(width: 30, height: 30)
+    }
+    
+    private func create() -> UIImage? {
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+        return UIImage(systemName: rawValue, withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+    }
+    
+    public func image() -> UIImage? {
+        Classic.resources.getImage(from: self)
+    }
+}
 
 public enum TLCIconSet: String, CaseIterable, Icon {
     public var id: String {
@@ -27,13 +54,29 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     case undo = "undo"
     case next = "next"
     case list = "list"
+    case settings = "gearshape"
+    case identify = "binoculars.fill"
+    case search = "magnifyingglass"
     
     var size: CGSize {
-        CGSize(width: 30, height: 30)
+        switch self {
+        case .search:
+            return CGSize(width: 24, height: 24)
+        case .settings, .identify:
+            return CGSize(width: 28, height: 28)
+        default:
+            return CGSize(width: 32, height: 32)
+        }
     }
     
     private func create() -> UIImage? {
-        return UIImage(named: rawValue)
+        switch self  {
+        case .edit, .delete, .undo, .next, .list:
+            return UIImage(named: rawValue)
+        default:
+            let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+            return UIImage(systemName: rawValue, withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        }
     }
 
     private func registerImage(to appResources: AppResources) {
@@ -48,6 +91,8 @@ public enum TLCIconSet: String, CaseIterable, Icon {
             appResources.register(appResources.render(create(), withColor: TLCStyle.progressIconColor, andSize: size), for: self)
         case .list:
             appResources.register(appResources.render(create(), withColor: TLCStyle.accentColor, andSize: size), for: self)
+        default:
+            appResources.register(appResources.render(create(), withColor: .white, andSize: size), for: self)
         }
     }
     
@@ -64,6 +109,15 @@ public struct TLCStyle {
 }
 
 extension TLCStyle: MetricsStyle {
+    
+    public static let categoryMaxTitleLength = 12
+    public static let categoryImageHeight: CGFloat = 32
+    
+    public static var safeArea: UIEdgeInsets {
+        get {
+            return UIApplication.shared.windows[0].safeAreaInsets
+        }
+    }
     
     public static let topMargin: CGFloat = 24
     public var topMargin: CGFloat {
@@ -83,7 +137,7 @@ extension TLCStyle: MetricsStyle {
         8
     }
     
-    public static let elementMargin: CGFloat = 8
+    public static let elementMargin: CGFloat = 12
     public var elementMargin: CGFloat { TLCStyle.elementMargin }
     
     public static let elementPadding: CGFloat = 8
@@ -163,7 +217,6 @@ extension TLCStyle: MetricsStyle {
     // New
     public static let bannerViewColor = UIColor(named: "Base6", in: bundle, compatibleWith: nil)
     public static let titleTextColor = UIColor(named: "WhiteBase1", in: bundle, compatibleWith: nil)
-    public static let titleTextAccentColor = UIColor(named: "Acent2", in: bundle, compatibleWith: nil)
     
     public static let itemBackgroundColor = UIColor(named: "Base4", in: bundle, compatibleWith: nil) // UIColor(rgb: 0x3E5E66)
 
@@ -217,9 +270,13 @@ extension TLCStyle: ColorStyle {
         ColorAssets.whitebase0.color
     }
     
+    public static let titleTextAccentColor = ColorAssets.accent3.color
     public var titleTextAccentColor: UIColor {
-        ColorAssets.accent3.color
+        TLCStyle.titleTextAccentColor
     }
+    
+    public static let darkBackgroundTextColor = ColorAssets.whitebase1.color
+
     
     private enum ColorAssets: String {
         case base6 = "Base6"
@@ -285,21 +342,24 @@ public enum TextStyle: TextStylable {
     case title
     case heading
     case subtitle
-
+    case accentLabel
+    case label
+    case subLabel
     
     case navBar
     case barButton
     case instructions
-    case label
     case userText
     case systemInfoLink
     
     public var fontName: String {
         switch self {
-        case .subtitle:
+        case .subtitle, .accentLabel:
             return "Avenir-Book"//"Thonburi-Light"
         case .title, .instructions:
             return "AppleSDGothicNeo-Regular"
+        case .label, .subLabel:
+            return "AppleSDGothicNeo-Light"
             
         case .heading:
             return "Avenir-Medium"
@@ -308,8 +368,7 @@ public enum TextStyle: TextStylable {
         case .barButton:
             return "AvenirNext-Regular"
 
-        case .label:
-            return "AppleSDGothicNeo-Light"
+
         case .userText:
             return "KohinoorTelugu-Regular"
         case .systemInfoLink:
@@ -320,6 +379,13 @@ public enum TextStyle: TextStylable {
     public var textColor: UIColor {
         
         switch self {
+        
+        case .label, .subLabel:
+            return TLCStyle.ColorPallet.black
+        
+        case .accentLabel:
+            return TLCStyle.darkBackgroundTextColor
+        
         case .title:
             return TLCStyle.ColorPallet.black
         case .heading:
@@ -332,8 +398,7 @@ public enum TextStyle: TextStylable {
         case .navBar, .barButton:
             return TLCStyle.ColorPallet.darkGrey
 
-        case .label:
-            return TLCStyle.ColorPallet.darkGrey
+
         case .userText:
             return TLCStyle.ColorPallet.black
         case .systemInfoLink:
@@ -344,6 +409,12 @@ public enum TextStyle: TextStylable {
     
     public var size: CGFloat {
         switch self {
+        case .label:
+            return 16
+        case .subLabel:
+            return 13
+        
+        
         case .navBar:
             return 22
         case .barButton:
@@ -354,7 +425,8 @@ public enum TextStyle: TextStylable {
             return 24
         case .instructions:
             return 16
-        case .label:
+
+        case .accentLabel:
             return 16
         case .userText:
             return 20

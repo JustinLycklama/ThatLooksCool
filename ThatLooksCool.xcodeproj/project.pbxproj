@@ -12,6 +12,7 @@
 		7D0314152511B0CC00F9CCBD /* TLCIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7D03140E2511B0CC00F9CCBD /* TLCIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7D03141A2511B19100F9CCBD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7D0314192511B19100F9CCBD /* Intents.intentdefinition */; };
 		7D03141B2511B19100F9CCBD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7D0314192511B19100F9CCBD /* Intents.intentdefinition */; };
+		7D075C3B25EB29ED00ECD806 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D075C3A25EB29ED00ECD806 /* ItemTableViewCell.swift */; };
 		7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */; };
 		7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A485E257D8B1300912AD1 /* ItemCategory.swift */; };
 		7D0ED11125AB7378004FEA98 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D0ED11025AB7378004FEA98 /* Settings.bundle */; };
@@ -66,6 +67,7 @@
 		7DBB541125CE358C00C652C8 /* MockCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBB541025CE358C00C652C8 /* MockCoordinator.swift */; };
 		7DCA594D259189B5004FB7E9 /* RealmObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA594C259189B5004FB7E9 /* RealmObjects.swift */; };
 		7DCA5A8E25A6A332000B7C9B /* EditItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */; };
+		7DDEDDCD25E5F82B00004A3F /* IconCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDEDDCC25E5F82B00004A3F /* IconCollectionCell.swift */; };
 		7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDFAA8D25CA52090075804C /* MapCell.swift */; };
 		7DEC0F7C25D245570005E822 /* NewHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */; };
 		7DEC0F8125D24C4C0005E822 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DEC0F8025D24C4C0005E822 /* Colors.xcassets */; };
@@ -73,6 +75,7 @@
 		7DECEBB225DF125D00175CC1 /* CategoryIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBB125DF125D00175CC1 /* CategoryIcon.swift */; };
 		7DECEBB725DF131100175CC1 /* CategoryWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBB625DF131100175CC1 /* CategoryWidget.swift */; };
 		7DECEBBF25DF238500175CC1 /* ItemWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBBE25DF238500175CC1 /* ItemWidget.swift */; };
+		7DECEBC825E0373300175CC1 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DECEBC725E0373300175CC1 /* CategoryViewController.swift */; };
 		7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */; };
 		7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF53251A809200D15306 /* AdViewController.swift */; };
 		7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */; };
@@ -168,6 +171,7 @@
 		7D0314102511B0CC00F9CCBD /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		7D0314122511B0CC00F9CCBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D0314192511B19100F9CCBD /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		7D075C3A25EB29ED00ECD806 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
 		7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupHelpViewController.swift; sourceTree = "<group>"; };
 		7D0A485E257D8B1300912AD1 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		7D0ED11025AB7378004FEA98 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -226,6 +230,7 @@
 		7DBB541025CE358C00C652C8 /* MockCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoordinator.swift; sourceTree = "<group>"; };
 		7DCA594C259189B5004FB7E9 /* RealmObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmObjects.swift; sourceTree = "<group>"; };
 		7DCA5A8D25A6A332000B7C9B /* EditItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemViewController.swift; sourceTree = "<group>"; };
+		7DDEDDCC25E5F82B00004A3F /* IconCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconCollectionCell.swift; sourceTree = "<group>"; };
 		7DDFAA8D25CA52090075804C /* MapCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCell.swift; sourceTree = "<group>"; };
 		7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewHomeViewController.swift; sourceTree = "<group>"; };
 		7DEC0F8025D24C4C0005E822 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -233,6 +238,7 @@
 		7DECEBB125DF125D00175CC1 /* CategoryIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryIcon.swift; sourceTree = "<group>"; };
 		7DECEBB625DF131100175CC1 /* CategoryWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryWidget.swift; sourceTree = "<group>"; };
 		7DECEBBE25DF238500175CC1 /* ItemWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemWidget.swift; sourceTree = "<group>"; };
+		7DECEBC725E0373300175CC1 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		7DEDAF51251A806800D15306 /* CategorizeItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategorizeItemsViewController.swift; sourceTree = "<group>"; };
 		7DEDAF53251A809200D15306 /* AdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdViewController.swift; sourceTree = "<group>"; };
 		7DEDAF5E251AECE300D15306 /* GooglePlacesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesModel.swift; sourceTree = "<group>"; };
@@ -420,6 +426,7 @@
 		7D98BBC925008F8700F0ADC0 /* ThatLooksCool */ = {
 			isa = PBXGroup;
 			children = (
+				7DECEBC625E0367500175CC1 /* New */,
 				7DDFAA8B25CA51D30075804C /* FormController */,
 				7D98BBE22500912B00F0ADC0 /* Podfile */,
 				7D98BBD825008F8900F0ADC0 /* Info.plist */,
@@ -443,7 +450,6 @@
 			children = (
 				7D98BBE4250136DA00F0ADC0 /* HomeViewController.swift */,
 				7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */,
-				7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -540,8 +546,19 @@
 			children = (
 				7DEC100025D2CFC10005E822 /* CategoryCollectionCell.swift */,
 				7D1D0DAC25D4D535008C2D43 /* ItemCollectionCell.swift */,
+				7DDEDDCC25E5F82B00004A3F /* IconCollectionCell.swift */,
+				7D075C3A25EB29ED00ECD806 /* ItemTableViewCell.swift */,
 			);
 			path = CollectionCells;
+			sourceTree = "<group>";
+		};
+		7DECEBC625E0367500175CC1 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */,
+				7DECEBC725E0373300175CC1 /* CategoryViewController.swift */,
+			);
+			path = New;
 			sourceTree = "<group>";
 		};
 		7DEDAF5A251AEC5000D15306 /* Google Model */ = {
@@ -967,6 +984,7 @@
 				7DA7350E25BBD93E00CE9607 /* TLCStyle.swift in Sources */,
 				7D8CAE76258C2F81004CF260 /* Item.swift in Sources */,
 				7DA7353925BBDA3C00CE9607 /* RealmSubjects.swift in Sources */,
+				7DDEDDCD25E5F82B00004A3F /* IconCollectionCell.swift in Sources */,
 				7DB0757125C8FA0700A1C716 /* AddCellView.swift in Sources */,
 				7DECEBB225DF125D00175CC1 /* CategoryIcon.swift in Sources */,
 				7DBB541125CE358C00C652C8 /* MockCoordinator.swift in Sources */,
@@ -984,6 +1002,7 @@
 				7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */,
 				7DEC100125D2CFC10005E822 /* CategoryCollectionCell.swift in Sources */,
 				7DB0753825C8F90800A1C716 /* DisplayCategoriesTableController.swift in Sources */,
+				7D075C3B25EB29ED00ECD806 /* ItemTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1006,6 +1025,7 @@
 				7D98BBCB25008F8700F0ADC0 /* AppDelegate.swift in Sources */,
 				7DEDAF65251BB22700D15306 /* FourSquareModel.swift in Sources */,
 				7D9F378F25A691E2002C1A99 /* DisplayItemsTableController.swift in Sources */,
+				7DECEBC825E0373300175CC1 /* CategoryViewController.swift in Sources */,
 				7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */,
 				7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */,
 				7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */,

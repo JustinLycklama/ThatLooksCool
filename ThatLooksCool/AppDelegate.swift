@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        ShareExtensionConfig.configure()
         
         TLCIconSet.register()
+        TLCCategoryIconSet.register()
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.badge]) { success, error in
             if success {

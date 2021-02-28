@@ -10,14 +10,21 @@ import UIKit
 import ClassicClient
 
 class CategoryIcon: UIView {
-    
-    let image: UIImage?
+        
+    var image: UIImage? {
+        didSet {
+            iconImage.image = image
+        }
+    }
     
     lazy var iconImage: UIImageView = {
         let imageView = UIImageView()
-    
+        imageView.addConstraint(.init(item: imageView, attribute: .height, relatedBy: .equal,
+                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: TLCStyle.categoryImageHeight))
+        
         let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
         imageView.image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        
         
         return imageView
     }()
@@ -47,4 +54,7 @@ class CategoryIcon: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func setImage(_ image: UIImage?) {
+        self.image = image
+    }
 }
