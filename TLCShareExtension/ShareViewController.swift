@@ -101,30 +101,30 @@ extension ShareViewController: ItemIterationDelegate {
     }
     
     func didPressSecond() {
-        let categoriesViewController = DisplayCategoriesTableController()
-        categoriesViewController.delegate = self
-        
-        self.present(categoriesViewController, animated: true, completion: nil)
+//        let categoriesViewController = DisplayCategoriesTableController()
+//        categoriesViewController.delegate = self
+//        
+//        self.present(categoriesViewController, animated: true, completion: nil)
     }
 }
 
-extension ShareViewController: CompletableWithCategoryDelegate {
-    func complete(withCategory category: ItemCategory?) {
-        self.dismiss(animated: true, completion: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            
-            // Categorize item
-            RealmSubjects.shared.categorizeItem(self.mockItemCoordinator.saveItem(), toCategory: category)
-            
-            // TODO: unpack url (ex. https://goo.gl/maps/WD3ZsR5zqGVgahcq8 ) using extension below and get new coordinates
-            // Update coordinates before completing
-            
-            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
-        })
-    }
-}
+//extension ShareViewController: CompletableWithCategoryDelegate {
+//    func complete(withCategory category: ItemCategory?) {
+//        self.dismiss(animated: true, completion: { [weak self] in
+//            guard let self = self else {
+//                return
+//            }
+//
+//            // Categorize item
+//            RealmSubjects.shared.categorizeItem(self.mockItemCoordinator.saveItem(), toCategory: category)
+//
+//            // TODO: unpack url (ex. https://goo.gl/maps/WD3ZsR5zqGVgahcq8 ) using extension below and get new coordinates
+//            // Update coordinates before completing
+//
+//            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+//        })
+//    }
+//}
 
 extension URL {
     /** Request the http status of the URL resource by sending a "HEAD" request over the network. A nil response means an error occurred. */

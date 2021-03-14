@@ -12,7 +12,7 @@ import ClassicClient
 
 class ItemViewController: UIViewController {
         
-    private var previewCellView: ItemCellView?
+//    private var previewCellView: ItemCellView?
     
     let formView: FormView
     let itemMockCoordinator: MockItemCoordinator

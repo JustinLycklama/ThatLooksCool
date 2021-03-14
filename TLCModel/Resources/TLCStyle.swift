@@ -220,7 +220,6 @@ extension TLCStyle: MetricsStyle {
         
     
     public static let accentColor = ColorPallet.yellow
-    public static let shadowColor = ColorPallet.mediumGrey
     
     public static let textBorderColor = ColorPallet.mediumGrey
     public static let viewBorderColor = ColorPallet.darkGrey
@@ -251,8 +250,10 @@ extension TLCStyle: MetricsStyle {
 
     public static let itemIconColor = UIColor(named: "WhiteBase3", in: bundle, compatibleWith: nil) // UIColor(rgb: 0x3E5E66)
 
-    
-    
+    public static let shadowColor = ColorPallet.mediumGrey
+    public var shadowColor: UIColor {
+        TLCStyle.shadowColor
+    }
     
     // Nav Bar
     public static let navBarBackgroundColor = ColorPallet.lightCyan

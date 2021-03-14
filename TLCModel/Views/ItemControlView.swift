@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ClassicClient
 
 public protocol ItemIterationDelegate: AnyObject {
     func didPressFirst()

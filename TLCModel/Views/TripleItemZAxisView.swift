@@ -9,7 +9,7 @@
 import UIKit
 //import EasyNotificationBadge
 
-public class TripleItemZAzisView: UIView {
+public class TripleItemZAxisView: UIView {
     
     public let itemDisplayArea = UIView()
     
