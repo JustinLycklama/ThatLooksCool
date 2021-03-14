@@ -25,6 +25,10 @@ class NewHomeViewController: AdViewController {
         let bar = UISearchBar()
         bar.backgroundImage = UIImage()
         bar.setImage(TLCIconSet.search.image(), for: .search, state: .normal)
+//        bar.backgroundColor = TLCStyle.searchBackgroundColor
+        
+        let textFieldInsideSearchBar = bar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.backgroundColor = TLCStyle.searchBackgroundColor
         
         return bar
     }()
@@ -131,19 +135,11 @@ class NewHomeViewController: AdViewController {
         let categoryCellConfig = CollectionCellConfig { (category: ItemCategory, cell: CategoryCollectionCell) in
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
-            
             let categoryViewController = CategoryViewController()
-            
             self?.present(categoryViewController, animated: true, completion: nil)
-            
-//            self?.delegate?.complete(withCategory: category)
         }
-            
-//        let categoriesTable = ActionableTableView(itemConfig: categoryCellConfig)
-//        categoriesTable.canPerformAction = true
-        
+                    
         let gridView = ActionableGridView(itemConfig: categoryCellConfig)
-        
         
         let cat1 = ItemCategory()
         let cat2 = ItemCategory()
@@ -199,7 +195,8 @@ class NewHomeViewController: AdViewController {
         let itemCellConfig = TableCellConfig(swipeActions: [deleteSwipAction]) { (item: Item, cell: ItemTableViewCell) in
             cell.displayItem(item: item)
         } performAction: { [weak self]  (item: Item) in
-//            self?.delegate?.complete(withCategory: category)
+            let itemViewController = ItemViewController(item: item, category: item.category ?? ItemCategory())
+            self?.present(itemViewController, animated: true, completion: nil)
         }
         
         let itemTable = ActionableTableView(actionConfig: actionCellConfig, itemConfig: itemCellConfig)

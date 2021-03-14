@@ -9,7 +9,7 @@
 import UIKit
 import ClassicClient
 
-class CategoryIcon: UIView {
+public class CategoryIcon: UIView {
         
     var image: UIImage? {
         didSet {
@@ -22,14 +22,21 @@ class CategoryIcon: UIView {
         imageView.addConstraint(.init(item: imageView, attribute: .height, relatedBy: .equal,
                                       toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: TLCStyle.categoryImageHeight))
         
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
-        imageView.image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
-        
+        imageView.image = image
         
         return imageView
     }()
     
-    init(image: UIImage?) {
+    public convenience init(category: ItemCategory?, borderColor: UIColor = .white) {
+        self.init(image: nil, borderColor: borderColor)
+        
+        defer {
+            let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+            image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        }
+    }
+    
+    public init(image: UIImage?, borderColor: UIColor = .white) {
         self.image = image
         
         super.init(frame: .zero)
@@ -38,11 +45,11 @@ class CategoryIcon: UIView {
         self.layer.cornerRadius = (30 + Classic.style.collectionMargin * 2)/2
         self.addConstraint(.init(item: self, attribute: .width, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0))
         
-        self.backgroundColor = .white
+        self.backgroundColor = borderColor
         self.clipsToBounds = true
         
         self.addSubview(iconImage)
-        self.constrainSubviewToBounds(iconImage, withInset: UIEdgeInsets(Classic.style.collectionMargin))
+        self.constrainSubviewToBounds(iconImage, withInset: UIEdgeInsets(TLCStyle.elementMargin))
         
 //        area.layoutIfNeeded()
 //

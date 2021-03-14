@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+import GoogleMaps
 import Firebase
 import GoogleMobileAds
 
@@ -25,6 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         TLCConfig.configure()
+        
+        GMSServices.provideAPIKey(TLCConfig.apiKey(.maps))
+        
 //
         Classic.setAppStyle(TLCStyle.shared)
         

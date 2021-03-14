@@ -10,7 +10,7 @@ import UIKit
 import TLCModel
 import ClassicClient
 
-class CategoryViewController: UIViewController {
+class CategoryViewController: AdViewController {
 
     private lazy var categoryHeader: UIView = {
         let view = UIView()
@@ -123,14 +123,53 @@ class CategoryViewController: UIViewController {
     // MARK: - Items Table
     
     private lazy var categoryItemsView: UIView = {
-        let view = UIView()
-//        view.backgroundColor = .blue
+        let container = UIView()
+
+        let deleteSwipAction = SwipeActionConfig(image: TLCIconSet.delete.image()) { (item: Item) in
+            RealmSubjects.shared.removeItem(item)
+        }
+                
+        let actionCellConfig = TableCellConfig<Void, AddCell> (performAction: nil)
         
-        return view
+        let itemCellConfig = TableCellConfig(swipeActions: [deleteSwipAction]) { (item: Item, cell: ItemTableViewCell) in
+            cell.displayItem(item: item)
+        } performAction: { [weak self]  (item: Item) in
+            let itemViewController = ItemViewController(item: item, category: item.category ?? ItemCategory())
+            itemViewController.modalPresentationStyle = .formSheet  //.overCurrentContext
+            
+            self?.present(itemViewController, animated: true, completion: nil)
+        }
+        
+        let itemTable = ActionableTableView(actionConfig: actionCellConfig, itemConfig: itemCellConfig)
+        
+        let cat = ItemCategory()
+        cat.title = "Books"
+        
+        let cat1 = Item(title: "1")
+        let cat2 = Item(title: "The Expanse")
+        cat2.updateCategory(cat)
+        cat2.info = "A sci fi show"
+        let cat3 = Item(title: "3")
+        let cat4 = Item(title: "4")
+        let cat5 = Item(title: "5")
+        let cat6 = Item(title: "6")
+        let cat7 = Item(title: "7")
+
+        let cat8 = Item(title: "3")
+        let cat9 = Item(title: "4")
+        let cat10 = Item(title: "5")
+        let cat11 = Item(title: "6")
+        let cat12 = Item(title: "7")
+        
+        
+        itemTable.setItems(items: [cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11, cat12])
+                
+        container.addSubview(itemTable)
+        container.constrainSubviewToBounds(itemTable, onEdges: [.left, .right, .bottom], withInset: UIEdgeInsets(TLCStyle.topPadding))
+        container.constrainSubviewToBounds(itemTable, onEdges: [.top])
+        
+        return container
     }()
-    
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,8 +183,8 @@ class CategoryViewController: UIViewController {
         stack.addArrangedSubview(categoryHeader)
         stack.addArrangedSubview(categoryItemsView)
         
-        self.view.addSubview(stack)
-        self.view.constrainSubviewToBounds(stack)
+        self.contentArea.addSubview(stack)
+        self.contentArea.constrainSubviewToBounds(stack)
     }
 }
 

@@ -140,7 +140,7 @@ extension MockItem: ModifiableFields {
             
             self.title = newVal
         }))
-        
+                
 //        if displaysMap, let coord = mockObject.coordinate {
 //            fields.append(.map(coordinate: coord))
 //        }

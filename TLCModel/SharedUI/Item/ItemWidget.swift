@@ -9,16 +9,8 @@
 import UIKit
 
 class ItemWidget: UIView {
-    private lazy var mapView: UIView =  {
-        let view = UIView()
-        
-//        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 24))
-//        view.addConstraint(.init(item: view, attribute: .width, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 3, constant: 0))
 
-        view.backgroundColor = .blue
-        
-        return view
-    }()
+    // MARK: - properties
     
     private lazy var categoryIcon: UIView = {
         
@@ -42,18 +34,7 @@ class ItemWidget: UIView {
         
         return view
     }()
-    
-    private lazy var textArea: UIView = {
-        let vStack = UIStackView()
-        vStack.axis = .vertical
-        vStack.distribution = .equalSpacing
-        
-        vStack.addArrangedSubview(titleLabel)
-        vStack.addArrangedSubview(detailLabel)
 
-        return vStack
-    }()
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.style(TextStyle.label)
@@ -68,21 +49,6 @@ class ItemWidget: UIView {
         label.textColor = .white
         
         return label
-    }()
-    
-    private lazy var metaArea: UIStackView = {
-        let vStack = UIStackView()
-        vStack.axis = .vertical
-        vStack.distribution = .equalSpacing
-        
-        vStack.addArrangedSubview(categoryLabel)
-        vStack.addArrangedSubview(dateLabel)
-
-        //
-//        vStack.addConstraint(.init(item: vStack, attribute: .width, relatedBy: .equal,
-//                                   toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 88))
-        
-        return vStack
     }()
     
     private lazy var dateLabel: UILabel = {
@@ -103,17 +69,11 @@ class ItemWidget: UIView {
         return label
     }()
     
+    // MARK: - init
+    
     init() {
         super.init(frame: .zero)
         
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup() {
         self.backgroundColor = .white
         self.clipsToBounds = true
         
@@ -123,41 +83,49 @@ class ItemWidget: UIView {
         
         self.layer.cornerRadius = TLCStyle.cornerRadius
         
-        let hStack = UIStackView()
-        hStack.axis = .horizontal
-        hStack.distribution = .fill
-        hStack.spacing = TLCStyle.elementPadding
         
+        let accentView = AccentView()
         
+        accentView.setPrimaryView(createItemInfoView())
+        accentView.setSecondaryView(createMetadataView())
         
-        let accentView = ShadowView()
+        self.addSubview(accentView)
+        self.constrainSubviewToBounds(accentView)
+    }
+    required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
         
-        accentView.backgroundColor = TLCStyle.itemBackgroundColor
-        accentView.layer.cornerRadius = TLCStyle.cornerRadius
+    private func createItemInfoView() -> UIView {
+        let vStack = UIStackView()
+        vStack.axis = .vertical
+        vStack.distribution = .equalSpacing
         
-        accentView.addSubview(textArea)
-        accentView.constrainSubviewToBounds(textArea, onEdges: [.top, .left, .bottom], withInset: UIEdgeInsets(TLCStyle.elementMargin))
-        accentView.constrainSubviewToBounds(textArea, onEdges: [.right], withInset: UIEdgeInsets(TLCStyle.elementPadding))
-  
-        let metaView = UIView()
+        vStack.addArrangedSubview(titleLabel)
+        vStack.addArrangedSubview(detailLabel)
+
+        return vStack
+    }
+    
+    private func createMetadataView() -> UIView {
+        
         let metaStack = UIStackView()
         metaStack.axis = .horizontal
         metaStack.spacing = TLCStyle.elementPadding
         
-        metaStack.addArrangedSubview(metaArea)
+        // Date Category Label
+        let vStack = UIStackView()
+        vStack.axis = .vertical
+        vStack.distribution = .equalCentering
+        
+        vStack.addArrangedSubview(categoryLabel)
+        vStack.addArrangedSubview(dateLabel)
+
+        metaStack.addArrangedSubview(vStack)
         metaStack.addArrangedSubview(categoryIcon)
-
-        metaView.addSubview(metaStack)
-        metaView.constrainSubviewToBounds(metaStack, onEdges: [.top, .right, .bottom], withInset: UIEdgeInsets(TLCStyle.elementMargin))
-        metaView.constrainSubviewToBounds(metaStack, onEdges: [.left], withInset: UIEdgeInsets(TLCStyle.elementPadding))
-
         
-        hStack.addArrangedSubview(accentView)
-        hStack.addArrangedSubview(metaView)
-        
-        self.addSubview(hStack)
-        self.constrainSubviewToBounds(hStack)
+        return metaStack
     }
+    
+    // MARK: - Public
     
     public func displayItem(item: Item) {
         titleLabel.text = item.title

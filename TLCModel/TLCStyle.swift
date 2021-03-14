@@ -22,10 +22,34 @@ public enum TLCCategoryIconSet: String, CaseIterable, Icon {
     }
     
     case books = "books.vertical"
-    
-    var size: CGSize {
-        CGSize(width: 30, height: 30)
-    }
+    case pencil = "pencil"
+    case cap = "graduationcap"
+    case ticket = "ticket"
+    case tag = "tag"
+    case camera = "camera"
+    case piano = "pianokays"
+    case brush = "paintbrush.pointed"
+    case ruler = "ruler"
+    case scroll = "scroll"
+    case briefcase = "briefcase"
+    case puzzle = "puzzlepiece"
+    case map = "map"
+    case controller = "gamecontroller"
+    case pallete = "paintpalette"
+    case gift = "gift"
+    case light = "lightbulb"
+    case walk = "figure.walk"
+    case bike = "bicycle"
+    case leaf = "leaf"
+    case cart = "cart"
+    case heart = "heart"
+    case sign = "signpost.left"
+    case people = "person.3"
+    case bag = "bag"
+    case tv = "tv"
+    case music = "tv.music.note"
+    case speaker = "hifispeaker"
+    case envelope = "envelope"
     
     private func create() -> UIImage? {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
@@ -57,13 +81,14 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     case settings = "gearshape"
     case identify = "binoculars.fill"
     case search = "magnifyingglass"
+    case plus = "plus.circle"
     
     var size: CGSize {
         switch self {
-        case .search:
-            return CGSize(width: 24, height: 24)
+        case .search, .plus:
+            return CGSize(width: 24, height: 24)  // Not used
         case .settings, .identify:
-            return CGSize(width: 28, height: 28)
+            return CGSize(width: 28, height: 28) // Not used
         default:
             return CGSize(width: 32, height: 32)
         }
@@ -92,7 +117,7 @@ public enum TLCIconSet: String, CaseIterable, Icon {
         case .list:
             appResources.register(appResources.render(create(), withColor: TLCStyle.accentColor, andSize: size), for: self)
         default:
-            appResources.register(appResources.render(create(), withColor: .white, andSize: size), for: self)
+            appResources.register(create()?.withTintColor(.white), for: self)
         }
     }
     
@@ -168,6 +193,8 @@ extension TLCStyle: MetricsStyle {
     public static let cornerRadius: CGFloat = 10
     public static let textCornerRadius: CGFloat = 5
     
+    public static let topButtonInsets = UIEdgeInsets(top: TLCStyle.elementMargin, left: TLCStyle.elementMargin*3, bottom: TLCStyle.elementMargin, right: TLCStyle.elementMargin*3)
+    
     // MARK: - Colors
     
     fileprivate struct ColorPallet {
@@ -216,6 +243,8 @@ extension TLCStyle: MetricsStyle {
     
     // New
     public static let bannerViewColor = UIColor(named: "Base6", in: bundle, compatibleWith: nil)
+    public static let searchBackgroundColor = UIColor(named: "Base5", in: bundle, compatibleWith: nil)
+    
     public static let titleTextColor = UIColor(named: "WhiteBase1", in: bundle, compatibleWith: nil)
     
     public static let itemBackgroundColor = UIColor(named: "Base4", in: bundle, compatibleWith: nil) // UIColor(rgb: 0x3E5E66)
@@ -254,8 +283,9 @@ extension TLCStyle: ColorStyle {
         ColorAssets.whitebase2.color
     }
 
+    public static let acceptButtonBackgroundColor = ColorAssets.accent4.color
     public var acceptButtonBackgroundColor: UIColor {
-        ColorAssets.accent4.color
+        TLCStyle.acceptButtonBackgroundColor
     }
 
     public var accentButtonBackgroundColor: UIColor {

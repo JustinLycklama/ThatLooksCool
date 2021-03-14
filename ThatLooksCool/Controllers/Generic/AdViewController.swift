@@ -42,8 +42,7 @@ class AdViewController: UIViewController {
         container.addConstraint(NSLayoutConstraint.init(item: adBanner, attribute: .centerX, relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0))
         container.constrainSubviewToBounds(adBanner, onEdges: [.top], withInset: UIEdgeInsets(0))
         
-        let window = UIApplication.shared.windows[0]
-        container.constrainSubviewToBounds(adBanner, onEdges: [.bottom], withInset: UIEdgeInsets(window.safeAreaInsets.bottom))
+        container.constrainSubviewToBounds(adBanner, onEdges: [.bottom], withInset: UIEdgeInsets(TLCStyle.safeArea.bottom))
         
         return container
     }()

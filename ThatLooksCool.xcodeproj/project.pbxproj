@@ -13,6 +13,9 @@
 		7D03141A2511B19100F9CCBD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7D0314192511B19100F9CCBD /* Intents.intentdefinition */; };
 		7D03141B2511B19100F9CCBD /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 7D0314192511B19100F9CCBD /* Intents.intentdefinition */; };
 		7D075C3B25EB29ED00ECD806 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D075C3A25EB29ED00ECD806 /* ItemTableViewCell.swift */; };
+		7D075C4825EC4DD200ECD806 /* ItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D075C4725EC4DD200ECD806 /* ItemViewController.swift */; };
+		7D075C4E25EDE30200ECD806 /* AccentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D075C4D25EDE30200ECD806 /* AccentView.swift */; };
+		7D075C5625F07ED900ECD806 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D075C5525F07ED900ECD806 /* MapView.swift */; };
 		7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */; };
 		7D0A485F257D8B1300912AD1 /* ItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0A485E257D8B1300912AD1 /* ItemCategory.swift */; };
 		7D0ED11125AB7378004FEA98 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7D0ED11025AB7378004FEA98 /* Settings.bundle */; };
@@ -172,6 +175,9 @@
 		7D0314122511B0CC00F9CCBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D0314192511B19100F9CCBD /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		7D075C3A25EB29ED00ECD806 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		7D075C4725EC4DD200ECD806 /* ItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewController.swift; sourceTree = "<group>"; };
+		7D075C4D25EDE30200ECD806 /* AccentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccentView.swift; sourceTree = "<group>"; };
+		7D075C5525F07ED900ECD806 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		7D0A4851257D840300912AD1 /* SetupHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupHelpViewController.swift; sourceTree = "<group>"; };
 		7D0A485E257D8B1300912AD1 /* ItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCategory.swift; sourceTree = "<group>"; };
 		7D0ED11025AB7378004FEA98 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
@@ -330,6 +336,14 @@
 			path = TLCIntents;
 			sourceTree = "<group>";
 		};
+		7D075C4C25EDD5BC00ECD806 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				7D075C4D25EDE30200ECD806 /* AccentView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		7D0A4858257D84DD00912AD1 /* Items */ = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +480,7 @@
 		7DA734C525BBD77A00CE9607 /* SharedUI */ = {
 			isa = PBXGroup;
 			children = (
+				7D075C4C25EDD5BC00ECD806 /* Components */,
 				7DEC0FFF25D2CFA50005E822 /* CollectionCells */,
 				7DA7350725BBD8D500CE9607 /* Protocols.swift */,
 				7DB0755225C8F9A600A1C716 /* Extensions+UIView.swift */,
@@ -557,6 +572,8 @@
 			children = (
 				7DEC0F7B25D245570005E822 /* NewHomeViewController.swift */,
 				7DECEBC725E0373300175CC1 /* CategoryViewController.swift */,
+				7D075C4725EC4DD200ECD806 /* ItemViewController.swift */,
+				7D075C5525F07ED900ECD806 /* MapView.swift */,
 			);
 			path = New;
 			sourceTree = "<group>";
@@ -982,6 +999,7 @@
 				7DB0757225C8FA0700A1C716 /* ItemCellView.swift in Sources */,
 				7DB0756F25C8FA0700A1C716 /* AddCell.swift in Sources */,
 				7DA7350E25BBD93E00CE9607 /* TLCStyle.swift in Sources */,
+				7D075C4E25EDE30200ECD806 /* AccentView.swift in Sources */,
 				7D8CAE76258C2F81004CF260 /* Item.swift in Sources */,
 				7DA7353925BBDA3C00CE9607 /* RealmSubjects.swift in Sources */,
 				7DDEDDCD25E5F82B00004A3F /* IconCollectionCell.swift in Sources */,
@@ -1028,6 +1046,7 @@
 				7DECEBC825E0373300175CC1 /* CategoryViewController.swift in Sources */,
 				7DEDAF5F251AECE300D15306 /* GooglePlacesModel.swift in Sources */,
 				7D98BBCD25008F8700F0ADC0 /* SceneDelegate.swift in Sources */,
+				7D075C5625F07ED900ECD806 /* MapView.swift in Sources */,
 				7D98BBE6250136DA00F0ADC0 /* HomeViewController.swift in Sources */,
 				7D0ED11B25AB922A004FEA98 /* WebViewController.swift in Sources */,
 				7DEDAF54251A809200D15306 /* AdViewController.swift in Sources */,
@@ -1035,6 +1054,7 @@
 				7D1BFB1225C3BB4B0032AEC7 /* TestDataModel.swift in Sources */,
 				7DEDAF52251A806800D15306 /* CategorizeItemsViewController.swift in Sources */,
 				7DEC0F7C25D245570005E822 /* NewHomeViewController.swift in Sources */,
+				7D075C4825EC4DD200ECD806 /* ItemViewController.swift in Sources */,
 				7D0A4852257D840300912AD1 /* SetupHelpViewController.swift in Sources */,
 				7DDFAA8E25CA52090075804C /* MapCell.swift in Sources */,
 			);
