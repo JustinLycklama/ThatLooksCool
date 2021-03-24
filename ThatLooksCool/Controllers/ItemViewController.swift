@@ -11,13 +11,33 @@ import TLCModel
 import ClassicClient
 
 class ItemViewController: UIViewController {
-        
-//    private var previewCellView: ItemCellView?
-    
+            
     let formView: FormView
     let itemMockCoordinator: MockItemCoordinator
     
     weak var delegate: CompletableActionDelegate?
+          
+    init(item: Item?, category: ItemCategory) {
+        itemMockCoordinator = MockItemCoordinator(item: item, category: category)
+        formView = FormView(fields: itemMockCoordinator.modifiableFields())
+        formView.backgroundColor = .clear
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(mock: MockItem) {
+        itemMockCoordinator = MockItemCoordinator(item: nil, mockItem: mock, category: nil)
+        formView = FormView(fields: itemMockCoordinator.modifiableFields())
+        formView.backgroundColor = .clear
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Views
     
     private lazy var backgroundView: UIView = {
         let view = UIView()
@@ -27,13 +47,30 @@ class ItemViewController: UIViewController {
         return view
     }()
     
-//    private lazy var itemTitleTextField: UITextField = {
-//       let textField = UITextField()
-//
-//        return textField
-//    }()
-//
+    override func viewDidLoad() {
+        super.viewDidLoad()
   
+        self.view.backgroundColor = .clear
+        self.hideKeyboardWhenTappedAround()
+        
+        self.view.addSubview(backgroundView)
+        self.view.constrainSubviewToBounds(backgroundView, onEdges: [.left, .right])
+        self.view.constrainSubviewToBounds(backgroundView, onEdges: [.bottom], withInset: UIEdgeInsets(TLCStyle.safeArea.bottom + 125))
+
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = TLCStyle.topPadding
+        
+        stack.addArrangedSubview(mapView)
+        stack.addArrangedSubview(createItemInfoView())
+        stack.addArrangedSubview(createSaveDeleteView())
+        
+        backgroundView.addSubview(stack)
+        backgroundView.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(TLCStyle.elementMargin))
+    }
+
+    // MARK: Map
+    
     private lazy var mapView: UIView = {
         let view = MapView()
         
@@ -41,6 +78,8 @@ class ItemViewController: UIViewController {
         
         return view
     }()
+    
+    // MARK: Item Info
     
     private lazy var categoryLabel: UILabel = {
         let label = UILabel()
@@ -59,6 +98,34 @@ class ItemViewController: UIViewController {
         
         return icon
     }()
+
+    private func createItemInfoView() -> UIView {
+        let accentView = AccentView()
+        
+//        formView.setContentCompressionResistancePriority(.required, for: .vertical)
+        accentView.setPrimaryView(formView)
+                
+        let categoryContainer = UIView()
+        
+        let categoryStack = UIStackView()
+        categoryStack.axis = .horizontal
+        categoryStack.spacing = TLCStyle.elementPadding
+        
+        categoryStack.addArrangedSubview(categoryLabel)
+        categoryStack.addArrangedSubview(categoryIcon)
+        
+        categoryContainer.addSubview(categoryStack)
+        categoryContainer.constrainSubviewToBounds(categoryStack, onEdges: [.left, .right])
+        categoryContainer.addConstraint(.init(item: categoryStack, attribute: .centerY, relatedBy: .equal, toItem: categoryContainer, attribute: .centerY, multiplier: 1, constant: 0))
+        
+        accentView.setSecondaryView(categoryContainer)
+        
+//        accentView.addConstraint(.init(item: accentView, attribute: .height, relatedBy: .equal, toItem: formView, attribute: .height, multiplier: 1, constant: 0))
+        
+        return accentView
+    }
+    
+    // MARK: Save Delete
     
     private lazy var saveButton: UIButton = {
         let button = UIButton()
@@ -86,67 +153,7 @@ class ItemViewController: UIViewController {
         return button
     }()
     
-    init(item: Item?, category: ItemCategory) {
-        itemMockCoordinator = MockItemCoordinator(item: item, category: category)
-        formView = FormView(fields: itemMockCoordinator.modifiableFields())
-        formView.backgroundColor = .clear
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-  
-        self.view.backgroundColor = .clear
-        self.hideKeyboardWhenTappedAround()
-        
-        self.view.addSubview(backgroundView)
-        self.view.constrainSubviewToBounds(backgroundView, onEdges: [.left, .right])
-        self.view.constrainSubviewToBounds(backgroundView, onEdges: [.bottom], withInset: UIEdgeInsets(TLCStyle.safeArea.bottom + 125))
-
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.spacing = TLCStyle.topPadding
-        
-        stack.addArrangedSubview(mapView)
-        stack.addArrangedSubview(createItemInfoView())
-        stack.addArrangedSubview(createSaveDelete())
-        
-        backgroundView.addSubview(stack)
-        backgroundView.constrainSubviewToBounds(stack, withInset: UIEdgeInsets(TLCStyle.elementMargin))
-    }
-
-    private func createItemInfoView() -> UIView {
-        let accentView = AccentView()
-        
-        formView.setContentCompressionResistancePriority(.required, for: .vertical)
-        accentView.setPrimaryView(formView)
-                
-        let categoryContainer = UIView()
-        
-        let categoryStack = UIStackView()
-        categoryStack.axis = .horizontal
-        categoryStack.spacing = TLCStyle.elementPadding
-        
-        categoryStack.addArrangedSubview(categoryLabel)
-        categoryStack.addArrangedSubview(categoryIcon)
-        
-        categoryContainer.addSubview(categoryStack)
-        categoryContainer.constrainSubviewToBounds(categoryStack, onEdges: [.left, .right])
-        categoryContainer.addConstraint(.init(item: categoryStack, attribute: .centerY, relatedBy: .equal, toItem: categoryContainer, attribute: .centerY, multiplier: 1, constant: 0))
-        
-        accentView.setSecondaryView(categoryContainer)
-        
-//        accentView.addConstraint(.init(item: accentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 150))
-        
-        return accentView
-    }
-    
-    private func createSaveDelete() -> UIView {
+    private func createSaveDeleteView() -> UIView {
 //        let container = UIView()
         
         let stack = UIStackView()
@@ -172,6 +179,8 @@ class ItemViewController: UIViewController {
     }
     
     private var contentHeightConstraint: NSLayoutConstraint?
+    
+    // MARK: - Functions
     
     @objc
     func saveItem() {

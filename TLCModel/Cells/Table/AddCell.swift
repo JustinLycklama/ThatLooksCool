@@ -23,7 +23,7 @@ public class AddCell: UITableViewCell {
         backgroundColor = .clear
         selectionStyle = .none
                 
-        let addView = AddCellView()
+        let addView = AddView()
         
         self.contentView.addSubview(addView)
         self.contentView.constrainSubviewToBounds(addView, withInset: UIEdgeInsets(top: TLCStyle.collectionMargin,

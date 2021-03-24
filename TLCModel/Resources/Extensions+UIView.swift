@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ClassicClient
 
 extension UIViewController {
     public func hideKeyboardWhenTappedAround() {

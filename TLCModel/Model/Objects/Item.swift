@@ -86,9 +86,7 @@ public class Item: Object, ItemDisplayable {
     }
 }
 
-public protocol ModifiableFields: AnyObject {
-    func modifiableFields() -> [Field]
-}
+// MARK: - Mock
 
 public class MockItem: ItemDisplayable {
     public var title: String?
@@ -101,6 +99,68 @@ public class MockItem: ItemDisplayable {
         info = item?.info
         coordinate = item?.coordinate
         timestamp = item?.timestamp
+    }
+}
+
+// MARK: - Coordinator
+
+public class MockItemCoordinator: MockCoordinator {
+    
+    public typealias ObjectType = Item
+    public typealias MockType = MockItem
+    
+    private let associatedCategory: ItemCategory?
+    
+    public let databaseObject: Item?
+    public let mockObject: MockItem
+                
+    public weak var completeDelegate: CompletableActionDelegate?
+    
+    public convenience init(item: Item?, category: ItemCategory? = nil) {
+        let mockObject = MockItem(item: item)
+        self.init(item: item, mockItem: mockObject, category: category)
+    }
+    
+    public init(item: Item?, mockItem: MockItem, category: ItemCategory?) {
+        mockObject = mockItem
+        databaseObject = item
+        associatedCategory = category
+    }
+    
+    public func modifiableFields() -> [Field] {
+        return mockObject.modifiableFields()
+    }
+    
+    @objc @discardableResult
+    public func saveItem() -> Item {
+        let savedItem: Item!
+        
+        if let item = databaseObject {
+            RealmSubjects.shared.updateItem(item: item, usingMock: mockObject)
+            savedItem = item
+        } else {
+            savedItem = RealmSubjects.shared.createItem(withMock: mockObject, toCategory: associatedCategory)
+        }
+        
+        complete()
+        return savedItem
+    }
+    
+    @discardableResult
+    public func deleteItem() -> MockItem? {
+        var deletedItem: MockItem? = nil
+        
+        if let item = databaseObject {
+            deletedItem = MockItem(item: item)
+            RealmSubjects.shared.removeItem(item)
+        }
+        
+        complete()
+        return deletedItem
+    }
+        
+    private func complete() {
+        completeDelegate?.complete()
     }
 }
 
@@ -117,39 +177,13 @@ extension MockItem: ModifiableFields {
             self.title = newVal
         }))
         
-        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
-            guard let self = self else {
-                return
-            }
-            
-            self.title = newVal
-        }))
-        
-        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
-            guard let self = self else {
-                return
-            }
-            
-            self.title = newVal
-        }))
-        
-        fields.append(ShortTextField(title: "Tag", initialValue: title, onUpdate: { [weak self] newVal in
-            guard let self = self else {
-                return
-            }
-            
-            self.title = newVal
-        }))
-                
-//        if displaysMap, let coord = mockObject.coordinate {
-//            fields.append(.map(coordinate: coord))
-//        }
-        
+
+    
         fields.append(LongTextField(title: "Notes", initialValue: info, onUpdate: { [weak self] newVal in
             guard let self = self else {
                 return
             }
-            
+
             self.info = newVal
         }))
         

@@ -280,11 +280,15 @@ public class RealmSubjects {
         }
     }
     
-    public func addCategory(withMock mock: MockCategory) {
+    public func addCategory(withMock mock: MockCategory) -> ItemCategory {
         do {
+            let category = ItemCategory(mock: mock)
+            
             try realm.write {
-                realm.add(ItemCategory(mock: mock))
+                realm.add(category)
             }
+            
+            return category
         } catch {
             fatalError()
         }        

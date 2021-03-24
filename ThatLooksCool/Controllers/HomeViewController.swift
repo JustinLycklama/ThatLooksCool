@@ -1,5 +1,5 @@
 //
-//  NewHomeViewController.swift
+//  HomeViewController.swift
 //  ThatLooksCool
 //
 //  Created by Justin Lycklama on 2021-02-08.
@@ -132,32 +132,52 @@ class HomeViewController: AdViewController {
         
         let container = UIView()
 
+        let actionCellConfig = CollectionCellConfig<Void, AddCollectionCell> (swipeActions: []) { (_, cell: AddCollectionCell) in
+            
+        } performAction: { [weak self] (_) in
+            let categoryViewController = CategoryViewController(category: nil)
+            self?.present(categoryViewController, animated: true, completion: nil)
+        }
+        
         let categoryCellConfig = CollectionCellConfig { (category: ItemCategory, cell: CategoryCollectionCell) in
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
-            let categoryViewController = CategoryViewController()
+            let categoryViewController = CategoryViewController(category: category)
             self?.present(categoryViewController, animated: true, completion: nil)
         }
                     
-        let gridView = ActionableGridView(itemConfig: categoryCellConfig)
+        let gridView = ActionableGridView(actionConfig: actionCellConfig, itemConfig: categoryCellConfig)
         
-        let cat1 = ItemCategory()
-        let cat2 = ItemCategory()
-        let cat3 = ItemCategory()
-        let cat4 = ItemCategory()
-        let cat5 = ItemCategory()
-        let cat6 = ItemCategory()
-        let cat7 = ItemCategory()
-
-
-
-        gridView.setItems(items: [cat1, cat2, cat3, cat4, cat5, cat6, cat7])
+        
+//        let cat1 = ItemCategory()
+//        let cat2 = ItemCategory()
+//        let cat3 = ItemCategory()
+//        let cat4 = ItemCategory()
+//        let cat5 = ItemCategory()
+//        let cat6 = ItemCategory()
+//        let cat7 = ItemCategory()
+//
+//
+//
+//        gridView.setItems(items: [cat1, cat2, cat3, cat4, cat5, cat6, cat7])
+        gridView.canPerformAction = true
         
         gridView.addConstraint(.init(item: gridView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 102))
         
         container.addSubview(gridView)
         container.constrainSubviewToBounds(gridView, onEdges: [.top, .right, .bottom])
         container.constrainSubviewToBounds(gridView, onEdges: [.left], withInset: UIEdgeInsets(Classic.style.topMargin))
+        
+        RealmSubjects.shared.resolvedItemCategoriesSubject
+            .subscribe(onNext: { (categories: [ItemCategory]) in
+                gridView.setItems(items: categories)
+            }, onError: { (err: Error) in
+                
+            }, onCompleted: {
+                
+            }) {
+                
+        }.disposed(by: disposeBag)
         
         return container
     }()

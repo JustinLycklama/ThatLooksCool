@@ -11,11 +11,11 @@ import ClassicClient
 
 public class CategoryWidget: UIView {
 
-    lazy var icon: UIView = {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
-        let image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+    lazy var icon: CategoryIcon = {
+//        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+//        let image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
         
-        let view = CategoryIcon(image: image)
+        let view = CategoryIcon(image: TLCCategoryIconSet.defaultIcon.image())
         
         return view
     }()
@@ -66,7 +66,7 @@ public class CategoryWidget: UIView {
     }
     
     public func displayCategory(displayable: CategoryDisplayable) {
-//        titleLabel.text = displayable.title
+        titleLabel.text = displayable.title
 //        backgroundColor = displayable.color
         
         

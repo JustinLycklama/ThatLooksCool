@@ -9,7 +9,7 @@
 import UIKit
 import ClassicClient
 
-class AddCellView: UIView {
+class AddView: UIView {
 
     private var shadowView = ShadowView()
     

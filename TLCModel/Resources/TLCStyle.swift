@@ -21,6 +21,8 @@ public enum TLCCategoryIconSet: String, CaseIterable, Icon {
         }
     }
     
+    public static let defaultIcon: TLCCategoryIconSet = TLCCategoryIconSet.books
+    
     case books = "books.vertical"
     case pencil = "pencil"
     case cap = "graduationcap"
@@ -171,17 +173,9 @@ extension TLCStyle: MetricsStyle {
     public var cornerRadius: CGFloat {
         10
     }
-    
-    public var formPadding: CGFloat {
-        8
-    }
-    
-    public var formMargin: CGFloat {
-        10
-    }
-    
+        
     public var textAreaCornerRadius: CGFloat {
-        10
+        5
     }
     
     // MARK: - Metrics
