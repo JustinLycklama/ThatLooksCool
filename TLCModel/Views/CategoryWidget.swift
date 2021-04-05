@@ -12,21 +12,20 @@ import ClassicClient
 public class CategoryWidget: UIView {
 
     lazy var icon: CategoryIcon = {
-//        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
-//        let image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
+        let view = CategoryIcon()
         
-        let view = CategoryIcon(image: TLCCategoryIconSet.defaultIcon.image())
+//        view.addConstraint(.init(item: view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 48))
         
         return view
     }()
     
-    lazy var titleLabel: UILabel = {
+    public internal(set) lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.style(TextStyle.subtitle)
+        label.style(TextStyle.categoryWidgetStyle)
+//        widget.styleTitle(TextStyle.accentLabel)
         
-        label.text = "123456789012"
-        label.numberOfLines = 2 
+        label.numberOfLines = 2
         label.setContentCompressionResistancePriority(.required, for: .vertical)
                 
         return label
@@ -52,27 +51,38 @@ public class CategoryWidget: UIView {
         self.backgroundColor = .clear
 
         stack.axis = .vertical
-        stack.spacing = Classic.style.collectionPadding
+        stack.distribution = .equalSpacing
+        stack.spacing = TLCStyle.elementPadding
         
-        stack.addArrangedSubview(icon)
-        stack.addArrangedSubview(titleLabel)
+        let iconContainer = UIView()
+        iconContainer.addSubview(icon)
+        iconContainer.constrainSubviewToBounds(icon, onEdges: [.top, .bottom])
+        iconContainer.addConstraint(.init(item: icon, attribute: .centerX, relatedBy: .equal, toItem: iconContainer, attribute: .centerX, multiplier: 1, constant: 0))
+        
+        stack.addArrangedSubview(iconContainer)
+        
+        let titleContainer = UIView()
+        titleContainer.addSubview(titleLabel)
+        titleContainer.constrainSubviewToBounds(titleLabel, onEdges: [.top, .left, .right])
+        
+        
+        stack.addArrangedSubview(titleContainer)
+//        stack.addArrangedSubview(UIView())
         
         addSubview(stack)
-        constrainSubviewToBounds(stack)
+        constrainSubviewToBounds(stack, onEdges: [.top, .left, .right, .bottom])
         
-        addConstraint(.init(item: titleLabel, attribute: .width, relatedBy: .equal, toItem: icon, attribute: .width, multiplier: 1, constant: 0))
+        self.addConstraint(.init(item: titleContainer, attribute: .height, relatedBy: .equal, toItem: iconContainer, attribute: .height, multiplier: 0.666, constant: 0))
+
         
-        invalidateIntrinsicContentSize()
+//        self.addConstraint(.init(item: icon, attribute: .height, relatedBy: .lessThanOrEqual,
+//                                 toItem: titleContainer, attribute: .height, multiplier: 1, constant: 0))
+        
+//        icon.backgroundColor = .blue
     }
-    
+        
     public func displayCategory(displayable: CategoryDisplayable) {
         titleLabel.text = displayable.title
-//        backgroundColor = displayable.color
-        
-        
-    }
-    
-    public func styleTitle(_ style: TextStylable) {
-        titleLabel.style(style)
+        icon.image = displayable.icon.image()
     }
 }

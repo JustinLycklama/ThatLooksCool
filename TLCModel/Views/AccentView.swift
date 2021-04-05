@@ -44,9 +44,11 @@ public class AccentView: UIView {
     
         hStack.addArrangedSubview(primaryArea)
         hStack.addArrangedSubview(secondaryArea)
-        
+                
         self.addSubview(hStack)
         self.constrainSubviewToBounds(hStack)
+        
+        self.addConstraint(.init(item: primaryArea, attribute: .width, relatedBy: .equal, toItem: secondaryArea, attribute: .width, multiplier: 1.333, constant: 0))
     }
     
     public func setPrimaryView(_ view: UIView) {
@@ -57,7 +59,9 @@ public class AccentView: UIView {
     
     public func setSecondaryView(_ view: UIView) {
         secondaryArea.addSubview(view)
-        secondaryArea.constrainSubviewToBounds(view, onEdges: [.top, .right, .bottom], withInset: UIEdgeInsets(TLCStyle.elementMargin))
+        secondaryArea.constrainSubviewToBounds(view, onEdges: [.right], withInset: UIEdgeInsets(TLCStyle.elementMargin))
+        secondaryArea.constrainSubviewToBounds(view, onEdges: [.top], withInset: UIEdgeInsets(TLCStyle.elementMargin + 2))
+        secondaryArea.constrainSubviewToBounds(view, onEdges: [.bottom], withInset: UIEdgeInsets(TLCStyle.elementMargin - 2))
         secondaryArea.constrainSubviewToBounds(view, onEdges: [.left], withInset: UIEdgeInsets(TLCStyle.elementPadding))
     }
 }

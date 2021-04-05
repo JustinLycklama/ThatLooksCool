@@ -17,8 +17,8 @@ class ItemViewController: UIViewController {
     
     weak var delegate: CompletableActionDelegate?
           
-    init(item: Item?, category: ItemCategory) {
-        itemMockCoordinator = MockItemCoordinator(item: item, category: category)
+    init(item: Item) {
+        itemMockCoordinator = MockItemCoordinator(item: item, category: item.category)
         formView = FormView(fields: itemMockCoordinator.modifiableFields())
         formView.backgroundColor = .clear
         
@@ -83,7 +83,7 @@ class ItemViewController: UIViewController {
     
     private lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.style(TextStyle.subLabel)
+        label.style(TextStyle.itemDetailStyle)
         label.textAlignment = .right
         
         label.text = "12345"
@@ -94,7 +94,8 @@ class ItemViewController: UIViewController {
     }()
     
     private lazy var categoryIcon: UIView = {
-        let icon = CategoryIcon(category: nil, borderColor: .clear)
+        let icon = CategoryIcon()
+        icon.image = itemMockCoordinator.associatedCategory?.icon.image()
         
         return icon
     }()
@@ -136,6 +137,7 @@ class ItemViewController: UIViewController {
         button.layer.borderColor = UIColor.black.cgColor
         
         button.setTitle("Save", for: .normal)
+        button.addTarget(self, action: #selector(saveItem), for: .touchUpInside)
         
         return button
     }()
@@ -149,6 +151,7 @@ class ItemViewController: UIViewController {
         button.layer.borderColor = UIColor.black.cgColor
         
         button.setTitle("Delete", for: .normal)
+        button.addTarget(self, action: #selector(deleteItem), for: .touchUpInside)
         
         return button
     }()
@@ -184,7 +187,20 @@ class ItemViewController: UIViewController {
     
     @objc
     func saveItem() {
-//        itemMockCoordinator.saveItem()
+        itemMockCoordinator.saveItem()
+        
+//        if let itemCategory = databaseObject {
+//            RealmSubjects.shared.updateCategory(category: itemCategory, usingMock: mockObject)
+//        } else {
+//            RealmSubjects.shared.addCategory(withMock: mockObject)
+//        }
+        
+        close()
+    }
+    
+    @objc
+    func deleteItem() {
+        itemMockCoordinator.deleteItem()
         
 //        if let itemCategory = databaseObject {
 //            RealmSubjects.shared.updateCategory(category: itemCategory, usingMock: mockObject)

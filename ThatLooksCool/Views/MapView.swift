@@ -103,7 +103,7 @@ class MapView: UIView {
         mapViewArea.layer.cornerRadius = Classic.style.textAreaCornerRadius
         
         let mapActionLabel = UILabel()
-        mapActionLabel.style(TextStyle.instructions)
+        mapActionLabel.style(TextStyle.setupInstruction)
         mapActionLabel.text = "Click to Explore & Identify\nSee help for More"
         mapActionLabel.numberOfLines = 2
         mapActionLabel.textAlignment = .center
@@ -113,9 +113,9 @@ class MapView: UIView {
         mapViewArea.constrainSubviewToBounds(mapActionLabel,
                                              onEdges: [.left, .right, .bottom],
                                              withInset: UIEdgeInsets(top: 0,
-                                                                     left: Classic.style.collectionMargin,
-                                                                     bottom: Classic.style.collectionMargin,
-                                                                     right: Classic.style.collectionMargin))
+                                                                     left: Classic.style.elementMargin,
+                                                                     bottom: Classic.style.elementMargin,
+                                                                     right: Classic.style.elementMargin))
         
         addMapToView(frame: CGRect(origin: .zero, size: mapViewArea.frame.size))
         layoutPin()

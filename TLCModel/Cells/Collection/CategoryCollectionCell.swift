@@ -10,8 +10,12 @@ import UIKit
 
 public class CategoryCollectionCell: UICollectionViewCell {
     
+//    public static let height: CGFloat = 102
+    
     private lazy var cellDisplayView: CategoryWidget = {
         let view = CategoryWidget()
+        
+        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: TLCStyle.categoryWidgetDesiredSize.height))
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view

@@ -9,14 +9,19 @@
 import UIKit
 
 public class IconCollectionCell: UICollectionViewCell {
-    public static let height: CGFloat = 32
+    public static let height: CGFloat = 48
     
-    private lazy var cellDisplayView: UIImageView = {
-        let view = UIImageView(image: nil)
-        view.translatesAutoresizingMaskIntoConstraints = false
-                
+    public override var isSelected: Bool {
+        didSet {
+            cellDisplayView.backgroundColor = isSelected ? TLCStyle.accentColor : .white
+//            alpha = isSelected ? 0.5 : 1.0
+        }
+    }
+    
+    private lazy var cellDisplayView: CategoryIcon = {
+        let view = CategoryIcon()
+        
         view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: IconCollectionCell.height))
-        view.addConstraint(.init(item: view, attribute: .width, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 1, constant: 0))
         
         return view
     }()
@@ -42,5 +47,5 @@ public class IconCollectionCell: UICollectionViewCell {
     
     public func setImage(_ image: UIImage?) {
         cellDisplayView.image = image
-    }
+    }    
 }

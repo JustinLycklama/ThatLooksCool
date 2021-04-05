@@ -51,7 +51,7 @@ class ShareViewController: UIViewController {
     func createDisplayView() -> UIView {
         let itemViewStack = UIStackView()
         itemViewStack.axis = .vertical
-        itemViewStack.spacing = -TLCStyle.interiorPadding
+        itemViewStack.spacing = -TLCStyle.elementPadding
 
 //        let mock = MockItem(item: item)
 //        mock.title = shareData.name

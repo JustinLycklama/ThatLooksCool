@@ -12,32 +12,9 @@ class ItemWidget: UIView {
 
     // MARK: - properties
     
-    private lazy var categoryIcon: UIView = {
-        
-        let view = UIView()
-        
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
-        let image = UIImage(systemName: "books.vertical", withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal).withTintColor(.black)
-        
-//        let view = CategoryIcon(image: image)
-        let imageView = UIImageView()
-        imageView.image = image
-        imageView.contentMode = .scaleAspectFit
-        
-        view.addSubview(imageView)
-        view.constrainSubviewToBounds(imageView)
-//
-//        view.addConstraint(.init(item: imageView, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0))
-//
-        view.addConstraint(.init(item: imageView, attribute: .width, relatedBy: .equal,
-                                      toItem: imageView, attribute: .height, multiplier: 1, constant: 0))
-        
-        return view
-    }()
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.style(TextStyle.label)
+        label.style(TextStyle.itemTitleStyle)
         label.textColor = .white
 
         return label
@@ -45,7 +22,7 @@ class ItemWidget: UIView {
     
     private lazy var detailLabel: UILabel = {
         let label = UILabel()
-        label.style(TextStyle.subLabel)
+        label.style(TextStyle.itemDetailStyle)
         label.textColor = .white
         
         return label
@@ -53,20 +30,29 @@ class ItemWidget: UIView {
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.style(TextStyle.subLabel)
+        label.style(TextStyle.itemDetailStyle)
         label.textAlignment = .right
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
         return label
     }()
     
     private lazy var categoryLabel: UILabel = {
         let label = UILabel()
-        label.style(TextStyle.subLabel)
+        label.style(TextStyle.itemDetailStyle)
         label.textAlignment = .right
-        
-        label.text = "12345"
-        
+                
         return label
+    }()
+    
+    private lazy var categoryIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        
+        imageView.addConstraint(.init(item: imageView, attribute: .width, relatedBy: .equal,
+                                      toItem: imageView, attribute: .height, multiplier: 1, constant: 0))
+        
+        return imageView
     }()
     
     // MARK: - init
@@ -77,9 +63,9 @@ class ItemWidget: UIView {
         self.backgroundColor = .white
         self.clipsToBounds = true
         
-        self.addConstraint(.init(item: self, attribute: .height, relatedBy: .equal,
-                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1,
-                                      constant: TLCStyle.categoryImageHeight + TLCStyle.elementMargin * 2))
+//        self.addConstraint(.init(item: self, attribute: .height, relatedBy: .equal,
+//                                      toItem: nil, attribute: .notAnAttribute, multiplier: 1,
+//                                      constant: 32 + TLCStyle.elementMargin * 2))
         
         self.layer.cornerRadius = TLCStyle.cornerRadius
         
@@ -87,7 +73,9 @@ class ItemWidget: UIView {
         let accentView = AccentView()
         
         accentView.setPrimaryView(createItemInfoView())
-        accentView.setSecondaryView(createMetadataView())
+        accentView.setSecondaryView(metaDataStack)
+        
+        setupMetaDataStack()
         
         self.addSubview(accentView)
         self.constrainSubviewToBounds(accentView)
@@ -105,24 +93,40 @@ class ItemWidget: UIView {
         return vStack
     }
     
-    private func createMetadataView() -> UIView {
-        
+    private lazy var metaDataStack: UIStackView = {
         let metaStack = UIStackView()
         metaStack.axis = .horizontal
         metaStack.spacing = TLCStyle.elementPadding
         
-        // Date Category Label
+        return metaStack
+    }()
+    
+    private lazy var dateCategoryStack: UIStackView = {
         let vStack = UIStackView()
         vStack.axis = .vertical
         vStack.distribution = .equalCentering
         
-        vStack.addArrangedSubview(categoryLabel)
-        vStack.addArrangedSubview(dateLabel)
-
-        metaStack.addArrangedSubview(vStack)
-        metaStack.addArrangedSubview(categoryIcon)
+        return vStack
+    }()
+    
+    public var onlyDisplayData = false {
+        didSet {
+            setupMetaDataStack()
+        }
+    }
+    
+    private func setupMetaDataStack() {
+        dateCategoryStack.removeAllArrangedSubviews()
+        metaDataStack.removeAllArrangedSubviews()
         
-        return metaStack
+        metaDataStack.addArrangedSubview(dateCategoryStack)
+        
+        if !onlyDisplayData {
+            dateCategoryStack.addArrangedSubview(categoryLabel)
+            metaDataStack.addArrangedSubview(categoryIcon)
+        }
+
+        dateCategoryStack.addArrangedSubview(dateLabel)
     }
     
     // MARK: - Public
@@ -141,5 +145,6 @@ class ItemWidget: UIView {
         }
         
         categoryLabel.text = item.category?.title
+        categoryIcon.image = item.category?.icon.image()
     }
 }

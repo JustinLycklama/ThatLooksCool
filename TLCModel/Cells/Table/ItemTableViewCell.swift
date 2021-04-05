@@ -13,7 +13,7 @@ public class ItemTableViewCell: UITableViewCell {
     private lazy var cellDisplayView: ItemWidget = {
         let view = ItemWidget()
         
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: ItemCollectionCell.height))
+        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32 + TLCStyle.elementMargin * 2))
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -44,5 +44,9 @@ public class ItemTableViewCell: UITableViewCell {
     
     public func displayItem(item: Item) {
         cellDisplayView.displayItem(item: item)
+    }
+    
+    public func onlyDisplayDate(_ shouldOnlyDisplayDate: Bool) {
+        cellDisplayView.onlyDisplayData = shouldOnlyDisplayDate
     }
 }

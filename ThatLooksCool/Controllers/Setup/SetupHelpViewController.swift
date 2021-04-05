@@ -10,6 +10,7 @@ import UIKit
 import IntentsUI
 
 import TLCModel
+import ClassicClient
 
 class SetupHelpViewController: UIViewController {
 
@@ -40,12 +41,12 @@ class SetupHelpViewController: UIViewController {
         
         let locationTitle = UILabel()
         locationTitle.text = "Remember Location"
-        locationTitle.style(TextStyle.heading)
+        locationTitle.style(TextStyle.header)
         
         let locationDetails = UILabel()
         locationDetails.numberOfLines = 0
         locationDetails.text = "This shortcut will be used to remember your location, when given phrase is spoken to siri. \n\nTry \'That Looks Cool'."
-        locationDetails.style(TextStyle.instructions)
+        locationDetails.style(TextStyle.setupInstruction)
         
         stack.addArrangedSubview(locationTitle)
         stack.addArrangedSubview(locationDetails)
@@ -66,12 +67,12 @@ class SetupHelpViewController: UIViewController {
         
         let rememberTitle = UILabel()
         rememberTitle.text = "Remember Spoken Item"
-        rememberTitle.style(TextStyle.heading)
+        rememberTitle.style(TextStyle.header)
         
         let rememberDetails = UILabel()
         rememberDetails.numberOfLines = 0
         rememberDetails.text = "This shortcut will be used to remember the next thing you say to Siri. \n\nTry \'Remember'.\n\nExample: \'Hey Siri. Remember. Check out Game of Thrones\'."
-        rememberDetails.style(TextStyle.instructions)
+        rememberDetails.style(TextStyle.setupInstruction)
         
         stack.addArrangedSubview(rememberTitle)
         stack.addArrangedSubview(rememberDetails)
@@ -85,7 +86,7 @@ class SetupHelpViewController: UIViewController {
         let ack = UILabel()
         ack.text = "About"
         ack.textAlignment = .right
-        ack.style(TextStyle.systemInfoLink)
+        ack.style(TextStyle.setupInstruction + TLCStyle.linkColor)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openAcknowledgements))
         ack.addGestureRecognizer(tapGesture)

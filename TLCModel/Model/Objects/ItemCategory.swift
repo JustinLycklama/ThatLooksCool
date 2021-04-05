@@ -56,6 +56,7 @@ public class ItemCategory: Object, CategoryDisplayable {
     public func update(usingMock mock: MockCategory) {
         self.title = mock.title
         self.color = mock.color
+        self.icon = mock.icon
     }
     
     static func ==(lhs: ItemCategory, rhs: ItemCategory) -> Bool {

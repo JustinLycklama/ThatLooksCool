@@ -31,6 +31,8 @@ public class RealmSubjects {
     
     public var resolvedItemSubjectsByCategory = [ItemCategory : BehaviorSubject<[Item]>]()
     
+    public var recentlyResolvedItems = BehaviorSubject<[Item]>(value: [])
+    
     private let realm: Realm
     
     private var tokenList = [NotificationToken]()
@@ -46,6 +48,7 @@ public class RealmSubjects {
         
         createCategorySubjects()
         createPendingItemSubjects()
+        createResolvedItemSubjects()
     }
     
     deinit {
@@ -101,6 +104,27 @@ public class RealmSubjects {
         }
         
         tokenList.append(pendingToken)
+    }
+    
+    private func createResolvedItemSubjects() {
+        let resolvedItems = realm.objects(Item.self).filter("category != nil")
+        
+        let token = resolvedItems.observe(on: .main) { [weak self] (changes: RealmCollectionChange<Results<Item>>) in
+            switch changes {
+            case .initial(let results), .update(let results, _, _, _):
+                let sorted = results.sorted(by: { (a: Item, b: Item) -> Bool in
+                    a.timestamp ?? Date() > b.timestamp ?? Date()
+                })
+                
+                DispatchQueue.main.async {
+                    self?.recentlyResolvedItems.onNext(sorted)
+                }
+            case .error:
+                break
+            }
+        }
+        
+        tokenList.append(token)
     }
     
     /// Resolved Items are items that have a category
@@ -294,11 +318,13 @@ public class RealmSubjects {
         }        
     }
     
-    public func updateCategory(category: ItemCategory, usingMock mock: MockCategory) {
+    public func updateCategory(category: ItemCategory, usingMock mock: MockCategory) -> ItemCategory {
         do {
             try realm.write {
                 category.update(usingMock: mock)
             }
+            
+            return category
         } catch {
             fatalError()
         }

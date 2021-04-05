@@ -115,7 +115,7 @@ class HomeViewController: AdViewController {
         let container = UIView()
         
         let label = UILabel()
-        label.style(TextStyle.heading)
+        label.style(TextStyle.header)
         
         label.text = "Categories"
         label.setContentHuggingPriority(.required, for: .vertical)
@@ -132,8 +132,7 @@ class HomeViewController: AdViewController {
         
         let container = UIView()
 
-        let actionCellConfig = CollectionCellConfig<Void, AddCollectionCell> (swipeActions: []) { (_, cell: AddCollectionCell) in
-            
+        let actionCellConfig = CollectionCellConfig<Void, AddCategoryCollectionCell> (swipeActions: []) { (_, cell: AddCategoryCollectionCell) in
         } performAction: { [weak self] (_) in
             let categoryViewController = CategoryViewController(category: nil)
             self?.present(categoryViewController, animated: true, completion: nil)
@@ -146,23 +145,11 @@ class HomeViewController: AdViewController {
             self?.present(categoryViewController, animated: true, completion: nil)
         }
                     
-        let gridView = ActionableGridView(actionConfig: actionCellConfig, itemConfig: categoryCellConfig)
+        let gridView = ActionableGridView(actionConfig: actionCellConfig, itemConfig: categoryCellConfig, itemWidth: TLCStyle.categoryWidgetDesiredSize.width)
         
-        
-//        let cat1 = ItemCategory()
-//        let cat2 = ItemCategory()
-//        let cat3 = ItemCategory()
-//        let cat4 = ItemCategory()
-//        let cat5 = ItemCategory()
-//        let cat6 = ItemCategory()
-//        let cat7 = ItemCategory()
-//
-//
-//
-//        gridView.setItems(items: [cat1, cat2, cat3, cat4, cat5, cat6, cat7])
         gridView.canPerformAction = true
         
-        gridView.addConstraint(.init(item: gridView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 102))
+        gridView.addConstraint(.init(item: gridView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: TLCStyle.categoryWidgetDesiredSize.height))
         
         container.addSubview(gridView)
         container.constrainSubviewToBounds(gridView, onEdges: [.top, .right, .bottom])
@@ -186,7 +173,7 @@ class HomeViewController: AdViewController {
         let container = UIView()
         
         let label = UILabel()
-        label.style(TextStyle.heading)
+        label.style(TextStyle.header)
         
         label.text = "Recent Items"
         label.setContentHuggingPriority(.required, for: .vertical)
@@ -202,10 +189,6 @@ class HomeViewController: AdViewController {
         
         let container = UIView()
 
-//        let editSwipeAction = SwipeActionConfig(image: TLCIconSet.edit.image()) { (category: ItemCategory) in
-//            editCategory(category: category)
-//        }
-        
         let deleteSwipAction = SwipeActionConfig(image: TLCIconSet.delete.image()) { (item: Item) in
             RealmSubjects.shared.removeItem(item)
         }
@@ -215,50 +198,25 @@ class HomeViewController: AdViewController {
         let itemCellConfig = TableCellConfig(swipeActions: [deleteSwipAction]) { (item: Item, cell: ItemTableViewCell) in
             cell.displayItem(item: item)
         } performAction: { [weak self]  (item: Item) in
-            let itemViewController = ItemViewController(item: item, category: item.category ?? ItemCategory())
+            let itemViewController = ItemViewController(item: item)
             self?.present(itemViewController, animated: true, completion: nil)
         }
         
         let itemTable = ActionableTableView(actionConfig: actionCellConfig, itemConfig: itemCellConfig)
         
-        let cat = ItemCategory()
-        cat.title = "Books"
-        
-        let cat1 = Item(title: "1")
-        let cat2 = Item(title: "The Expanse")
-        cat2.updateCategory(cat)
-        cat2.info = "A sci fi show"
-        let cat3 = Item(title: "3")
-        let cat4 = Item(title: "4")
-        let cat5 = Item(title: "5")
-        let cat6 = Item(title: "6")
-        let cat7 = Item(title: "7")
-
-        itemTable.setItems(items: [cat1, cat2, cat3, cat4, cat5, cat6, cat7])
-        
-//        gridView.setContentHuggingPriority(.defaultLow, for: .vertical)
-//        gridView.setContentCompressionResistancePriority(.required, for: .vertical)
-        
-//        gridView.addConstraint(.init(item: gridView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 88))
-        
         container.addSubview(itemTable)
         container.constrainSubviewToBounds(itemTable, onEdges: [.left, .right], withInset: UIEdgeInsets(TLCStyle.topMargin))
         container.constrainSubviewToBounds(itemTable, onEdges: [.top, .bottom])
 
-//        container.constrainSubviewToBounds(itemTable, onEdges: [.left], withInset: UIEdgeInsets(Classic.style.topMargin))
-//
-//        let doubleItemHeight = NSLayoutConstraint.init(item: itemTable, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: (ItemCollectionCell.height * 2 + TLCStyle.topPadding * 1))
-//        doubleItemHeight.priority = UILayoutPriority(rawValue: 699)
-
-//
-//        let tripleItemHeight = NSLayoutConstraint.init(item: gridView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: (ItemCollectionCell.height * 3 + TLCStyle.topPadding * 2))
-//        tripleItemHeight.priority = UILayoutPriority(rawValue: 700)
+        RealmSubjects.shared.recentlyResolvedItems.subscribe { (items: [Item]) in
+            itemTable.setItems(items: items)
+        } onError: { (error: Error) in
+            
+        } onCompleted: {
         
-//        itemTable.addConstraint(doubleItemHeight)
-////        gridView.addConstraint(tripleItemHeight)
-//
-//        container.addConstraint(.init(item: itemTable, attribute: .bottom, relatedBy: .lessThanOrEqual,
-//                                      toItem: container, attribute: .bottom, multiplier: 1, constant: 0))
+        } onDisposed: {
+            
+        }.disposed(by: disposeBag)
         
         return container
     }()

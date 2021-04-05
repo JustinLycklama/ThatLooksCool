@@ -95,7 +95,7 @@ public class MockItem: ItemDisplayable {
     public var timestamp: Date?
 
     public init(item: Item?) {
-        title = item?.title
+        title = item?.title ?? "New Item"
         info = item?.info
         coordinate = item?.coordinate
         timestamp = item?.timestamp
@@ -109,7 +109,7 @@ public class MockItemCoordinator: MockCoordinator {
     public typealias ObjectType = Item
     public typealias MockType = MockItem
     
-    private let associatedCategory: ItemCategory?
+    public let associatedCategory: ItemCategory?
     
     public let databaseObject: Item?
     public let mockObject: MockItem

@@ -54,7 +54,7 @@ public enum TLCCategoryIconSet: String, CaseIterable, Icon {
     case envelope = "envelope"
     
     private func create() -> UIImage? {
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light, scale: .default)
         return UIImage(systemName: rawValue, withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
     }
     
@@ -101,7 +101,7 @@ public enum TLCIconSet: String, CaseIterable, Icon {
         case .edit, .delete, .undo, .next, .list:
             return UIImage(named: rawValue)
         default:
-            let imageConfig = UIImage.SymbolConfiguration(pointSize: TextStyle.heading.size, weight: .light, scale: .default)
+            let imageConfig = UIImage.SymbolConfiguration(pointSize: 24, weight: .light, scale: .default)
             return UIImage(systemName: rawValue, withConfiguration: imageConfig)?.withRenderingMode(.alwaysOriginal)
         }
     }
@@ -136,9 +136,20 @@ public struct TLCStyle {
 }
 
 extension TLCStyle: MetricsStyle {
+    public var collectionPadding: CGFloat {
+        4
+    }
+    
+    
+    public static let textInset: CGFloat = 4
+    public var textInset: CGFloat {
+        TLCStyle.textInset
+    }
+    
     
     public static let categoryMaxTitleLength = 12
-    public static let categoryImageHeight: CGFloat = 32
+//    public static let categoryImageHeight: CGFloat = 48
+    public static let categoryWidgetDesiredSize = CGSize(width: 56, height: 102)
     
     public static var safeArea: UIEdgeInsets {
         get {
@@ -156,12 +167,8 @@ extension TLCStyle: MetricsStyle {
         TLCStyle.topPadding
     }
     
-    public var collectionMargin: CGFloat {
+    public var textMargin: CGFloat {
         13
-    }
-    
-    public var collectionPadding: CGFloat {
-        8
     }
     
     public static let elementMargin: CGFloat = 12
@@ -182,7 +189,6 @@ extension TLCStyle: MetricsStyle {
     
     
     public static let collectionMargin: CGFloat = 12
-    public static let interiorPadding: CGFloat = 6
     
     public static let cornerRadius: CGFloat = 10
     public static let textCornerRadius: CGFloat = 5
@@ -220,6 +226,7 @@ extension TLCStyle: MetricsStyle {
     
     public static let placeholderTextColor = ColorPallet.mediumGrey
 
+    public static let linkColor = ColorPallet.turquoise
     
     public static let primaryBackgroundColor = ColorPallet.lightGrey
     public static let secondaryBackgroundColor = ColorPallet.offWhite
@@ -228,7 +235,7 @@ extension TLCStyle: MetricsStyle {
     public static let modificationIconColor = ColorPallet.yellow
     public static let destructiveIconColor = ColorPallet.red
     
-    public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
+//    public static let placeholderFont = UIFont(name: TextStyle.label.fontName, size: TextStyle.label.size)
     
     
     
@@ -252,14 +259,8 @@ extension TLCStyle: MetricsStyle {
     // Nav Bar
     public static let navBarBackgroundColor = ColorPallet.lightCyan
     
-    private static let navBarLabelType = TextStyle.navBar
-    public static let navBarFont = UIFont(name: navBarLabelType.fontName, size: navBarLabelType.size)
-    public static let navBarTextColor = navBarLabelType.textColor
+//    public static let navBarStyle = Text
     
-    // Bar Button Item
-    private static let barButtonLabelType = TextStyle.barButton
-    public static let barButtonFont = UIFont(name: barButtonLabelType.fontName, size: barButtonLabelType.size)
-    public static let barButtonTextColor = barButtonLabelType.textColor
     
     
     
@@ -332,15 +333,8 @@ extension TLCStyle: ColorStyle {
 
 extension TLCStyle: FontStyle {
     public var placeholderTextAttributes: [NSAttributedString.Key : Any] {
-        attributesForStyle(TextStyle.label)
+        return TextStyle.itemTitleStyle.asAttributes
     }
-    
-    
-    func attributesForStyle(_ style: TextStylable) -> [NSAttributedString.Key: Any] {
-        return [NSAttributedString.Key.font : UIFont.fromStyle(style: style),
-                NSAttributedString.Key.foregroundColor : style.textColor]
-    }
-    
 }
 
 public class ImagesResources {
@@ -360,106 +354,43 @@ public class ImagesResources {
     }
 }
 
-
-
-public enum TextStyle: TextStylable {
+public enum FontBook: String {
+    case navigation = "KohinoorTelugu-Medium"
+    case barButton = "AvenirNext-Regular"
+    case header = "Avenir-Medium"
     
-    case title
-    case heading
-    case subtitle
-    case accentLabel
-    case label
-    case subLabel
+    case regular = "AppleSDGothicNeo-Regular"
+    case light = "AppleSDGothicNeo-Light"
     
-    case navBar
-    case barButton
-    case instructions
-    case userText
-    case systemInfoLink
-    
-    public var fontName: String {
-        switch self {
-        case .subtitle, .accentLabel:
-            return "Avenir-Book"//"Thonburi-Light"
-        case .title, .instructions:
-            return "AppleSDGothicNeo-Regular"
-        case .label, .subLabel:
-            return "AppleSDGothicNeo-Light"
-            
-        case .heading:
-            return "Avenir-Medium"
-        case .navBar:
-            return "KohinoorTelugu-Medium"
-        case .barButton:
-            return "AvenirNext-Regular"
-
-
-        case .userText:
-            return "KohinoorTelugu-Regular"
-        case .systemInfoLink:
-            return "AvenirNextCondensed-Medium"
-        }
-    }
-    
-    public var textColor: UIColor {
-        
-        switch self {
-        
-        case .label, .subLabel:
-            return TLCStyle.ColorPallet.black
-        
-        case .accentLabel:
-            return TLCStyle.darkBackgroundTextColor
-        
-        case .title:
-            return TLCStyle.ColorPallet.black
-        case .heading:
-            return TLCStyle.ColorPallet.darkGrey
-        case .instructions:
-            return TLCStyle.ColorPallet.darkGrey
-        case .subtitle:
-            return TLCStyle.ColorPallet.black
-        
-        case .navBar, .barButton:
-            return TLCStyle.ColorPallet.darkGrey
-
-
-        case .userText:
-            return TLCStyle.ColorPallet.black
-        case .systemInfoLink:
-            return TLCStyle.ColorPallet.turquoise
-
-        }
-    }
-    
-    public var size: CGFloat {
-        switch self {
-        case .label:
-            return 16
-        case .subLabel:
-            return 13
-        
-        
-        case .navBar:
-            return 22
-        case .barButton:
-            return 16
-        case .title:
-            return 32
-        case .heading:
-            return 24
-        case .instructions:
-            return 16
-
-        case .accentLabel:
-            return 16
-        case .userText:
-            return 20
-        case .systemInfoLink:
-            return 16
-        case .subtitle:
-            return 14
-        }
+    func of(size: CGFloat) -> UIFont {
+        return UIFont.init(name: rawValue, size: size) ?? UIFont.systemFont(ofSize: size)
     }
 }
 
+
+public struct TextStyle {
+    public static let navBarStyle = NewTextStyle(font: FontBook.navigation.of(size: 22), color: TLCStyle.ColorPallet.darkGrey)
+    public static let barButtonStyle = NewTextStyle(font: FontBook.navigation.of(size: 16), color: TLCStyle.ColorPallet.darkGrey)
+    
+    public static let title = NewTextStyle(font: FontBook.regular.of(size: 32),
+                                                 color: TLCStyle.ColorPallet.black)
+    
+    public static let header = NewTextStyle(font: FontBook.header.of(size: 24),
+                                                 color: TLCStyle.ColorPallet.darkGrey)
+    
+    
+    public static let categoryWidgetStyle = NewTextStyle(font: FontBook.light.of(size: 13),
+                                                         color: TLCStyle.ColorPallet.black)
+    
+    public static let itemTitleStyle = NewTextStyle(font: FontBook.light.of(size: 16),
+                                                    color: TLCStyle.ColorPallet.black) // .label
+    
+    public static let itemDetailStyle = NewTextStyle(font: FontBook.light.of(size: 13),
+                                                    color: TLCStyle.ColorPallet.black) // .subLabel
+    
+    
+    
+    public static let setupInstruction = NewTextStyle(font: FontBook.regular.of(size: 16),
+                                                           color: TLCStyle.ColorPallet.darkGrey) // .subLabel
+    
+}

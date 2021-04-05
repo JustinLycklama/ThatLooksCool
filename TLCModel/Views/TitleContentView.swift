@@ -47,7 +47,7 @@ public class TitleContentView: UIView {
         
         
         // Title Views
-        titleLabel.style(TextStyle.label)
+        titleLabel.style(DefaultTextStyle)
         titleLabel.setContentHuggingPriority(.required, for: .vertical)
         titleLabel.textAlignment = .center
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +67,7 @@ public class TitleContentView: UIView {
         addSubview(contentView)
         
         let views = ["title" : titleStackView, "content": contentView]
-        let metrics = ["spacing" : TLCStyle.interiorPadding, "margin" : TLCStyle.collectionMargin]
+        let metrics = ["spacing" : TLCStyle.elementPadding, "margin" : TLCStyle.collectionMargin]
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-(margin)-[title]-(spacing)-[content]-(margin)-|", options: .alignAllCenterX, metrics: metrics, views: views))
         

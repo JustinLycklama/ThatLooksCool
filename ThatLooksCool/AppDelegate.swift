@@ -47,14 +47,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().barTintColor = TLCStyle.navBarBackgroundColor
         UINavigationBar.appearance().tintColor = .white
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: TLCStyle.navBarFont ?? UIFont.systemFont(ofSize: 24),
-                                                            NSAttributedString.Key.foregroundColor: TLCStyle.navBarTextColor]
+        UINavigationBar.appearance().titleTextAttributes = TextStyle.navBarStyle.asAttributes
         UINavigationBar.appearance().isTranslucent = false
         UINavigationBar.appearance().isHidden = true
 
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: TLCStyle.barButtonFont ?? UIFont.systemFont(ofSize: 14),
-                                                             NSAttributedString.Key.foregroundColor: TLCStyle.barButtonTextColor], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes(TextStyle.barButtonStyle.asAttributes, for: .normal)
 
         return true
     }
