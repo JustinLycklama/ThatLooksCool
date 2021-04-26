@@ -17,100 +17,10 @@ import RxSwift
 
 import Onboard
 
-class HomeViewController: AdViewController {
+class HomeViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    private lazy var searchbar: UISearchBar = {
-        let bar = UISearchBar()
-        bar.backgroundImage = UIImage()
-        bar.setImage(TLCIconSet.search.image(), for: .search, state: .normal)
-//        bar.backgroundColor = TLCStyle.searchBackgroundColor
-        
-        let textFieldInsideSearchBar = bar.value(forKey: "searchField") as? UITextField
-        textFieldInsideSearchBar?.backgroundColor = TLCStyle.searchBackgroundColor
-        
-        return bar
-    }()
-    
-    private lazy var viewBanner: UIView = {
-        let headerView = ShadowView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        headerView.layer.cornerRadius = 25
-        headerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-
-        headerView.backgroundColor = TLCStyle.bannerViewColor
-
-        let stack = UIStackView()
-        stack.axis = .vertical
-//        stack.spacing = TLCStyle.elementPadding
-        
-        let hstack = UIStackView()
-        hstack.axis = .horizontal
-        
-        let titleLabel = UILabel()
-        titleLabel.style(TextStyle.title)
-        titleLabel.numberOfLines = 0
-        titleLabel.textAlignment = .left
-
-        let mutableString = NSMutableAttributedString()
-
-        let accentTitle = NSAttributedString(string: "That\n",
-                                             attributes: [NSAttributedString.Key.foregroundColor : Classic.style.titleTextAccentColor])
-        let titleSuffix = NSAttributedString(string: "Looks Cool",
-                                             attributes: [NSAttributedString.Key.foregroundColor : Classic.style.titleTextColor])
-
-        mutableString.append(accentTitle)
-        mutableString.append(titleSuffix)
-
-        titleLabel.attributedText = mutableString
-        
-        hstack.addArrangedSubview(titleLabel)
-        hstack.addArrangedSubview(iconsView)
-        
-        stack.addArrangedSubview(hstack)
-        stack.addArrangedSubview(searchbar)
-
-        headerView.addSubview(stack)
-        
-        headerView.constrainSubviewToBounds(stack, onEdges: [.top],
-                                            withInset: UIEdgeInsets(TLCStyle.topMargin + TLCStyle.safeArea.top))
-        headerView.constrainSubviewToBounds(stack, onEdges: [.left, .right],
-                                            withInset: UIEdgeInsets(TLCStyle.topMargin))
-        headerView.constrainSubviewToBounds(stack, onEdges: [.bottom],
-                                            withInset: UIEdgeInsets(TLCStyle.topPadding))
-
-        titleLabel.setContentHuggingPriority(.required, for: .vertical)
-//        headerView.setContentHuggingPriority(.required, for: .vertical)
-        
-        return headerView
-    }()
-    
-    private lazy var iconsView: UIView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        
-        let settingsButton = UIButton(frame: .zero)
-        
-        if let settingsIcons = TLCIconSet.settings.image() {
-            settingsButton.setImage(settingsIcons, for: .normal)
-            stack.addArrangedSubview(settingsButton)
-        }
-        
-        let identifyButton = UIButton(frame: .zero)
-        
-        if let identifyIcon = TLCIconSet.identify.image()?.withTintColor(TLCStyle.titleTextAccentColor) {
-            identifyButton.setImage(identifyIcon, for: .normal)
-            stack.addArrangedSubview(identifyButton)
-        }
-        
-        stack.addConstraint(.init(item: stack, attribute: .width, relatedBy: .equal,
-                                  toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32))
-        return stack
-    }()
-    
     private lazy var categoriesHeader: UIView = {
         let container = UIView()
         
@@ -135,6 +45,8 @@ class HomeViewController: AdViewController {
         let actionCellConfig = CollectionCellConfig<Void, AddCategoryCollectionCell> (swipeActions: []) { (_, cell: AddCategoryCollectionCell) in
         } performAction: { [weak self] (_) in
             let categoryViewController = CategoryViewController(category: nil)
+            categoryViewController.delegate = self
+            
             self?.present(categoryViewController, animated: true, completion: nil)
         }
         
@@ -142,6 +54,8 @@ class HomeViewController: AdViewController {
             cell.displayCategory(displayable: category)
         } performAction: { [weak self]  (category: ItemCategory) in
             let categoryViewController = CategoryViewController(category: category)
+            categoryViewController.delegate = self
+            
             self?.present(categoryViewController, animated: true, completion: nil)
         }
                     
@@ -190,7 +104,7 @@ class HomeViewController: AdViewController {
         let container = UIView()
 
         let deleteSwipAction = SwipeActionConfig(image: TLCIconSet.delete.image()) { (item: Item) in
-            RealmSubjects.shared.removeItem(item)
+            item.remove()
         }
                 
         let actionCellConfig = TableCellConfig<Void, AddCell> (performAction: nil)
@@ -199,6 +113,7 @@ class HomeViewController: AdViewController {
             cell.displayItem(item: item)
         } performAction: { [weak self]  (item: Item) in
             let itemViewController = ItemViewController(item: item)
+            itemViewController.delegate = self
             self?.present(itemViewController, animated: true, completion: nil)
         }
         
@@ -228,10 +143,10 @@ class HomeViewController: AdViewController {
         super.viewDidLoad()
 
         view.backgroundColor = Classic.style.baseBackgroundColor
-        
-        self.contentArea.addSubview(viewBanner)
-        self.contentArea.constrainSubviewToBounds(viewBanner, onEdges: [.top, .left, .right])
-
+                
+        let banner = ApplicationBanner(titleInfo: BannerTitleInfo(accentString: "That", plainString: "Looks Cool", textLeftAligned: true),
+                                       withSearchBarAndNewItems: true)
+        banner.delegate = self
         
         let stack = UIStackView()
         stack.axis = .vertical
@@ -243,12 +158,31 @@ class HomeViewController: AdViewController {
                 
         stack.addArrangedSubview(itemsHeader)
         stack.addArrangedSubview(itemsView)
+                
+        self.view.addAndConstrainSubview(AdContainerLayout(rootViewController: self,
+                                                         content: HeaderContentLayout(header: banner, content: stack, spacing: Classic.style.topMargin)))
+    }
+    
+//    @objc
+//    func navigateToNewItems() {
+//        let newItemsVC = NewItemsViewController()
+//        self.navigationController?.pushViewController(newItemsVC, animated: true)
+//    }
+}
+
+extension HomeViewController: CompletableActionDelegate {
+    func complete() {
+        self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: BannerDelegate {
+    func settingsPressed() {
         
-        self.contentArea.addSubview(stack)
-        self.contentArea.constrainSubviewToBounds(stack, onEdges: [.left, .right])
-        
-        self.contentArea.constrainSubviewToBounds(stack, onEdges: [.bottom], withInset: UIEdgeInsets(TLCStyle.topMargin))
-        
-        self.contentArea.addConstraint(.init(item: viewBanner, attribute: .bottom, relatedBy: .equal, toItem: stack, attribute: .top, multiplier: 1, constant: -Classic.style.topMargin))
+    }
+    
+    func secondaryIconPressed() {
+        let newItemsVC = NewItemsViewController()
+        self.navigationController?.pushViewController(newItemsVC, animated: true)
     }
 }

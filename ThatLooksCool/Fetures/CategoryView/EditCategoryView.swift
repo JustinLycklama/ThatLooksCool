@@ -15,6 +15,8 @@ class EditCategoryView: UIView {
     var category: ItemCategory
     var mockCategory: MockCategory
     
+    weak var delegate: CompletableActionDelegate?
+    
     private lazy var categoryBadge: CategoryWidget = {
         let widget = CategoryWidget()
         widget.titleLabel.style(TextStyle.categoryWidgetStyle + TLCStyle.darkBackgroundTextColor)
@@ -34,6 +36,23 @@ class EditCategoryView: UIView {
         textField.delegate = self
         
         return textField
+    }()
+    
+    private lazy var deleteButton: Button = {
+        let button = Button()
+        button.backgroundColor = TLCStyle.destructiveIconColor
+        button.title = "Delete"
+        button.action = { [weak self] button in
+            guard let self = self else {
+                return
+            }
+            
+            button.setEnabled(false)
+            self.category.remove()
+            self.delegate?.complete()
+        }
+        
+        return button
     }()
     
     private lazy var categoryIconList: UIView = {
@@ -126,15 +145,31 @@ class EditCategoryView: UIView {
         stack.axis = .vertical
         stack.spacing = TLCStyle.elementMargin
         
+        let titleDeleteStack = UIStackView()
+        titleDeleteStack.axis = .horizontal
+        titleDeleteStack.spacing = TLCStyle.elementPadding
+        titleDeleteStack.distribution = .fill
+        
         let titleContainer = UIView()
         titleContainer.addSubview(categoryNameTextField)
         titleContainer.constrainSubviewToBounds(categoryNameTextField, onEdges: [.top, .bottom], withInset: UIEdgeInsets(TLCStyle.textInset))
         titleContainer.constrainSubviewToBounds(categoryNameTextField, onEdges: [.left, .right], withInset: UIEdgeInsets(TLCStyle.textInset))
+        
+        titleDeleteStack.addArrangedSubview(deleteButton)
+        titleDeleteStack.addArrangedSubview(titleContainer)
+//        titleDeleteStack.addArrangedSubview(UIView())
 
+//        titleContainer.addSubview(deleteButton)
+//        titleContainer.constrainSubviewToBounds(deleteButton, onEdges: [.top, .bottom], withInset: UIEdgeInsets(TLCStyle.textInset))
+//        titleContainer.constrainSubviewToBounds(deleteButton, onEdges: [.right], withInset: UIEdgeInsets(TLCStyle.textInset))
+
+//        titleDeleteStack.addConstraint(.init(item: categoryNameTextField, attribute: .right, relatedBy: .equal, toItem: deleteButton, attribute: .left, multiplier: 1, constant: -TLCStyle.elementPadding))
+//        titleDeleteStack.addConstraint(.init(item: categoryNameTextField, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 102))
+        
         titleContainer.backgroundColor = .white
         titleContainer.layer.cornerRadius = TLCStyle.textCornerRadius
         
-        stack.addArrangedSubview(titleContainer)
+        stack.addArrangedSubview(titleDeleteStack)
         
         let iconContainer = UIView()
         iconContainer.addSubview(categoryIconList)
@@ -154,8 +189,8 @@ class EditCategoryView: UIView {
         return container
     }
     
-    private func saveCategory() {
-        categoryBadge.displayCategory(displayable: RealmSubjects.shared.updateCategory(category: category, usingMock: mockCategory))
+    private func saveCategory() {        
+        categoryBadge.displayCategory(displayable: category.update(usingMock: mockCategory))
     }
 }
 

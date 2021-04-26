@@ -68,20 +68,20 @@ class ShareViewController: UIViewController {
 //        editItemController = itemController
         
         // Item Navigation
-        let itemControlView = ItemControlView()
-        itemControlView.delegate = self
-        itemControlView.translatesAutoresizingMaskIntoConstraints = false
-        
-        itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
-        
-        itemControlView.secondButtonEnabled = true
-
-        
-        itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
-        
+//        let itemControlView = ItemControlView()
+//        itemControlView.delegate = self
+//        itemControlView.translatesAutoresizingMaskIntoConstraints = false
+//
+//        itemControlView.shadowType = .border(radius: 10, offset: CGSize(width: 5, height: 5))
+//
+//        itemControlView.secondButtonEnabled = true
+//
+//
+//        itemControlView.addConstraint(NSLayoutConstraint.init(item: itemControlView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 64))
+//
         itemViewStack.addArrangedSubview(itemController)
-        itemViewStack.addArrangedSubview(itemControlView)
-        
+//        itemViewStack.addArrangedSubview(itemControlView)
+//
         return itemViewStack
     }
         
@@ -91,22 +91,22 @@ class ShareViewController: UIViewController {
     }
 }
 
-extension ShareViewController: ItemIterationDelegate {
-    func didPressFirst() {
-        
-    }
-    
-    func didPressThird() {
-        
-    }
-    
-    func didPressSecond() {
-//        let categoriesViewController = DisplayCategoriesTableController()
-//        categoriesViewController.delegate = self
+//extension ShareViewController: ItemIterationDelegate {
+//    func didPressFirst() {
 //        
-//        self.present(categoriesViewController, animated: true, completion: nil)
-    }
-}
+//    }
+//
+//    func didPressThird() {
+//
+//    }
+//
+//    func didPressSecond() {
+////        let categoriesViewController = DisplayCategoriesTableController()
+////        categoriesViewController.delegate = self
+////
+////        self.present(categoriesViewController, animated: true, completion: nil)
+//    }
+//}
 
 //extension ShareViewController: CompletableWithCategoryDelegate {
 //    func complete(withCategory category: ItemCategory?) {

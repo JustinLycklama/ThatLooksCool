@@ -28,22 +28,22 @@ public class Item: Object, ItemDisplayable {
     
     @objc public dynamic let timestamp: Date?
     
-    public init(title: String) {
-        self.id = UUID().uuidString
-        self.title = title
-        
-        timestamp = Date()
-    }
+//    public init(title: String) {
+//        self.id = UUID().uuidString
+//        self.title = title
+//
+//        timestamp = Date()
+//    }
+//
+//    public init(coordinate: Coordinate) {
+//        self.id = UUID().uuidString
+//        self.title = ""
+//        self.coordinate = coordinate
+//
+//        self.timestamp = Date()
+//    }
     
-    public init(coordinate: Coordinate) {
-        self.id = UUID().uuidString
-        self.title = ""
-        self.coordinate = coordinate
-        
-        self.timestamp = Date()
-    }
-    
-    public init(mock: MockItem, category: ItemCategory?) {
+    init(mock: MockItem, category: ItemCategory?) {
         self.id = UUID().uuidString
         self.title = mock.title
         self.info = mock.info
@@ -59,15 +59,15 @@ public class Item: Object, ItemDisplayable {
         timestamp = Date()
     }
     
-    public func update(usingMock mock: MockItem) {
-        self.title = mock.title
-        self.info = mock.info
-        self.coordinate = mock.coordinate
-    }
-    
-    public func updateCategory(_ category: ItemCategory?) {
-        self.category = category
-    }
+//    func update(usingMock mock: MockItem) {
+//        self.title = mock.title
+//        self.info = mock.info
+//        self.coordinate = mock.coordinate
+//    }
+//    
+//    func updateCategory(_ category: ItemCategory?) {
+//        self.category = category
+//    }
     
     open override func isEqual(_ object: Any?) -> Bool {
         if self.isInvalidated || (object as? Object)?.isInvalidated ?? false {
@@ -94,7 +94,7 @@ public class MockItem: ItemDisplayable {
     public var coordinate: Coordinate?
     public var timestamp: Date?
 
-    public init(item: Item?) {
+    public init(item: Item? = nil) {
         title = item?.title ?? "New Item"
         info = item?.info
         coordinate = item?.coordinate
@@ -136,10 +136,10 @@ public class MockItemCoordinator: MockCoordinator {
         let savedItem: Item!
         
         if let item = databaseObject {
-            RealmSubjects.shared.updateItem(item: item, usingMock: mockObject)
+            item.update(usingMock: mockObject)
             savedItem = item
         } else {
-            savedItem = RealmSubjects.shared.createItem(withMock: mockObject, toCategory: associatedCategory)
+            savedItem = Item.create(withMock: mockObject, toCategory: associatedCategory)
         }
         
         complete()
@@ -152,7 +152,7 @@ public class MockItemCoordinator: MockCoordinator {
         
         if let item = databaseObject {
             deletedItem = MockItem(item: item)
-            RealmSubjects.shared.removeItem(item)
+            item.remove()
         }
         
         complete()
@@ -177,8 +177,6 @@ extension MockItem: ModifiableFields {
             self.title = newVal
         }))
         
-
-    
         fields.append(LongTextField(title: "Notes", initialValue: info, onUpdate: { [weak self] newVal in
             guard let self = self else {
                 return

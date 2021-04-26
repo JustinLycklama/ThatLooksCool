@@ -28,13 +28,18 @@ class RealmObjects {
             
         let coordinate = Coordinate(coreLocationCoordinate: coreLocationCoordinate)
         
-        do {
-            try realm.write {
-                realm.add(Item(coordinate: coordinate))
-            }
-        } catch {
-            completion(false)
-        }
+        let mock = MockItem(item: nil)
+        mock.coordinate = coordinate
+        
+        Item.create(withMock: mock, toCategory: nil)
+                
+//        do {
+//            try realm.write {
+//                realm.add(Item(title: phrase))
+//            }
+//        } catch {
+//            completion(false)
+//        }
         
         updateNotificationCount(givenRealm: realm)
         
@@ -51,13 +56,17 @@ class RealmObjects {
             return
         }
         
-        do {
-            try realm.write {
-                realm.add(Item(title: phrase))
-            }
-        } catch {
-            completion(false)
-        }
+        let mock = MockItem(item: nil)
+        mock.title = phrase
+        Item.create(withMock: mock, toCategory: nil)
+        
+//        do {
+//            try realm.write {
+//                realm.add(Item(title: phrase))
+//            }
+//        } catch {
+//            completion(false)
+//        }
         
         updateNotificationCount(givenRealm: realm)
         

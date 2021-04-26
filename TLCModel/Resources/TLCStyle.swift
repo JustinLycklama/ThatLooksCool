@@ -84,6 +84,7 @@ public enum TLCIconSet: String, CaseIterable, Icon {
     case identify = "binoculars.fill"
     case search = "magnifyingglass"
     case plus = "plus.circle"
+    case back = "arrowshape.turn.up.backward.fill"
     
     var size: CGSize {
         switch self {
@@ -392,5 +393,8 @@ public struct TextStyle {
     
     public static let setupInstruction = NewTextStyle(font: FontBook.regular.of(size: 16),
                                                            color: TLCStyle.ColorPallet.darkGrey) // .subLabel
+    
+    public static let finePrint = NewTextStyle(font: FontBook.light.of(size: 11),
+                                                           color: TLCStyle.ColorPallet.black) // .subLabel
     
 }

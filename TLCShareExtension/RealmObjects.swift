@@ -32,7 +32,7 @@ class RealmObjects {
             
             try realm.write {
                 item.isSelectedOutItem = false
-                item.updateCategory(category)
+                item.categorize(toCategory: category)
             }
         } catch {
             fatalError()

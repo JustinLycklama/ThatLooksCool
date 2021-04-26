@@ -53,12 +53,12 @@ public class ItemCategory: Object, CategoryDisplayable {
         self.iconIdentifier = TLCCategoryIconSet.defaultIcon.rawValue
     }
     
-    public func update(usingMock mock: MockCategory) {
-        self.title = mock.title
-        self.color = mock.color
-        self.icon = mock.icon
-    }
-    
+//    public func update(usingMock mock: MockCategory) {
+//        self.title = mock.title
+//        self.color = mock.color
+//        self.icon = mock.icon
+//    }
+//    
     static func ==(lhs: ItemCategory, rhs: ItemCategory) -> Bool {
         return lhs.id == rhs.id
     }

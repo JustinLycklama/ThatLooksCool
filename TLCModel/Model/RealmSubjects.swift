@@ -11,8 +11,154 @@ import Foundation
 import RealmSwift
 import RxSwift
 
-//TODO: Remove
-import CoreLocation
+// Encapsulate Realm in this file, to not become dependant on one type of database
+public enum DatabaseObservation<CollectionType: RealmCollectionValue> {
+    case initial([CollectionType])
+    case update([CollectionType], deletions: [Int], insertions: [Int], modifications: [Int])
+    case error(Error)
+}
+
+fileprivate extension DatabaseObservation {
+    init(realmChange: RealmCollectionChange<Results<CollectionType>>)  {
+        switch realmChange {
+        case .initial(let results):
+            self = .initial(results.list())
+        case .update(let results, deletions: let deletions, insertions: let insertions, modifications: let modifications):
+            self = .update(results.list(), deletions: deletions, insertions: insertions, modifications: modifications)
+        case .error(let error):
+            self = .error(error)
+        }
+    }
+}
+
+fileprivate class Database {
+    fileprivate static let shared = Database()
+    
+    private var tokenList = [NotificationToken]()
+    
+    private var realm: Realm? {
+        get {
+            do {
+                let realm = try Realm(configuration: TLC_Constants.realmConfig)
+                return realm
+            } catch (let error) {
+                print("---")
+                print("Couldn't get Realm Database from config: \(error.localizedDescription)")
+                print("---")
+                
+                return nil
+            }
+        }
+    }
+    
+    deinit {
+        for token in tokenList {
+            token.invalidate()
+        }
+    }
+    
+    @discardableResult
+    func add(object: Object) -> Bool {
+        do {
+            try realm?.write {
+                realm?.add(object)
+            }
+            return true
+        } catch (let error) {
+            print("Couldn't write to database: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    @discardableResult
+    func update(_ modification:(() -> Void)) -> Bool {
+        do {
+            try realm?.write {
+                modification()
+            }
+            return true
+        } catch (let error) {
+            print("Couldn't write to database: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    @discardableResult
+    func remove(object: Object) -> Bool {
+        do {
+            try realm?.write {
+                realm?.delete(object)
+            }
+            return true
+        } catch (let error) {
+            print("Couldn't delete from database: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func observe<T: Object>(_ filterString: String, _ filterObject: Object? = nil, onUpdate: @escaping (DatabaseObservation<T>) -> Void) {
+        let results: Results<T>?
+        if let obj = filterObject {
+            results = realm?.objects(T.self).filter(filterString, obj)
+        } else {
+            results = realm?.objects(T.self).filter(filterString)
+        }
+        
+        if let objectSubset = results {
+            let token = objectSubset.observe(on: .main) { (changes: RealmCollectionChange<Results<T>>) in
+                onUpdate(DatabaseObservation(realmChange: changes))
+            }
+            
+            tokenList.append(token)
+        } else {
+            print("Couldn't observe on database using filter: \(filterString)")
+        }
+    }
+}
+
+public class DatabaseListener {
+    public static let shared = DatabaseListener()
+
+    // MARK: Item
+//    public var newItems = BehaviorSubject<[Item]>(value: [])
+
+//    private var itemSubjectByCategory = [ItemCategory : BehaviorSubject<[Item]>]()
+//    func items(by category: ItemCategory? = nil) {
+//
+//    }
+    
+    
+    // MARK: ItemCategory
+    public var itemCategories = BehaviorSubject<[ItemCategory]>(value: [])
+    
+    
+    init() {
+        createNewItemSubjects()
+//        createPendingItemSubjects()
+//        createResolvedItemSubjects()
+    }
+    
+    public func newItems(onUpdate: @escaping (DatabaseObservation<Item>) -> Void) {
+        Database.shared.observe("category == nil", onUpdate: onUpdate)
+    }
+    
+    public func items(by category: ItemCategory, onUpdate: @escaping (DatabaseObservation<Item>) -> Void) {
+        Database.shared.observe("category == %@", category, onUpdate: onUpdate)
+    }
+    
+    private func createNewItemSubjects() {
+//        Database.shared.observe("category == nil") { (observation: DatabaseObservation<Item>) in
+//            switch observation {
+//            case .initial(let newItems):
+//
+//            case .update(let newItems, deletions: let deletions, insertions: let insertions, modifications: let modifications):
+//
+//            case .error(_):
+//                break
+//            }
+//        }
+    }
+}
 
 public class RealmSubjects {
     public static let shared = RealmSubjects()
@@ -72,7 +218,7 @@ public class RealmSubjects {
             case .initial(let results), .update(let results, _, _, _):
                 DispatchQueue.main.async {
                     let categories = results.list()
-                    self.updateResolvedItemSubjects(for: categories)
+//                    self.updateResolvedItemSubjects(for: categories)
                     
                     self.resolvedItemCategoriesSubject.onNext(categories)
                 }
@@ -191,155 +337,121 @@ public class RealmSubjects {
         }
     }
     
-    // TODO remove
-    public func addPendingItem(title: String) {
-        let newItem = Item(title: title)
+//    // TODO remove
+//    public func addPendingItem(title: String) {
+//        let newItem = Item(title: title)
+//
+//        realm.beginWrite()
+//        realm.add(newItem)
+//
+//        do {
+//            try realm.commitWrite()
+//        } catch {
+//            fatalError()
+//        }
+//    }
+//    
+//    // TODO remove
+//    public func addPendingItem() {
+//        let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(43.6331596), longitude: CLLocationDegrees(-79.4141207)))
+//        let newItem = Item(coordinate: coordinate)
+//
+//        realm.beginWrite()
+//        realm.add(newItem)
+//
+//        do {
+//            try realm.commitWrite()
+//        } catch {
+//            fatalError()
+//        }
+//    }
+    
 
-        realm.beginWrite()
-        realm.add(newItem)
-
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
     
-    // TODO remove
-    public func addPendingItem() {
-        let coordinate = Coordinate(coreLocationCoordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(43.6331596), longitude: CLLocationDegrees(-79.4141207)))
-        let newItem = Item(coordinate: coordinate)
-
-        realm.beginWrite()
-        realm.add(newItem)
-
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
-    
-    @discardableResult
-    public func createItem(withMock mock: MockItem, toCategory category: ItemCategory?) -> Item {
-        do {
-            let item = Item(mock: mock, category: category)
-            
-            try realm.write {
-                realm.add(item)
-            }
-            
-            return item
-        } catch {
-            fatalError()
-        }
-    }
-    
-    public func updateItem(item: Item, usingMock mock: MockItem) {
-        do {
-            try realm.write {
-                item.update(usingMock: mock)
-            }
-        } catch {
-            fatalError()
-        }
-    }
-    
-    public func categorizeItem(_ item: Item, toCategory category: ItemCategory?) {
-        do {
-            try realm.write {
-                item.updateCategory(category)
-            }
-        } catch {
-            fatalError()
-        }
-    }
-    
-    public func removeItem(_ item: Item) {
-        realm.beginWrite()
-        
-        realm.delete(item)
-        
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
-    
-    public func removeAllPendingItems() {
-        
-        let pendingItems = realm.objects(Item.self)
-        
-        realm.beginWrite()
-        realm.delete(pendingItems)
-        
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
-    }
+//    public func removeAllPendingItems() {
+//
+//        let pendingItems = realm.objects(Item.self)
+//
+//        realm.beginWrite()
+//        realm.delete(pendingItems)
+//
+//        do {
+//            try realm.commitWrite()
+//        } catch {
+//            fatalError()
+//        }
+//    }
     
     // MARK: - Category
     
-    public func setupCategoriesIfNone() {
-        let categories = realm.objects(ItemCategory.self)
+//    public func setupCategoriesIfNone() {
+//        let categories = realm.objects(ItemCategory.self)
+//
+//        if (categories.count == 0) {
+//            do {
+//                let takeout = MockCategory(category: nil)
+//                takeout.title = "Takeout"
+//
+//                let bars = MockCategory(category: nil)
+//                bars.title = "Bars"
+//
+//                try realm.write {
+//                    realm.add(ItemCategory(mock: takeout))
+//                    realm.add(ItemCategory(mock: bars))
+//                }
+//            } catch {
+//                fatalError()
+//            }
+//        }
+//    }
+}
+
+extension ItemCategory {
+    @discardableResult
+    public static func create(withMock mock: MockCategory) -> ItemCategory? {
+        let category = ItemCategory(mock: mock)
+        return Database.shared.add(object: category) ? category : nil
+    }
+
+    @discardableResult
+    public func update(usingMock mock: MockCategory) -> ItemCategory {
+        Database.shared.update {
+            self.title = mock.title
+            self.color = mock.color
+            self.icon = mock.icon
+        }
         
-        if (categories.count == 0) {
-            do {
-                let takeout = MockCategory(category: nil)
-                takeout.title = "Takeout"
-                
-                let bars = MockCategory(category: nil)
-                bars.title = "Bars"
-                
-                try realm.write {
-                    realm.add(ItemCategory(mock: takeout))
-                    realm.add(ItemCategory(mock: bars))
-                }
-            } catch {
-                fatalError()
-            }
+        return self
+    }
+    
+    public func remove() {
+        Database.shared.remove(object: self)
+    }
+}
+
+extension Item {
+    @discardableResult
+    public static func create(withMock mock: MockItem, toCategory category: ItemCategory?) -> Item? {
+        let item = Item(mock: mock, category: category)
+        return Database.shared.add(object: item) ? item : nil
+    }
+    
+    public func update(usingMock mock: MockItem) {
+        Database.shared.update {
+            self.title = mock.title
+            self.info = mock.info
+            self.coordinate = mock.coordinate
         }
     }
     
-    public func addCategory(withMock mock: MockCategory) -> ItemCategory {
-        do {
-            let category = ItemCategory(mock: mock)
-            
-            try realm.write {
-                realm.add(category)
-            }
-            
-            return category
-        } catch {
-            fatalError()
-        }        
-    }
-    
-    public func updateCategory(category: ItemCategory, usingMock mock: MockCategory) -> ItemCategory {
-        do {
-            try realm.write {
-                category.update(usingMock: mock)
-            }
-            
-            return category
-        } catch {
-            fatalError()
+    public func categorize(toCategory category: ItemCategory?) {
+        Database.shared.update {
+            self.category = category
         }
     }
     
-    public func removeCategory(_ category: ItemCategory) {
-        realm.beginWrite()
-        
-        realm.delete(category)
-        
-        do {
-            try realm.commitWrite()
-        } catch {
-            fatalError()
-        }
+    public func remove() {
+        Database.shared.remove(object: self)
     }
 }
 
@@ -350,3 +462,4 @@ public extension Results {
         return Array(self)
     }
  }
+

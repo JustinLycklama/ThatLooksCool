@@ -116,8 +116,9 @@ class ItemWidget: UIView {
     }
     
     private func setupMetaDataStack() {
-        dateCategoryStack.removeAllArrangedSubviews()
-        metaDataStack.removeAllArrangedSubviews()
+        //??
+//        dateCategoryStack.removeAllArrangedSubviews()
+//        metaDataStack.removeAllArrangedSubviews()
         
         metaDataStack.addArrangedSubview(dateCategoryStack)
         
