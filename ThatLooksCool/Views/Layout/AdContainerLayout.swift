@@ -31,6 +31,8 @@ class AdContainerLayout: UIView {
     }
     
     func setup(withContent content: UIView) {
+        self.backgroundColor = TLCStyle.primaryBackgroundColor
+        
         let adContainer = ShadowView()
         
         adContainer.backgroundColor = TLCStyle.bannerViewColor

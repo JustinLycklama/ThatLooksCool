@@ -10,16 +10,7 @@ import UIKit
 
 public class CategoryCollectionCell: UICollectionViewCell {
     
-//    public static let height: CGFloat = 102
-    
-    private lazy var cellDisplayView: CategoryWidget = {
-        let view = CategoryWidget()
-        
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: TLCStyle.categoryWidgetDesiredSize.height))
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var cellDisplayView = CategoryWidget()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +24,13 @@ public class CategoryCollectionCell: UICollectionViewCell {
     
     func setup() {
         self.backgroundColor = .clear
-        
         self.contentView.clipsToBounds = false
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
         
         self.contentView.addSubview(cellDisplayView)
         self.contentView.constrainSubviewToBounds(cellDisplayView)
+        
+        self.contentView.addConstraint(.init(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 92))
     }
     
     public func displayCategory(displayable: CategoryDisplayable) {

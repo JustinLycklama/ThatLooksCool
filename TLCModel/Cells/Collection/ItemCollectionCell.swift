@@ -12,14 +12,7 @@ public class ItemCollectionCell: UICollectionViewCell {
 
     public static let height: CGFloat = 64
     
-    private lazy var cellDisplayView: ItemWidget = {
-        let view = ItemWidget()
-        
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: ItemCollectionCell.height))
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var cellDisplayView = ItemWidget()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -38,6 +31,8 @@ public class ItemCollectionCell: UICollectionViewCell {
         
         self.contentView.addSubview(cellDisplayView)
         self.contentView.constrainSubviewToBounds(cellDisplayView)
+        
+        self.contentView.addConstraint(.init(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: ItemCollectionCell.height))
     }
     
 //    public func displayCategory(displayable: CategoryDisplayable) {

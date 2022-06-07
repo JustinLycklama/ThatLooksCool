@@ -35,8 +35,8 @@ class NewItemsViewController: UIViewController {
         self.view.backgroundColor = .clear
         self.hideKeyboardWhenTappedAround()
   
-        let backgroundView = UIView()
-        backgroundView.backgroundColor = TLCStyle.primaryBackgroundColor
+//        let backgroundView = UIView()
+//        backgroundView.backgroundColor = TLCStyle.primaryBackgroundColor
 
         let stack = UIStackView()
         stack.axis = .vertical

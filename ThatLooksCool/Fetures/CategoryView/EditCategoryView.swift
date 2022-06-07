@@ -68,7 +68,7 @@ class EditCategoryView: UIView {
             self?.saveCategory()
         }
         
-        let grid = ActionableGridView(actionConfig: actionCellConfig, itemConfig: iconCellConfig)
+        let grid = ActionableGridView(actionConfig: actionCellConfig, itemConfig: iconCellConfig, itemWidth: 32)
                 
         grid.spacing = 2
         grid.setItems(items: TLCCategoryIconSet.allCases)
@@ -80,7 +80,7 @@ class EditCategoryView: UIView {
         grid.backgroundColor = .white
         grid.layer.cornerRadius = TLCStyle.cornerRadius
         
-        grid.addConstraint(.init(item: grid, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: IconCollectionCell.height))
+        grid.addConstraint(.init(item: grid, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
         
         return grid
     }()

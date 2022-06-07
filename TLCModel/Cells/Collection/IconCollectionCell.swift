@@ -21,7 +21,7 @@ public class IconCollectionCell: UICollectionViewCell {
     private lazy var cellDisplayView: CategoryIcon = {
         let view = CategoryIcon()
         
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: IconCollectionCell.height))
+//        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: IconCollectionCell.height))
         
         return view
     }()

@@ -41,7 +41,8 @@ class HomeViewController: UIViewController {
     private lazy var categoriesView: UIView = {
         
         let container = UIView()
-
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
         let actionCellConfig = CollectionCellConfig<Void, AddCategoryCollectionCell> (swipeActions: []) { (_, cell: AddCategoryCollectionCell) in
         } performAction: { [weak self] (_) in
             let categoryViewController = CategoryViewController(category: nil)
@@ -102,7 +103,8 @@ class HomeViewController: UIViewController {
     private lazy var itemsView: UIView = {
         
         let container = UIView()
-
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
         let deleteSwipAction = SwipeActionConfig(image: TLCIconSet.delete.image()) { (item: Item) in
             item.remove()
         }
@@ -132,7 +134,7 @@ class HomeViewController: UIViewController {
         } onDisposed: {
             
         }.disposed(by: disposeBag)
-        
+                
         return container
     }()
     

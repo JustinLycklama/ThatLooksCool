@@ -10,14 +10,7 @@ import UIKit
 
 public class ItemTableViewCell: UITableViewCell {
     
-    private lazy var cellDisplayView: ItemWidget = {
-        let view = ItemWidget()
-        
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32 + TLCStyle.elementMargin * 2))
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    private lazy var cellDisplayView = ItemWidget()
     
     public override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,11 +28,13 @@ public class ItemTableViewCell: UITableViewCell {
         self.contentView.clipsToBounds = false
         
         self.contentView.addSubview(cellDisplayView)
-        self.contentView.constrainSubviewToBounds(cellDisplayView)
-        self.contentView.constrainSubviewToBounds(cellDisplayView, withInset: UIEdgeInsets(top: 10,
+//        self.contentView.constrainSubviewToBounds(cellDisplayView)
+        self.contentView.constrainSubviewToBounds(cellDisplayView, withInset: UIEdgeInsets(top: 0,
                                                                                            left: 0,
-                                                                                           bottom: 10,
+                                                                                           bottom: TLCStyle.elementPadding,
                                                                                            right: 0))
+        
+//        self.contentView.addConstraint(.init(item: self.contentView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 32 + TLCStyle.elementMargin * 2))
     }
     
     public func displayItem(item: Item) {

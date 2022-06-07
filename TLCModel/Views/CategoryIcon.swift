@@ -19,6 +19,8 @@ public class CategoryIcon: UIView {
     
     private lazy var iconImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         imageView.contentMode = .scaleAspectFill
         
         imageView.image = image
@@ -31,6 +33,7 @@ public class CategoryIcon: UIView {
 
         self.backgroundColor = .white
         self.clipsToBounds = true
+        self.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(iconImageView)
         self.constrainSubviewToBounds(iconImageView, withInset: UIEdgeInsets(TLCStyle.elementMargin))

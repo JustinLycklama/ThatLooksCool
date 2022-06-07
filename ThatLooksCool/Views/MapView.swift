@@ -122,8 +122,6 @@ class MapView: UIView {
         
         self.addSubview(mapViewArea)
         self.constrainSubviewToBounds(mapViewArea)
-        
-        mapViewArea.addConstraint(.init(item: mapViewArea, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 160))
     }
     
     required init?(coder: NSCoder) {

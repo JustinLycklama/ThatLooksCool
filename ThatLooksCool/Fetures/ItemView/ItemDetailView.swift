@@ -14,6 +14,23 @@ class ItemDetailView: UIView {
 
     let itemMockCoordinator: MockItemCoordinator
 
+    // MARK: Views
+    
+    private let mapView = MapView()
+    private let categoryIcon = CategoryIcon()
+        
+    private lazy var categoryLabel: UILabel = {
+        let label = UILabel()
+        label.style(TextStyle.itemDetailStyle)
+        label.textAlignment = .right
+        
+        label.text = "12345"
+        
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        
+        return label
+    }()
+    
     init(item: Item) {
         itemMockCoordinator = MockItemCoordinator(item: item, category: item.category)
         
@@ -63,42 +80,14 @@ class ItemDetailView: UIView {
         
         self.addSubview(stack)
         self.constrainSubviewToBounds(stack)
+        
+        mapView.addConstraint(.init(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
+
+        
 //
     //        accentView.addConstraint(.init(item: accentView, attribute: .height, relatedBy: .equal, toItem: formView, attribute: .height, multiplier: 1, constant: 0))
 //
-        
     }
-    
-    // MARK: Map
-    
-    private lazy var mapView: UIView = {
-        let view = MapView()
-        
-        view.addConstraint(.init(item: view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200))
-        
-        return view
-    }()
-    
-    // MARK: Item Info
-    
-    private lazy var categoryLabel: UILabel = {
-        let label = UILabel()
-        label.style(TextStyle.itemDetailStyle)
-        label.textAlignment = .right
-        
-        label.text = "12345"
-        
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        
-        return label
-    }()
-    
-    private lazy var categoryIcon: UIView = {
-        let icon = CategoryIcon()
-//        icon.image = itemMockCoordinator.associatedCategory?.icon.image()
-        
-        return icon
-    }()
     
     func saveChanges() {
         itemMockCoordinator.saveItem()
